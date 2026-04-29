@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 
 # ── CONFIG ───────────────────────────────────────────────────────────────────
-VIDEO_PATH    = Path(__file__).parent / "Luxury_poker_club_video_202604281947.mp4"
+VIDEO_PATH    = Path(__file__).parent / "aaaa.mp4"
 OUTPUT_DIR    = Path(__file__).parent / "frames"
 TOTAL_FRAMES  = 150        # número de frames extraídos (mais = mais suave, mais pesado)
 FRAME_WIDTH   = 1280       # largura de saída (height proporcional)
