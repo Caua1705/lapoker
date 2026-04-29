@@ -12,6 +12,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/CustomEase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <style>
     /* ─── TOKENS ─── */
@@ -63,17 +64,19 @@
       padding: clamp(80px, 12vh, 120px) clamp(24px, 5vw, 80px);
     }
 
-    /* ─── FULLSCREEN VIDEO BACKGROUND ─── */
-    .hero-video {
+    /* ─── SCROLL-DRIVEN FRAME CANVAS BACKGROUND ─── */
+    .hero-canvas-wrap {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center;
       z-index: 0;
-      transform: translateZ(0);
-      backface-visibility: hidden;
+    }
+    .hero-canvas-wrap canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     /* ─── DARK OVERLAY ─── */
@@ -89,7 +92,7 @@
       pointer-events: none;
     }
 
-    /* ─── HERO INNER (above video) ─── */
+    /* ─── HERO INNER (above canvas) ─── */
     .hero-inner {
       position: relative;
       z-index: 2;
@@ -299,6 +302,13 @@
       z-index: 3;
     }
 
+    /* ─── SCROLL SPACER ─── */
+    .scroll-spacer {
+      height: 300vh;
+      position: relative;
+      z-index: -1;
+    }
+
     /* ─── REDUCED MOTION ─── */
     @media (prefers-reduced-motion: reduce) {
       .hero-label, .divider, .hero-headline,
@@ -324,18 +334,15 @@
 </head>
 <body>
 
+<!-- Scroll-driven hero wrapper — pinned while frames play -->
+<div id="heroWrapper">
+
 <section id="hero" aria-label="Alá Poker Private Club">
 
-  <!-- Fullscreen looping background video -->
-  <video
-    class="hero-video"
-    src="Poker_club_video_202604281402.mp4"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
-  ></video>
+  <!-- Scroll-driven canvas background (replaces video) -->
+  <div class="hero-canvas-wrap">
+    <canvas id="heroCanvas"></canvas>
+  </div>
 
   <!-- Dark overlay for readability -->
   <div class="hero-overlay" aria-hidden="true"></div>
@@ -392,8 +399,107 @@
 
 </section>
 
+<!-- Extra scroll space so the user can scroll through frames -->
+<div class="scroll-spacer"></div>
+
+</div><!-- /#heroWrapper -->
+
 <script>
 (function () {
+  /* ─── SCROLL-DRIVEN FRAME SEQUENCE ─── */
+  gsap.registerPlugin(ScrollTrigger);
+
+  const TOTAL_FRAMES = 150;
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Preload all frames
+  const frames = [];
+  let loadedCount = 0;
+  const currentFrame = { index: 0 };
+
+  function framePath(i) {
+    return 'frames/frame_' + String(i).padStart(4, '0') + '.webp';
+  }
+
+  function drawFrame(index) {
+    const img = frames[index];
+    if (!img || !img.complete || !img.naturalWidth) return;
+
+    // Match canvas internal resolution to display size
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const cw = rect.width * dpr;
+    const ch = rect.height * dpr;
+
+    if (canvas.width !== cw || canvas.height !== ch) {
+      canvas.width = cw;
+      canvas.height = ch;
+    }
+
+    // Cover-fit the image onto the canvas
+    const imgRatio = img.naturalWidth / img.naturalHeight;
+    const canvasRatio = cw / ch;
+
+    let sw, sh, sx, sy;
+    if (imgRatio > canvasRatio) {
+      // Image is wider — crop sides
+      sh = img.naturalHeight;
+      sw = sh * canvasRatio;
+      sx = (img.naturalWidth - sw) / 2;
+      sy = 0;
+    } else {
+      // Image is taller — crop top/bottom
+      sw = img.naturalWidth;
+      sh = sw / canvasRatio;
+      sx = 0;
+      sy = (img.naturalHeight - sh) / 2;
+    }
+
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
+  }
+
+  // Load images
+  for (let i = 0; i < TOTAL_FRAMES; i++) {
+    const img = new Image();
+    img.src = framePath(i);
+    img.onload = function () {
+      loadedCount++;
+      // Draw first frame as soon as it's ready
+      if (i === 0) drawFrame(0);
+    };
+    frames.push(img);
+  }
+
+  // Pin the hero and scrub through frames on scroll
+  const heroWrapper = document.getElementById('heroWrapper');
+  const heroSection = document.getElementById('hero');
+
+  ScrollTrigger.create({
+    trigger: heroWrapper,
+    start: 'top top',
+    end: 'bottom bottom',
+    pin: heroSection,
+    scrub: 0.15,
+    onUpdate: function (self) {
+      const progress = self.progress;
+      const frameIndex = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.floor(progress * TOTAL_FRAMES)
+      );
+      if (frameIndex !== currentFrame.index) {
+        currentFrame.index = frameIndex;
+        drawFrame(frameIndex);
+      }
+    }
+  });
+
+  // Resize canvas on window resize
+  window.addEventListener('resize', function () {
+    drawFrame(currentFrame.index);
+  });
+
+  /* ─── INTRO ANIMATIONS (unchanged) ─── */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   CustomEase.create('luxury', 'M0,0 C0.16,1 0.3,1 1,1');
