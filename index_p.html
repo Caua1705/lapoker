@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alá Poker — Private Members Club</title>
+  <meta name="description" content="Private poker nights for selected guests in a refined, discreet and high-standard setting." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/CustomEase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --black:      #060606;
+      --gold:       #C9A84C;
+      --gold-light: #E2C882;
+      --gold-dim:   #7A6230;
+      --gold-faint: rgba(201,168,76,0.12);
+      --white:      #ffffff;
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'Manrope', sans-serif;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ══ NAVBAR — floating luxury strip ══════════════════════════════ */
+    #navbar-wrap {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      pointer-events: none;
+      opacity: 0;  /* revealed by GSAP entrance */
+
+      /* ── default: floating atmospheric fade ── */
+      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+      background: linear-gradient(
+        to bottom,
+        rgba(6,6,6,0.72) 0%,
+        rgba(6,6,6,0.38) 60%,
+        transparent 100%
+      );
+      padding-bottom: 40px;
+
+      /* smooth transition between states */
+      transition:
+        background      0.55s cubic-bezier(0.16,1,0.3,1),
+        box-shadow      0.55s cubic-bezier(0.16,1,0.3,1),
+        padding-bottom  0.55s cubic-bezier(0.16,1,0.3,1),
+        -webkit-mask-image 0.55s ease,
+        mask-image      0.55s ease;
+    }
+
+    /* ── SCROLLED state: solid, deep black, still premium ── */
+    #navbar-wrap.scrolled {
+      background: rgba(5,5,5,0.96);
+      -webkit-mask-image: none;
+      mask-image: none;
+      padding-bottom: 0;
+      /* hairline gold underline — separates navbar from content elegantly */
+      box-shadow:
+        0 1px 0 0 rgba(232,201,106,0.12),
+        0 4px 32px rgba(0,0,0,0.55);
+    }
+
+    #navbar {
+      pointer-events: all;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px clamp(32px, 5vw, 80px);
+      gap: 40px;
+      /* no background, no border — the wrap handles atmosphere */
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* ── BRAND MARK ── */
+    .nav-brand {
+      font-family: var(--serif);
+      font-size: clamp(15px, 1.5vw, 18px);
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.90);
+      text-decoration: none;
+      flex-shrink: 0;
+      /* hairline separator between Alá and Poker */
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    /* "Poker" in a warmer, dimmer tone — luxury brand contrast */
+    .nav-brand span {
+      color: var(--gold);
+      font-weight: 300;
+      letter-spacing: 0.28em;
+    }
+    /* thin vertical divider between words */
+    .nav-brand::after {
+      content: '';
+      display: none; /* removed — spacing is enough */
+    }
+
+    /* ── CENTER NAV ── */
+    .nav-links {
+      display: flex;
+      gap: clamp(28px, 3.5vw, 56px);
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.32);
+      text-decoration: none;
+      transition: color 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    .nav-links a:hover {
+      color: rgba(201,168,76,0.85); /* warm gold — not pure white */
+    }
+
+    /* ── CTA — spinning gold border + luminous fill ── */
+    :root {
+      --gold-vivid:  #E8C96A;
+      --gold-soft:   #D4AE52;
+      --gold-border: rgba(232,201,106,0.55);
+    }
+
+    .nav-cta {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.30em;
+      text-transform: uppercase;
+      color: var(--gold-vivid);
+      text-decoration: none;
+      padding: 10px 22px;
+      overflow: hidden;
+      cursor: pointer;
+      flex-shrink: 0;
+      border: none;
+      background: transparent;
+      transition: transform 0.25s, filter 0.45s;
+      /* ambient glow — both states */
+      filter: drop-shadow(0 0 8px rgba(232,201,106,0.20));
+    }
+    .nav-cta:hover {
+      filter: drop-shadow(0 0 16px rgba(232,201,106,0.40));
+    }
+    .nav-cta:active { transform: scale(0.97); }
+
+    /* ── CTA in SCROLLED state — brighter, higher contrast ── */
+    .scrolled .nav-cta {
+      filter: drop-shadow(0 0 10px rgba(232,201,106,0.28));
+    }
+    .scrolled .nav-cta:hover {
+      filter: drop-shadow(0 0 20px rgba(232,201,106,0.50));
+    }
+
+    /* ① spinning conic border */
+    .nav-cta .cta-spin {
+      position: absolute;
+      inset: -100%;
+      animation: cta-spin 3s linear infinite;
+      background: conic-gradient(
+        from 90deg at 50% 50%,
+        transparent 0%,
+        transparent 72%,
+        var(--gold-vivid) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .nav-cta:hover .cta-spin { opacity: 1; }
+
+    /* ② base border — 3-side luminous gradient, always visible */
+    .nav-cta .cta-bg {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      border-top:    1px solid rgba(232,201,106,0.72);
+      border-left:   1px solid rgba(232,201,106,0.48);
+      border-right:  1px solid rgba(232,201,106,0.48);
+      border-bottom: 1px solid rgba(232,201,106,0.22);
+      transition: opacity 0.35s, border-color 0.45s;
+    }
+    /* scrolled: push border to full brightness */
+    .scrolled .nav-cta .cta-bg {
+      border-top-color:    rgba(232,201,106,0.90);
+      border-left-color:   rgba(232,201,106,0.60);
+      border-right-color:  rgba(232,201,106,0.60);
+      border-bottom-color: rgba(232,201,106,0.30);
+    }
+    .nav-cta:hover .cta-bg { opacity: 0; }
+
+    /* ③ inner fill — pure black in both states */
+    .nav-cta .cta-fill {
+      position: absolute;
+      inset: 1px;
+      background: #040404;
+      z-index: 1;
+      transition: background 0.45s;
+    }
+    /* scrolled: keep it deep black, don't gray out */
+    .scrolled .nav-cta .cta-fill { background: #030303; }
+
+    /* ④ inner glow — top light source */
+    .nav-cta .cta-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      background: radial-gradient(
+        60% 40% at 50% 0%,
+        rgba(232,201,106,0.22) 0%,
+        transparent 100%
+      );
+      transition: opacity 0.5s;
+    }
+    .nav-cta:hover .cta-glow { opacity: 1; }
+    /* scrolled: always show a faint constant inner glow */
+    .scrolled .nav-cta .cta-glow {
+      opacity: 0.35;
+    }
+    .scrolled .nav-cta:hover .cta-glow {
+      opacity: 1;
+    }
+
+    /* ⑤ label */
+    .nav-cta span.label {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: text-shadow 0.45s;
+    }
+    .nav-cta:hover span.label {
+      text-shadow: 0 0 14px rgba(232,201,106,0.60);
+    }
+    .nav-cta span.label::after {
+      content: '\2192';
+      font-size: 10px;
+      opacity: 0.65;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
+    }
+    .nav-cta:hover span.label::after {
+      transform: translateX(3px);
+      opacity: 1;
+    }
+
+    @keyframes cta-spin { to { transform: rotate(360deg); } }
+
+
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      #navbar { padding: 24px clamp(20px, 5vw, 40px); }
+    }
+
+
+    /* ── HERO WRAPPER (scroll pin container) ── */
+    #heroWrapper {
+      position: relative;
+      height: 400vh; /* scroll distance for pin + expansion */
+    }
+
+    /* ── HERO SECTION ── */
+    #hero {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    /* ── LEFT ZONE ── */
+    .hero-left {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: clamp(100px, 14vh, 140px) clamp(32px, 4vw, 64px) clamp(60px, 8vh, 100px) clamp(48px, 7vw, 120px);
+    }
+
+    /* ── TOP LABEL ── */
+    .hero-label {
+      font-family: var(--sans);
+      font-size: clamp(9px, 0.9vw, 11px);
+      font-weight: 500;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 36px;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold-dim);
+      flex-shrink: 0;
+    }
+
+    /* ── HEADLINE ── */
+    .hero-headline {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(38px, 4.8vw, 76px);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      max-width: 580px;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    /* Gold rule below headline */
+    .hero-rule {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold-dim), transparent);
+      margin-bottom: 28px;
+      opacity: 0;
+    }
+
+    /* ── SUBHEADLINE ── */
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: clamp(13px, 1.2vw, 15px);
+      font-weight: 300;
+      line-height: 1.80;
+      color: rgba(255,255,255,0.38);
+      max-width: 400px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    /* ── CTA BUTTON — spinning gold border + glow ── */
+    .btn-primary {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-family: var(--sans);
+      font-size: clamp(11px, 1vw, 13px);
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--white);
+      padding: clamp(16px, 1.8vw, 20px) clamp(36px, 3.5vw, 52px);
+      margin-bottom: 28px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s;
+      border: none;
+      background: transparent;
+      opacity: 0;
+    }
+    /* Spinning conic border layer */
+    .btn-primary .btn-spin {
+      position: absolute;
+      inset: -100%;
+      animation: cta-spin 3s linear infinite;
+      background: conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 75%, var(--gold) 100%);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .btn-primary:hover .btn-spin { opacity: 1; }
+    /* Default zinc-ish base border */
+    .btn-primary .btn-base {
+      position: absolute;
+      inset: 0;
+      background: rgba(201,168,76,0.10);
+      border: 1px solid rgba(201,168,76,0.28);
+      transition: opacity 0.3s;
+    }
+    .btn-primary:hover .btn-base { opacity: 0; }
+    /* Inner fill — black core */
+    .btn-primary .btn-fill {
+      position: absolute;
+      inset: 1px;
+      background: var(--black);
+      z-index: 1;
+    }
+    /* Bottom glow radial on hover */
+    .btn-primary .btn-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      background: radial-gradient(50% 50% at 50% 100%, rgba(201,168,76,0.30) 0%, transparent 100%);
+      transition: opacity 0.55s;
+    }
+    .btn-primary:hover .btn-glow { opacity: 1; }
+    /* Label on top */
+    .btn-primary .btn-label {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-primary .btn-label svg {
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .btn-primary:hover .btn-label svg { transform: translateX(4px); }
+    .btn-primary:active { transform: scale(0.97) !important; }
+
+    /* ── DISCLAIMER ── */
+    .hero-disclaimer {
+      font-family: var(--sans);
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.16);
+      opacity: 0;
+    }
+
+    /* ── RIGHT ZONE ── */
+    .hero-right {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: clamp(80px, 10vh, 120px) clamp(24px, 4vw, 60px) clamp(80px, 10vh, 120px) 0;
+      height: 100%;
+    }
+
+    /* ── VIDEO FRAME ──
+       Starts in normal flow so layout renders correctly.
+       initExpansion() will snapshot its viewport rect and switch to fixed.  */
+    .video-frame {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      aspect-ratio: 16 / 10;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.14);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.6),
+        0 24px 80px rgba(0,0,0,0.7),
+        0 0 100px rgba(201,168,76,0.04);
+      opacity: 0;          /* revealed by entrance animation */
+    }
+
+    .video-frame canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Subtle vignette inside video frame */
+    .video-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(6,6,6,0.30) 0%,
+        transparent 40%,
+        transparent 70%,
+        rgba(6,6,6,0.20) 100%
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── AMBIENT GLOW (behind video frame) ── */
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 70%;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── SCROLL SPACER (removed — heroWrapper height handles it) ── */
+    .scroll-spacer { display: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+      }
+      .hero-left {
+        padding: 120px 32px 40px 32px;
+        align-items: center;
+        text-align: center;
+      }
+      .hero-label::before { display: none; }
+      .hero-headline { text-align: center; }
+      .hero-sub { text-align: center; }
+      .hero-right {
+        padding: 0 32px 64px 32px;
+        justify-content: center;
+      }
+      .video-frame { max-width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .btn-primary { width: 100%; justify-content: center; }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-label, .hero-headline, .hero-rule, .hero-sub,
+      .btn-primary, .hero-disclaimer, .video-frame, #navbar {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR WRAPPER (pill layout) ── -->
+<div id="navbar-wrap">
+  <nav id="navbar" aria-label="Main navigation">
+    <a class="nav-brand" href="#">Alá <span>Poker</span></a>
+    <ul class="nav-links">
+      <li><a href="#">Experiência</a></li>
+      <li><a href="#">Mesa Privada</a></li>
+      <li><a href="#">Acesso</a></li>
+    </ul>
+    <a class="nav-cta" href="#">
+      <span class="cta-spin"></span>
+      <span class="cta-bg"></span>
+      <span class="cta-fill"></span>
+      <span class="cta-glow"></span>
+      <span class="label">Solicitar Acesso</span>
+    </a>
+  </nav>
+</div>
+
+<!-- ── SCROLL WRAPPER ── -->
+<div id="heroWrapper">
+
+  <section id="hero" aria-label="Alá Poker Private Members Club">
+
+    <!-- LEFT: text content -->
+    <div class="hero-left">
+      <p class="hero-label" id="heroLabel">Clube Privado para Membros Selecionados</p>
+
+      <h1 class="hero-headline" id="heroHeadline">
+        Uma mesa reservada<br><em>para poucos.</em>
+      </h1>
+
+      <div class="hero-rule" id="heroRule"></div>
+
+      <p class="hero-sub" id="heroSub">
+        Uma experiência sob convite para quem valoriza
+        presença, precisão e discrição.
+      </p>
+
+      <a href="#" class="btn-primary" id="heroCta">
+        <span class="btn-spin"></span>
+        <span class="btn-base"></span>
+        <span class="btn-fill"></span>
+        <span class="btn-glow"></span>
+        <span class="btn-label">
+          Solicitar Acesso
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </a>
+
+      <p class="hero-disclaimer" id="heroDisclaimer">
+        Vagas limitadas &nbsp;&middot;&nbsp; Sujeito à aprovação &nbsp;&middot;&nbsp; 18+
+      </p>
+    </div>
+
+    <!-- RIGHT: cinematic video frame -->
+    <div class="hero-right" id="heroRight">
+      <div class="video-frame" id="videoFrame">
+        <canvas id="heroCanvas"></canvas>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- scroll spacer hidden by css -->
+  <div class="scroll-spacer"></div>
+
+</div><!-- /#heroWrapper -->
+
+<script>
+(function () {
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ══ FRAME SEQUENCE ══════════════════════════════════════════════════ */
+  const TOTAL_FRAMES = 150;
+  const canvas = document.getElementById('heroCanvas');
+  const ctx    = canvas.getContext('2d');
+  const frames = [];
+  const cur    = { index: 0 };
+
+  function framePath(i) {
+    return 'frames/frame_' + String(i).padStart(4, '0') + '.webp';
+  }
+
+  function drawFrame(index) {
+    const img = frames[index];
+    if (!img || !img.complete || !img.naturalWidth) return;
+    const rect = canvas.getBoundingClientRect();
+    const dpr  = window.devicePixelRatio || 1;
+    const cw   = rect.width  * dpr;
+    const ch   = rect.height * dpr;
+    if (canvas.width !== cw || canvas.height !== ch) {
+      canvas.width  = cw;
+      canvas.height = ch;
+    }
+    const ir = img.naturalWidth / img.naturalHeight;
+    const cr = cw / ch;
+    let sw, sh, sx, sy;
+    if (ir > cr) { sh = img.naturalHeight; sw = sh * cr; sx = (img.naturalWidth - sw) / 2; sy = 0; }
+    else         { sw = img.naturalWidth;  sh = sw / cr; sx = 0; sy = (img.naturalHeight - sh) / 2; }
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
+  }
+
+  for (let i = 0; i < TOTAL_FRAMES; i++) {
+    const img = new Image();
+    img.src = framePath(i);
+    img.onload = () => { if (i === 0) drawFrame(0); };
+    frames.push(img);
+  }
+
+  /* Frame scrub on scroll */
+  ScrollTrigger.create({
+    trigger: '#heroWrapper',
+    start:   'top top',
+    end:     'bottom bottom',
+    scrub:   0.2,
+    onUpdate(self) {
+      const idx = Math.min(TOTAL_FRAMES - 1, Math.floor(self.progress * TOTAL_FRAMES));
+      if (idx !== cur.index) { cur.index = idx; drawFrame(idx); }
+    }
+  });
+
+  /* ══ VIDEO FRAME EXPANSION ═══════════════════════════════════════════
+     The frame lives in normal flow initially so CSS layout renders it
+     correctly next to the text. We snapshot its viewport-relative rect,
+     switch it to position:fixed at EXACTLY those coordinates (no jump),
+     then use GSAP + ScrollTrigger to animate it to fullscreen.
+  ════════════════════════════════════════════════════════════════════════ */
+  function initExpansion() {
+    const frame = document.getElementById('videoFrame');
+    const r     = frame.getBoundingClientRect();
+
+    // Bail and retry if layout isn't ready yet
+    if (r.width === 0 || r.height === 0) {
+      requestAnimationFrame(initExpansion);
+      return;
+    }
+
+    // Snapshot initial card position (viewport-relative = fixed coords)
+    const iLeft   = r.left;
+    const iTop    = r.top;
+    const iWidth  = r.width;
+    const iHeight = r.height;
+
+    // Switch to fixed — visually identical to where it was in normal flow
+    Object.assign(frame.style, {
+      position:  'fixed',
+      left:      iLeft   + 'px',
+      top:       iTop    + 'px',
+      width:     iWidth  + 'px',
+      height:    iHeight + 'px',
+      maxWidth:  'none',
+      zIndex:    '50',
+    });
+
+    // Redraw at new dimensions
+    drawFrame(cur.index);
+
+    // Fade out left text as expansion starts
+    gsap.to('.hero-left', {
+      opacity: 0,
+      y: -24,
+      scrollTrigger: {
+        trigger: '#heroWrapper',
+        start:   'top top',
+        end:     '18% top',
+        scrub:   true,
+      }
+    });
+
+    // Expand to fullscreen
+    gsap.to(frame, {
+      left:         0,
+      top:          0,
+      width:        window.innerWidth,
+      height:       window.innerHeight,
+      borderRadius: 0,
+      ease:         'none',
+      onUpdate:     () => drawFrame(cur.index),
+      scrollTrigger: {
+        trigger: '#heroWrapper',
+        start:   '12% top',
+        end:     'bottom bottom',
+        scrub:   0.4,
+      }
+    });
+  }
+
+  // Run after fonts + images have had a chance to lay out
+  if (document.readyState === 'complete') {
+    requestAnimationFrame(() => requestAnimationFrame(initExpansion));
+  } else {
+    window.addEventListener('load', () => {
+      requestAnimationFrame(() => requestAnimationFrame(initExpansion));
+    });
+  }
+
+  window.addEventListener('resize', () => {
+    ScrollTrigger.refresh();
+    drawFrame(cur.index);
+  });
+
+  /* ══ ENTRANCE ANIMATIONS ═════════════════════════════════════════════ */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  CustomEase.create('lux', 'M0,0 C0.16,1 0.3,1 1,1');
+
+  const tl = gsap.timeline({ defaults: { ease: 'lux' } });
+
+  gsap.set('#navbar-wrap',     { opacity: 0, y: -16 });
+  gsap.set('#heroLabel',      { opacity: 0, x: -12 });
+  gsap.set('#heroHeadline',   { opacity: 0, y: 24 });
+  gsap.set('#heroRule',       { opacity: 0, scaleX: 0, transformOrigin: 'left center' });
+  gsap.set('#heroSub',        { opacity: 0, y: 12 });
+  gsap.set('#heroCta',        { opacity: 0, y: 10 });
+  gsap.set('#heroDisclaimer', { opacity: 0 });
+  /* #videoFrame opacity is 0 via CSS; entrance tl will reveal it */
+
+  tl.to('#navbar-wrap',     { opacity: 1, y: 0,      duration: 1.0, ease: 'power2.out'   }, 0.1);
+  tl.to('#heroLabel',      { opacity: 1, x: 0,      duration: 0.9, ease: 'power2.out'   }, 0.6);
+  tl.to('#heroHeadline',   { opacity: 1, y: 0,      duration: 1.2, ease: 'power3.out'   }, 1.0);
+  tl.to('#heroRule',       { opacity: 1, scaleX: 1, duration: 0.8, ease: 'power2.inOut' }, 1.8);
+  tl.to('#heroSub',        { opacity: 1, y: 0,      duration: 1.0, ease: 'power2.out'   }, 2.0);
+  tl.to('#heroCta',        { opacity: 1, y: 0,      duration: 0.9, ease: 'power2.out'   }, 2.5);
+  tl.to('#heroDisclaimer', { opacity: 1,             duration: 0.8                       }, 2.9);
+  tl.to('#videoFrame',     { opacity: 1,             duration: 1.4, ease: 'power2.out'  }, 0.8);
+
+  /* ══ NAVBAR SCROLL STATE ════════════════════════════════════════════
+     Toggles .scrolled on #navbar-wrap when the user scrolls past
+     a small threshold. Uses rAF for performance.
+  ════════════════════════════════════════════════════════════════════ */
+  (function () {
+    const wrap      = document.getElementById('navbar-wrap');
+    const THRESHOLD = 60; // px — enough to clear the hero text area
+    let   ticking   = false;
+
+    function updateNav() {
+      if (window.scrollY > THRESHOLD) {
+        wrap.classList.add('scrolled');
+      } else {
+        wrap.classList.remove('scrolled');
+      }
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateNav);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+
+})();
+</script>
+</body>
+</html>
