@@ -18,6 +18,7 @@
       --black:      #060606;
       --gold:       #C9A84C;
       --gold-light: #E2C882;
+      --gold-vivid: #E8C96A;
       --gold-dim:   #7A6230;
       --gold-faint: rgba(201,168,76,0.12);
       --white:      #ffffff;
@@ -843,6 +844,343 @@
       #s3 { padding: 72px 24px; }
     }
 
+    /* ═══════════════════════════════════════════════════════════════════
+       SEÇÃO 4 — SOLICITAÇÃO DE ACESSO
+    ═══════════════════════════════════════════════════════════════════ */
+    #s4 {
+      position: relative;
+      background: var(--black);
+      padding: clamp(96px, 13vw, 160px) clamp(32px, 7vw, 120px);
+      overflow: hidden;
+    }
+    /* subtle gold ambient from bottom */
+    #s4::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(201,168,76,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    #s4-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.16) 25%, rgba(201,168,76,0.16) 75%, transparent);
+      margin-bottom: clamp(72px, 10vw, 120px);
+    }
+    .s4-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: clamp(48px, 7vw, 96px);
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── LEFT: copy + trust ── */
+    .s4-left {
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: clamp(100px, 14vh, 130px);
+    }
+    .s4-label {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: clamp(24px, 3vw, 36px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+    }
+    .s4-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--gold-dim);
+      flex-shrink: 0;
+    }
+    .s4-headline {
+      font-family: var(--serif);
+      font-size: clamp(34px, 4.2vw, 58px);
+      font-weight: 300;
+      line-height: 1.18;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: clamp(24px, 3vw, 36px);
+      opacity: 0;
+    }
+    .s4-para {
+      font-family: var(--sans);
+      font-size: clamp(13px, 1.15vw, 14px);
+      font-weight: 300;
+      line-height: 1.82;
+      color: rgba(255,255,255,0.30);
+      max-width: 380px;
+      margin-bottom: clamp(36px, 5vw, 56px);
+      opacity: 0;
+    }
+    /* trust notes */
+    .s4-trust {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      opacity: 0;
+    }
+    .s4-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.28);
+    }
+    .s4-trust-item::before {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      flex-shrink: 0;
+    }
+
+    /* ── RIGHT: form card ── */
+    .s4-card {
+      background: rgba(8,8,7,0.96);
+      border: 1px solid rgba(201,168,76,0.16);
+      padding: clamp(36px, 4.5vw, 60px) clamp(32px, 4vw, 52px);
+      position: relative;
+      opacity: 0;
+      /* subtle inner ambient */
+      box-shadow:
+        0 0 0 1px rgba(201,168,76,0.04) inset,
+        0 32px 80px rgba(0,0,0,0.60);
+      transition: border-color 0.5s;
+    }
+    .s4-card:focus-within {
+      border-color: rgba(201,168,76,0.30);
+      box-shadow:
+        0 0 0 1px rgba(201,168,76,0.08) inset,
+        0 32px 80px rgba(0,0,0,0.60),
+        0 0 40px rgba(201,168,76,0.04);
+    }
+
+    /* form groups */
+    .s4-form { display: flex; flex-direction: column; gap: 20px; }
+
+    .s4-field { display: flex; flex-direction: column; gap: 7px; }
+
+    .s4-label-field {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.48);
+    }
+
+    /* inputs & select & textarea */
+    .s4-input,
+    .s4-select,
+    .s4-textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.09);
+      color: rgba(255,255,255,0.82);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1;
+      padding: 14px 16px;
+      outline: none;
+      border-radius: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: border-color 0.35s, background 0.35s, box-shadow 0.35s;
+    }
+    .s4-input::placeholder,
+    .s4-textarea::placeholder { color: rgba(255,255,255,0.18); }
+    .s4-input:focus,
+    .s4-select:focus,
+    .s4-textarea:focus {
+      border-color: rgba(201,168,76,0.55);
+      background: rgba(201,168,76,0.03);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.06);
+    }
+    .s4-input.error,
+    .s4-select.error,
+    .s4-textarea.error {
+      border-color: rgba(220,90,60,0.55);
+    }
+    .s4-error-msg {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: rgba(220,120,80,0.80);
+      display: none;
+    }
+    .s4-field.has-error .s4-error-msg { display: block; }
+
+    .s4-textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+    /* select arrow */
+    .s4-select-wrap { position: relative; }
+    .s4-select-wrap::after {
+      content: '↓';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      color: rgba(201,168,76,0.50);
+      pointer-events: none;
+    }
+    .s4-select option { background: #0a0a09; color: rgba(255,255,255,0.82); }
+
+    /* 2 col row for compact fields */
+    .s4-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* checkboxes */
+    .s4-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+    .s4-check input[type="checkbox"] { display: none; }
+    .s4-check-box {
+      width: 16px;
+      height: 16px;
+      border: 1px solid rgba(201,168,76,0.28);
+      background: transparent;
+      flex-shrink: 0;
+      margin-top: 1px;
+      position: relative;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .s4-check input[type="checkbox"]:checked + .s4-check-box {
+      background: rgba(201,168,76,0.15);
+      border-color: rgba(201,168,76,0.65);
+    }
+    .s4-check input[type="checkbox"]:checked + .s4-check-box::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 8px; height: 8px;
+      background: var(--gold-vivid);
+    }
+    .s4-check-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.32);
+    }
+
+    /* divider inside form */
+    .s4-divider {
+      height: 1px;
+      background: linear-gradient(to right, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      margin: 4px 0;
+    }
+
+    /* submit button */
+    .s4-submit {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 16px 28px;
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold-vivid);
+      background: transparent;
+      border: 1px solid rgba(232,201,106,0.45);
+      cursor: pointer;
+      overflow: hidden;
+      transition: color 0.4s, filter 0.4s;
+      filter: drop-shadow(0 0 8px rgba(232,201,106,0.14));
+    }
+    .s4-submit:hover {
+      color: #040404;
+      filter: drop-shadow(0 0 18px rgba(232,201,106,0.38));
+    }
+    .s4-submit:active { transform: scale(0.98); }
+    .s4-submit-fill {
+      position: absolute;
+      inset: 0;
+      background: var(--gold-vivid);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .s4-submit:hover .s4-submit-fill { transform: scaleX(1); }
+    .s4-submit-label { position: relative; z-index: 1; }
+
+    /* states */
+    .s4-form-status {
+      display: none;
+      padding: 20px 24px;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 1.7;
+      text-align: center;
+    }
+    .s4-form-status.success {
+      display: block;
+      color: rgba(255,255,255,0.60);
+      border: 1px solid rgba(201,168,76,0.20);
+      background: rgba(201,168,76,0.04);
+    }
+    .s4-form-status.success strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 8px;
+    }
+    .s4-form-status.error {
+      display: block;
+      color: rgba(220,120,80,0.70);
+      border: 1px solid rgba(220,90,60,0.20);
+    }
+
+    /* legal text */
+    .s4-legal {
+      margin-top: 18px;
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.16);
+      text-align: center;
+    }
+
+    @media (max-width: 960px) {
+      .s4-grid { grid-template-columns: 1fr; gap: clamp(48px, 7vw, 64px); }
+      .s4-left { position: static; }
+      .s4-para { max-width: 100%; }
+    }
+    @media (max-width: 600px) {
+      #s4 { padding: 72px 24px; }
+      .s4-row { grid-template-columns: 1fr; }
+    }
+
   </style>
 </head>
 
@@ -995,6 +1333,130 @@
 
   </div>
 
+</section>
+
+<!-- ══ SECTION 4 — SOLICITAÇÃO DE ACESSO ══ -->
+<section id="s4" aria-label="Solicitação de acesso ao Alá Poker">
+
+  <div id="s4-rule"></div>
+
+  <div class="s4-grid">
+
+    <!-- LEFT: editorial copy + trust notes -->
+    <div class="s4-left">
+      <p class="s4-label" id="s4Label">Solicitação de Acesso</p>
+
+      <h2 class="s4-headline" id="s4Headline">
+        Entre para a lista<br>de convidados.
+      </h2>
+
+      <p class="s4-para" id="s4Para">
+        Preencha seus dados para solicitar participação em uma experiência
+        privada. As solicitações são avaliadas individualmente e a
+        confirmação será enviada por WhatsApp ou SMS.
+      </p>
+
+      <div class="s4-trust" id="s4Trust">
+        <div class="s4-trust-item">Acesso sujeito à aprovação</div>
+        <div class="s4-trust-item">Lista privada de convidados</div>
+        <div class="s4-trust-item">Confirmação por WhatsApp ou SMS</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: form card -->
+    <div class="s4-card" id="s4Card">
+
+      <form class="s4-form" id="s4Form" novalidate>
+
+        <!-- Nome + WhatsApp -->
+        <div class="s4-row">
+          <div class="s4-field" id="s4FieldNome">
+            <label class="s4-label-field" for="s4Nome">Nome completo</label>
+            <input class="s4-input" id="s4Nome" name="nome" type="text"
+              placeholder="Seu nome completo" autocomplete="name">
+            <span class="s4-error-msg">Campo obrigatório</span>
+          </div>
+          <div class="s4-field" id="s4FieldWpp">
+            <label class="s4-label-field" for="s4Wpp">WhatsApp</label>
+            <input class="s4-input" id="s4Wpp" name="whatsapp" type="tel"
+              placeholder="(00) 00000-0000" autocomplete="tel">
+            <span class="s4-error-msg">Informe um número válido</span>
+          </div>
+        </div>
+
+        <!-- Instagram + Indicação -->
+        <div class="s4-row">
+          <div class="s4-field">
+            <label class="s4-label-field" for="s4Insta">Instagram</label>
+            <input class="s4-input" id="s4Insta" name="instagram" type="text"
+              placeholder="@seuinstagram">
+          </div>
+          <div class="s4-field">
+            <label class="s4-label-field" for="s4Indica">Indicação</label>
+            <input class="s4-input" id="s4Indica" name="indicacao" type="text"
+              placeholder="Nome de quem indicou, se houver">
+          </div>
+        </div>
+
+        <!-- Intenção de jogo -->
+        <div class="s4-field">
+          <label class="s4-label-field" for="s4Jogo">Você pretende jogar?</label>
+          <div class="s4-select-wrap">
+            <select class="s4-select" id="s4Jogo" name="intencao">
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="sim">Sim</option>
+              <option value="talvez">Talvez</option>
+              <option value="nao">Não, quero participar da experiência</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Observação -->
+        <div class="s4-field">
+          <label class="s4-label-field" for="s4Obs">Observação <span style="opacity:.45;font-size:9px;letter-spacing:.1em">(opcional)</span></label>
+          <textarea class="s4-textarea" id="s4Obs" name="observacao"
+            placeholder="Conte algo que ajude nossa equipe a avaliar sua solicitação"></textarea>
+        </div>
+
+        <div class="s4-divider"></div>
+
+        <!-- Checkboxes -->
+        <div class="s4-field" id="s4FieldAge">
+          <label class="s4-check">
+            <input type="checkbox" id="s4Age" name="age18">
+            <span class="s4-check-box"></span>
+            <span class="s4-check-label">Confirmo que tenho 18 anos ou mais.</span>
+          </label>
+          <span class="s4-error-msg">Confirmação obrigatória</span>
+        </div>
+
+        <div class="s4-field" id="s4FieldConsent">
+          <label class="s4-check">
+            <input type="checkbox" id="s4Consent" name="consent">
+            <span class="s4-check-box"></span>
+            <span class="s4-check-label">Autorizo o contato por WhatsApp ou SMS sobre minha solicitação e próximos eventos.</span>
+          </label>
+          <span class="s4-error-msg">Autorização necessária</span>
+        </div>
+
+        <!-- Submit -->
+        <button class="s4-submit" id="s4Submit" type="submit">
+          <span class="s4-submit-fill"></span>
+          <span class="s4-submit-label" id="s4SubmitLabel">Enviar solicitação</span>
+        </button>
+
+      </form>
+
+      <!-- Status messages (hidden by default) -->
+      <div class="s4-form-status" id="s4Status"></div>
+
+      <p class="s4-legal">
+        O envio da solicitação não garante acesso automático. As vagas são
+        limitadas e a participação está sujeita à aprovação.
+      </p>
+
+    </div>
+  </div>
 </section>
 
 <script>
@@ -1157,6 +1619,128 @@
       const bar = document.querySelector(s + ' .s3-card-bar');
       if (bar) gsap.fromTo(bar, { width:'0%' }, { width:'100%', duration:0.85,
         ease:'power2.inOut', delay: 0.22 + i * 0.18, scrollTrigger:TC });
+    });
+  })();
+
+  /* ══ SECTION 4 ENTRANCE — composed, confident ══ */
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      ['s4Label','s4Headline','s4Para','s4Trust','s4Card'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.style.opacity = 1;
+      });
+      return;
+    }
+    const T  = { trigger: '#s4', start: 'top 82%', once: true };
+    const TC = { trigger: '#s4', start: 'top 76%', once: true };
+    const e  = 'power3.out';
+
+    gsap.fromTo('#s4Label',    { opacity:0, x:-14 }, { opacity:1, x:0, duration:1.0, ease:e, scrollTrigger:T });
+    gsap.fromTo('#s4Headline', { opacity:0, y:32  }, { opacity:1, y:0, duration:1.3, ease:e, delay:0.10, scrollTrigger:T });
+    gsap.fromTo('#s4Para',     { opacity:0, y:18  }, { opacity:1, y:0, duration:1.0, ease:e, delay:0.25, scrollTrigger:T });
+
+    // trust items stagger
+    document.querySelectorAll('.s4-trust-item').forEach((el, i) => {
+      gsap.fromTo(el, { opacity:0, x:-10 }, { opacity:1, x:0, duration:0.85, ease:e,
+        delay: 0.38 + i * 0.12, scrollTrigger:T });
+    });
+    gsap.set('#s4Trust', { opacity:1 }); // parent visible while children animate
+
+    // card: scale-in + fade
+    gsap.fromTo('#s4Card',
+      { opacity:0, y:40, scale:0.97 },
+      { opacity:1, y:0,  scale:1.00, duration:1.3, ease:e, delay:0.18, scrollTrigger:TC }
+    );
+
+    // form inputs reveal with stagger (only on desktop where they're visible at once)
+    if (window.innerWidth > 768) {
+      const inputs = document.querySelectorAll('#s4Form .s4-input, #s4Form .s4-select, #s4Form .s4-textarea');
+      inputs.forEach((el, i) => {
+        gsap.fromTo(el, { opacity:0 }, { opacity:1, duration:0.6, delay: 0.55 + i * 0.07, scrollTrigger:TC });
+      });
+    }
+  })();
+
+  /* ══ SECTION 4 FORM HANDLER ══ */
+  (function () {
+    const form      = document.getElementById('s4Form');
+    const status    = document.getElementById('s4Status');
+    const submitBtn = document.getElementById('s4Submit');
+    const submitLbl = document.getElementById('s4SubmitLabel');
+    if (!form) return;
+
+    function setFieldError(fieldEl, inputEl, show) {
+      if (show) {
+        fieldEl.classList.add('has-error');
+        inputEl.classList.add('error');
+      } else {
+        fieldEl.classList.remove('has-error');
+        inputEl.classList.remove('error');
+      }
+    }
+
+    function validate() {
+      let valid = true;
+
+      const nome = document.getElementById('s4Nome');
+      const nomeField = document.getElementById('s4FieldNome');
+      if (!nome.value.trim()) { setFieldError(nomeField, nome, true); valid = false; }
+      else setFieldError(nomeField, nome, false);
+
+      const wpp = document.getElementById('s4Wpp');
+      const wppField = document.getElementById('s4FieldWpp');
+      const wppClean = wpp.value.replace(/\D/g,'');
+      if (wppClean.length < 10) { setFieldError(wppField, wpp, true); valid = false; }
+      else setFieldError(wppField, wpp, false);
+
+      const age = document.getElementById('s4Age');
+      const ageField = document.getElementById('s4FieldAge');
+      if (!age.checked) { ageField.classList.add('has-error'); valid = false; }
+      else ageField.classList.remove('has-error');
+
+      const consent = document.getElementById('s4Consent');
+      const consentField = document.getElementById('s4FieldConsent');
+      if (!consent.checked) { consentField.classList.add('has-error'); valid = false; }
+      else consentField.classList.remove('has-error');
+
+      return valid;
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (!validate()) return;
+
+      // Loading state
+      submitBtn.disabled = true;
+      submitLbl.textContent = 'Enviando solicitação...';
+
+      try {
+        /* ── Replace this block with your real endpoint ──────────────
+           Example: await fetch('/api/acesso', { method:'POST', body: new FormData(form) });
+        ─────────────────────────────────────────────────────────────── */
+        await new Promise(r => setTimeout(r, 1800)); // simulated delay
+
+        // Success
+        form.style.display = 'none';
+        status.className = 's4-form-status success';
+        status.innerHTML =
+          '<strong>Solicitação recebida.</strong>' +
+          'Caso aprovada, você receberá o convite com as informações pelo WhatsApp ou SMS.';
+        gsap.fromTo(status, { opacity:0, y:12 }, { opacity:1, y:0, duration:0.9, ease:'power2.out' });
+
+      } catch {
+        // Error state
+        submitBtn.disabled = false;
+        submitLbl.textContent = 'Enviar solicitação';
+        status.className = 's4-form-status error';
+        status.textContent = 'Não foi possível enviar agora. Tente novamente em instantes.';
+        gsap.fromTo(status, { opacity:0 }, { opacity:1, duration:0.5 });
+      }
+    });
+
+    // Live clear errors on input
+    ['s4Nome','s4Wpp'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => el.classList.remove('error'));
     });
   })();
 
