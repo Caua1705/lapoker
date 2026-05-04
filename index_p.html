@@ -563,8 +563,290 @@
         transform: none !important;
       }
     }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       SEÇÃO 2 — A EXPERIÊNCIA  (editorial / brand statement)
+    ═══════════════════════════════════════════════════════════════════ */
+    #s2 {
+      position: relative;
+      background: var(--black);
+      padding: clamp(100px, 14vw, 180px) clamp(32px, 7vw, 120px) clamp(80px, 11vw, 140px);
+      overflow: hidden;
+      text-align: center;
+    }
+    #s2::before {
+      content: 'AP';
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--serif);
+      font-size: clamp(220px, 30vw, 480px);
+      font-weight: 300;
+      letter-spacing: -0.06em;
+      color: rgba(201,168,76,0.028);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    #s2-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.18) 25%, rgba(201,168,76,0.18) 75%, transparent);
+      margin-bottom: clamp(72px, 10vw, 120px);
+    }
+    .s2-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .s2-label {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: clamp(28px, 3.5vw, 44px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      opacity: 0;
+    }
+    .s2-label::before, .s2-label::after {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 1px;
+      background: var(--gold-dim);
+      flex-shrink: 0;
+    }
+    .s2-headline {
+      font-family: var(--serif);
+      font-size: clamp(42px, 6vw, 88px);
+      font-weight: 300;
+      line-height: 1.10;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: clamp(28px, 3.5vw, 48px);
+      opacity: 0;
+    }
+    .s2-headline em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .s2-para {
+      font-family: var(--sans);
+      font-size: clamp(13px, 1.2vw, 15px);
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.32);
+      max-width: 520px;
+      margin: 0 auto clamp(56px, 8vw, 96px);
+      opacity: 0;
+    }
+    /* 3 horizontal highlights */
+    .s2-trio {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      border-left: 1px solid rgba(255,255,255,0.07);
+    }
+    .s2-card {
+      padding: clamp(28px, 3.5vw, 44px) clamp(24px, 3vw, 40px);
+      border-right: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transition: background 0.5s;
+      cursor: default;
+    }
+    .s2-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+      transform: scaleX(0);
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .s2-card:hover::before { transform: scaleX(1); }
+    .s2-card:hover { background: rgba(201,168,76,0.025); }
+    .s2-card-title {
+      font-family: var(--serif);
+      font-size: clamp(17px, 1.8vw, 22px);
+      font-weight: 400;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.01em;
+      line-height: 1.3;
+      transition: color 0.35s;
+    }
+    .s2-card:hover .s2-card-title { color: rgba(255,255,255,0.96); }
+    .s2-card-dot {
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      margin: 0 auto 16px;
+      transition: background 0.35s;
+    }
+    .s2-card:hover .s2-card-dot { background: var(--gold); }
+
+    @media (max-width: 900px) {
+      #s2 { text-align: left; }
+      .s2-label { justify-content: flex-start; }
+      .s2-label::before { display: none; }
+      .s2-para { margin-left: 0; }
+      .s2-trio { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      #s2 { padding: 72px 24px; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       SEÇÃO 3 — COMO FUNCIONA  (3-card horizontal process)
+    ═══════════════════════════════════════════════════════════════════ */
+    #s3 {
+      position: relative;
+      background: #040404;
+      padding: clamp(96px, 13vw, 160px) clamp(32px, 7vw, 120px);
+      overflow: hidden;
+    }
+    #s3::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 55% at 50% 100%, rgba(201,168,76,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #s3-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.14) 25%, rgba(201,168,76,0.14) 75%, transparent);
+      margin-bottom: clamp(72px, 10vw, 120px);
+    }
+    .s3-header {
+      max-width: 600px;
+      margin-bottom: clamp(56px, 8vw, 96px);
+      position: relative;
+      z-index: 1;
+    }
+    .s3-label {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: clamp(20px, 2.5vw, 32px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+    }
+    .s3-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--gold-dim);
+      flex-shrink: 0;
+    }
+    .s3-headline {
+      font-family: var(--serif);
+      font-size: clamp(34px, 4vw, 56px);
+      font-weight: 300;
+      line-height: 1.18;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: clamp(20px, 2.5vw, 32px);
+      opacity: 0;
+    }
+    .s3-para {
+      font-family: var(--sans);
+      font-size: clamp(13px, 1.15vw, 14px);
+      font-weight: 300;
+      line-height: 1.80;
+      color: rgba(255,255,255,0.30);
+      max-width: 480px;
+      opacity: 0;
+    }
+    /* 3 cards in a row */
+    .s3-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      z-index: 1;
+    }
+    .s3-card {
+      background: #040404;
+      padding: clamp(36px, 4.5vw, 60px) clamp(28px, 3.5vw, 48px);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      cursor: default;
+      transition: background 0.5s;
+    }
+    .s3-card:hover { background: #080806; }
+    /* animated gold top bar */
+    .s3-card-bar {
+      position: absolute;
+      top: 0; left: 0;
+      height: 1px;
+      width: 0;
+      background: linear-gradient(to right, var(--gold-dim), rgba(201,168,76,0.28));
+    }
+    .s3-card-num {
+      font-family: var(--serif);
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 300;
+      line-height: 1;
+      color: rgba(201,168,76,0.12);
+      letter-spacing: -0.03em;
+      margin-bottom: clamp(20px, 2.5vw, 32px);
+      transition: color 0.4s;
+    }
+    .s3-card:hover .s3-card-num { color: rgba(201,168,76,0.22); }
+    .s3-card-title {
+      font-family: var(--serif);
+      font-size: clamp(18px, 1.9vw, 24px);
+      font-weight: 400;
+      color: rgba(255,255,255,0.80);
+      letter-spacing: 0.01em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      transition: color 0.35s;
+    }
+    .s3-card:hover .s3-card-title { color: rgba(255,255,255,0.96); }
+    .s3-card-desc {
+      font-family: var(--sans);
+      font-size: clamp(12px, 1.05vw, 13px);
+      font-weight: 300;
+      line-height: 1.78;
+      color: rgba(255,255,255,0.22);
+      transition: color 0.45s;
+    }
+    .s3-card:hover .s3-card-desc { color: rgba(255,255,255,0.36); }
+
+    @media (max-width: 900px) {
+      .s3-cards { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      #s3 { padding: 72px 24px; }
+    }
+
   </style>
 </head>
+
+
 <body>
 
 <!-- ── NAVBAR WRAPPER (pill layout) ── -->
@@ -636,12 +918,91 @@
 
 </div><!-- /#heroWrapper -->
 
+<!-- ══ SECTION 2 — A EXPERIÊNCIA ══ -->
+<section id="s2" aria-label="A Experiência Alá Poker">
+
+  <div id="s2-rule"></div>
+
+  <div class="s2-inner">
+    <p class="s2-label" id="s2Label">A Experiência</p>
+
+    <h2 class="s2-headline" id="s2Headline">
+      Mais do que uma mesa.<br>
+      <em>Um ambiente reservado.</em>
+    </h2>
+
+    <p class="s2-para" id="s2Para">
+      O Alá Poker reúne convidados em uma experiência pensada para quem
+      valoriza presença, discrição e uma atmosfera mais seletiva.
+    </p>
+
+    <div class="s2-trio">
+      <div class="s2-card" id="s2Card1">
+        <span class="s2-card-dot"></span>
+        <span class="s2-card-title">Ambiente reservado</span>
+      </div>
+      <div class="s2-card" id="s2Card2">
+        <span class="s2-card-dot"></span>
+        <span class="s2-card-title">Convidados selecionados</span>
+      </div>
+      <div class="s2-card" id="s2Card3">
+        <span class="s2-card-dot"></span>
+        <span class="s2-card-title">Atmosfera exclusiva</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ SECTION 3 — COMO FUNCIONA ══ -->
+<section id="s3" aria-label="Como funciona o acesso ao Alá Poker">
+
+  <div id="s3-rule"></div>
+
+  <div class="s3-header">
+    <p class="s3-label" id="s3Label">Como Funciona</p>
+    <h2 class="s3-headline" id="s3Headline">
+      Solicite acesso<br>em poucos passos.
+    </h2>
+    <p class="s3-para" id="s3Para">
+      Preencha seus dados, aguarde a análise e receba a confirmação
+      caso seu perfil seja aprovado.
+    </p>
+  </div>
+
+  <div class="s3-cards">
+
+    <div class="s3-card" id="s3Card1">
+      <div class="s3-card-bar"></div>
+      <div class="s3-card-num">01</div>
+      <h3 class="s3-card-title">Envie sua solicitação</h3>
+      <p class="s3-card-desc">Preencha o formulário com seus dados básicos.</p>
+    </div>
+
+    <div class="s3-card" id="s3Card2">
+      <div class="s3-card-bar"></div>
+      <div class="s3-card-num">02</div>
+      <h3 class="s3-card-title">Aguarde a análise</h3>
+      <p class="s3-card-desc">Cada solicitação é avaliada individualmente.</p>
+    </div>
+
+    <div class="s3-card" id="s3Card3">
+      <div class="s3-card-bar"></div>
+      <div class="s3-card-num">03</div>
+      <h3 class="s3-card-title">Receba a confirmação</h3>
+      <p class="s3-card-desc">Se aprovado, você receberá o convite por WhatsApp ou SMS.</p>
+    </div>
+
+  </div>
+
+</section>
+
 <script>
 (function () {
 
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, CustomEase);
 
-  /* ══ FRAME SEQUENCE ══════════════════════════════════════════════════ */
+  /* ══ FRAME SEQUENCE ════════════════════════════════════════════════ */
   const TOTAL_FRAMES = 150;
   const canvas = document.getElementById('heroCanvas');
   const ctx    = canvas.getContext('2d');
@@ -678,7 +1039,6 @@
     frames.push(img);
   }
 
-  /* Frame scrub on scroll */
   ScrollTrigger.create({
     trigger: '#heroWrapper',
     start:   'top top',
@@ -690,135 +1050,114 @@
     }
   });
 
-  /* ══ VIDEO FRAME EXPANSION ═══════════════════════════════════════════
-     The frame lives in normal flow initially so CSS layout renders it
-     correctly next to the text. We snapshot its viewport-relative rect,
-     switch it to position:fixed at EXACTLY those coordinates (no jump),
-     then use GSAP + ScrollTrigger to animate it to fullscreen.
-  ════════════════════════════════════════════════════════════════════════ */
+  /* ══ VIDEO FRAME EXPANSION ════════════════════════════════════════ */
   function initExpansion() {
     const frame = document.getElementById('videoFrame');
     const r     = frame.getBoundingClientRect();
-
-    // Bail and retry if layout isn't ready yet
-    if (r.width === 0 || r.height === 0) {
-      requestAnimationFrame(initExpansion);
-      return;
-    }
-
-    // Snapshot initial card position (viewport-relative = fixed coords)
-    const iLeft   = r.left;
-    const iTop    = r.top;
-    const iWidth  = r.width;
-    const iHeight = r.height;
-
-    // Switch to fixed — visually identical to where it was in normal flow
+    if (r.width === 0 || r.height === 0) { requestAnimationFrame(initExpansion); return; }
+    const iLeft = r.left, iTop = r.top, iWidth = r.width, iHeight = r.height;
     Object.assign(frame.style, {
-      position:  'fixed',
-      left:      iLeft   + 'px',
-      top:       iTop    + 'px',
-      width:     iWidth  + 'px',
-      height:    iHeight + 'px',
-      maxWidth:  'none',
-      zIndex:    '50',
+      position: 'fixed', left: iLeft+'px', top: iTop+'px',
+      width: iWidth+'px', height: iHeight+'px', maxWidth: 'none', zIndex: '50',
     });
-
-    // Redraw at new dimensions
     drawFrame(cur.index);
-
-    // Fade out left text as expansion starts
     gsap.to('.hero-left', {
-      opacity: 0,
-      y: -24,
-      scrollTrigger: {
-        trigger: '#heroWrapper',
-        start:   'top top',
-        end:     '18% top',
-        scrub:   true,
-      }
+      opacity: 0, y: -24,
+      scrollTrigger: { trigger:'#heroWrapper', start:'top top', end:'18% top', scrub:true }
     });
-
-    // Expand to fullscreen
     gsap.to(frame, {
-      left:         0,
-      top:          0,
-      width:        window.innerWidth,
-      height:       window.innerHeight,
-      borderRadius: 0,
-      ease:         'none',
-      onUpdate:     () => drawFrame(cur.index),
-      scrollTrigger: {
-        trigger: '#heroWrapper',
-        start:   '12% top',
-        end:     'bottom bottom',
-        scrub:   0.4,
-      }
+      left:0, top:0, width: window.innerWidth, height: window.innerHeight,
+      borderRadius:0, ease:'none',
+      onUpdate: () => drawFrame(cur.index),
+      scrollTrigger: { trigger:'#heroWrapper', start:'12% top', end:'bottom bottom', scrub:0.4 }
     });
   }
 
-  // Run after fonts + images have had a chance to lay out
   if (document.readyState === 'complete') {
     requestAnimationFrame(() => requestAnimationFrame(initExpansion));
   } else {
-    window.addEventListener('load', () => {
-      requestAnimationFrame(() => requestAnimationFrame(initExpansion));
-    });
+    window.addEventListener('load', () => requestAnimationFrame(() => requestAnimationFrame(initExpansion)));
   }
 
-  window.addEventListener('resize', () => {
-    ScrollTrigger.refresh();
-    drawFrame(cur.index);
-  });
+  window.addEventListener('resize', () => { ScrollTrigger.refresh(); drawFrame(cur.index); });
 
-  /* ══ ENTRANCE ANIMATIONS ═════════════════════════════════════════════ */
+  /* ══ HERO ENTRANCE ANIMATIONS ════════════════════════════════════ */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   CustomEase.create('lux', 'M0,0 C0.16,1 0.3,1 1,1');
-
   const tl = gsap.timeline({ defaults: { ease: 'lux' } });
 
-  gsap.set('#navbar-wrap',     { opacity: 0, y: -16 });
+  gsap.set('#navbar-wrap',    { opacity: 0, y: -16 });
   gsap.set('#heroLabel',      { opacity: 0, x: -12 });
-  gsap.set('#heroHeadline',   { opacity: 0, y: 24 });
+  gsap.set('#heroHeadline',   { opacity: 0, y: 24  });
   gsap.set('#heroRule',       { opacity: 0, scaleX: 0, transformOrigin: 'left center' });
-  gsap.set('#heroSub',        { opacity: 0, y: 12 });
-  gsap.set('#heroCta',        { opacity: 0, y: 10 });
+  gsap.set('#heroSub',        { opacity: 0, y: 12  });
+  gsap.set('#heroCta',        { opacity: 0, y: 10  });
   gsap.set('#heroDisclaimer', { opacity: 0 });
-  /* #videoFrame opacity is 0 via CSS; entrance tl will reveal it */
 
-  tl.to('#navbar-wrap',     { opacity: 1, y: 0,      duration: 1.0, ease: 'power2.out'   }, 0.1);
-  tl.to('#heroLabel',      { opacity: 1, x: 0,      duration: 0.9, ease: 'power2.out'   }, 0.6);
-  tl.to('#heroHeadline',   { opacity: 1, y: 0,      duration: 1.2, ease: 'power3.out'   }, 1.0);
-  tl.to('#heroRule',       { opacity: 1, scaleX: 1, duration: 0.8, ease: 'power2.inOut' }, 1.8);
-  tl.to('#heroSub',        { opacity: 1, y: 0,      duration: 1.0, ease: 'power2.out'   }, 2.0);
-  tl.to('#heroCta',        { opacity: 1, y: 0,      duration: 0.9, ease: 'power2.out'   }, 2.5);
-  tl.to('#heroDisclaimer', { opacity: 1,             duration: 0.8                       }, 2.9);
-  tl.to('#videoFrame',     { opacity: 1,             duration: 1.4, ease: 'power2.out'  }, 0.8);
+  tl.to('#navbar-wrap',    { opacity:1, y:0,      duration:1.0, ease:'power2.out'   }, 0.1);
+  tl.to('#heroLabel',      { opacity:1, x:0,      duration:0.9, ease:'power2.out'   }, 0.6);
+  tl.to('#heroHeadline',   { opacity:1, y:0,      duration:1.2, ease:'power3.out'   }, 1.0);
+  tl.to('#heroRule',       { opacity:1, scaleX:1, duration:0.8, ease:'power2.inOut' }, 1.8);
+  tl.to('#heroSub',        { opacity:1, y:0,      duration:1.0, ease:'power2.out'   }, 2.0);
+  tl.to('#heroCta',        { opacity:1, y:0,      duration:0.9, ease:'power2.out'   }, 2.5);
+  tl.to('#heroDisclaimer', { opacity:1,            duration:0.8                     }, 2.9);
+  tl.to('#videoFrame',     { opacity:1,            duration:1.4, ease:'power2.out'  }, 0.8);
 
-  /* ══ NAVBAR SCROLL STATE ════════════════════════════════════════════
-     Toggles .scrolled on #navbar-wrap when the user scrolls past
-     a small threshold. Uses rAF for performance.
-  ════════════════════════════════════════════════════════════════════ */
+  /* ══ NAVBAR SCROLL STATE ════════════════════════════════════════ */
   (function () {
-    const wrap      = document.getElementById('navbar-wrap');
-    const THRESHOLD = 60; // px — enough to clear the hero text area
-    let   ticking   = false;
-
+    const wrap = document.getElementById('navbar-wrap');
+    const THRESHOLD = 60;
+    let ticking = false;
     function updateNav() {
-      if (window.scrollY > THRESHOLD) {
-        wrap.classList.add('scrolled');
-      } else {
-        wrap.classList.remove('scrolled');
-      }
+      wrap.classList.toggle('scrolled', window.scrollY > THRESHOLD);
       ticking = false;
     }
-
     window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(updateNav);
-        ticking = true;
-      }
+      if (!ticking) { requestAnimationFrame(updateNav); ticking = true; }
     }, { passive: true });
+  })();
+
+  /* ══ SECTION 2 — atmospheric, slow, cinematic ══ */
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      ['s2Label','s2Headline','s2Para','s2Card1','s2Card2','s2Card3']
+        .forEach(id => { const el = document.getElementById(id); if (el) el.style.opacity = 1; });
+      return;
+    }
+    const T = { trigger: '#s2', start: 'top 82%', once: true };
+    const e = 'power3.out';
+    gsap.fromTo('#s2Label',    { opacity:0, x:-14 }, { opacity:1, x:0, duration:1.1, ease:e, scrollTrigger:T });
+    gsap.fromTo('#s2Headline', { opacity:0, y:36  }, { opacity:1, y:0, duration:1.4, ease:e, delay:0.10, scrollTrigger:T });
+    gsap.fromTo('#s2Para',     { opacity:0, y:20  }, { opacity:1, y:0, duration:1.1, ease:e, delay:0.28, scrollTrigger:T });
+    ['#s2Card1','#s2Card2','#s2Card3'].forEach((s, i) => {
+      gsap.fromTo(s, { opacity:0, y:28 }, { opacity:1, y:0, duration:1.0, ease:e,
+        delay: 0.42 + i * 0.16,
+        scrollTrigger: { trigger:'#s2', start:'top 76%', once:true } });
+    });
+  })();
+
+  /* ══ SECTION 3 — structured, sequential, clear ══ */
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      ['s3Label','s3Headline','s3Para','s3Card1','s3Card2','s3Card3']
+        .forEach(id => { const el = document.getElementById(id); if (el) el.style.opacity = 1; });
+      document.querySelectorAll('.s3-card-bar').forEach(b => b.style.width = '100%');
+      return;
+    }
+    const T  = { trigger: '#s3', start: 'top 82%', once: true };
+    const TC = { trigger: '#s3', start: 'top 74%', once: true };
+    const e  = 'power3.out';
+    gsap.fromTo('#s3Label',    { opacity:0, x:-14 }, { opacity:1, x:0, duration:1.0, ease:e, scrollTrigger:T });
+    gsap.fromTo('#s3Headline', { opacity:0, y:28  }, { opacity:1, y:0, duration:1.2, ease:e, delay:0.10, scrollTrigger:T });
+    gsap.fromTo('#s3Para',     { opacity:0, y:16  }, { opacity:1, y:0, duration:1.0, ease:e, delay:0.24, scrollTrigger:T });
+    ['#s3Card1','#s3Card2','#s3Card3'].forEach((s, i) => {
+      gsap.fromTo(s, { opacity:0, y:32 }, { opacity:1, y:0, duration:1.0, ease:e,
+        delay: i * 0.18, scrollTrigger:TC });
+      const bar = document.querySelector(s + ' .s3-card-bar');
+      if (bar) gsap.fromTo(bar, { width:'0%' }, { width:'100%', duration:0.85,
+        ease:'power2.inOut', delay: 0.22 + i * 0.18, scrollTrigger:TC });
+    });
   })();
 
 })();
