@@ -1773,29 +1773,29 @@
       #s2-rule { margin-bottom: 40px; }
 
       .s2-label {
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.32em;
-        color: var(--gold);
-        margin-bottom: 18px;
+        font-size: 10px;
+        font-weight: 400;
+        letter-spacing: 0.36em;
+        color: var(--gold-dim);
+        margin-bottom: 16px;
         justify-content: flex-start;
       }
       .s2-label::before { display: none; }
       .s2-label::after  { display: none; }
 
       .s2-headline {
-        font-size: clamp(30px, 8.5vw, 42px);
-        line-height: 1.10;
-        margin-bottom: 16px;
+        font-size: clamp(28px, 7.5vw, 36px);
+        line-height: 1.12;
+        margin-bottom: 14px;
       }
 
       .s2-para {
-        font-size: 15px;
-        line-height: 1.70;
-        margin-bottom: 32px;
+        font-size: 14px;
+        line-height: 1.72;
+        margin-bottom: 28px;
         margin-left: 0;
         max-width: 100%;
-        color: rgba(255,255,255,0.28);
+        color: rgba(255,255,255,0.32);
       }
 
       /* cards — clean separator list */
@@ -1822,8 +1822,8 @@
         background: rgba(201,168,76,0.32);
       }
       .s2-card-title {
-        font-size: clamp(18px, 4.8vw, 22px);
-        color: rgba(255,255,255,0.80);
+        font-size: clamp(16px, 4.2vw, 20px);
+        color: rgba(255,255,255,0.72);
       }
       .s2-card::before { display: none; }
 
@@ -1840,24 +1840,24 @@
       .s3-header { margin-bottom: 32px; }
 
       .s3-label {
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.32em;
-        color: var(--gold);
+        font-size: 10px;
+        font-weight: 400;
+        letter-spacing: 0.36em;
+        color: var(--gold-dim);
         margin-bottom: 12px;
       }
 
       .s3-headline {
-        font-size: clamp(28px, 8vw, 40px);
-        line-height: 1.12;
-        margin-bottom: 14px;
+        font-size: clamp(26px, 7vw, 34px);
+        line-height: 1.14;
+        margin-bottom: 12px;
       }
 
       .s3-para {
-        font-size: 15px;
+        font-size: 14px;
         line-height: 1.68;
         max-width: 100%;
-        color: rgba(255,255,255,0.26);
+        color: rgba(255,255,255,0.30);
       }
 
       .s3-cards {
@@ -1873,24 +1873,24 @@
         align-items: start;
       }
       .s3-card-num {
-        font-size: clamp(34px, 8.5vw, 46px);
+        font-size: clamp(28px, 7vw, 38px);
         line-height: 1;
         margin-top: 2px;              /* aligns visually with title baseline */
         margin-bottom: 0;
         grid-row: 1 / 3;             /* spans title + desc rows */
         align-self: start;
-        color: rgba(201,168,76,0.16); /* slightly more visible, still subtle */
+        color: rgba(201,168,76,0.13); /* subtle — decorative, not dominant */
       }
       .s3-card-title {
-        font-size: clamp(18px, 4.6vw, 22px);
-        line-height: 1.2;
+        font-size: clamp(16px, 4.2vw, 20px);
+        line-height: 1.22;
         margin-top: 0;
         align-self: start;
       }
       .s3-card-desc {
-        font-size: 14px;
-        line-height: 1.65;
-        color: rgba(255,255,255,0.26);
+        font-size: 13px;
+        line-height: 1.68;
+        color: rgba(255,255,255,0.28);
       }
 
       /* ── SECTION 4 — form ──────────────────────────────────── */
@@ -1907,25 +1907,25 @@
       .s4-left { position: static; }
 
       .s4-label {
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.32em;
-        color: var(--gold);
-        margin-bottom: 14px;
+        font-size: 10px;
+        font-weight: 400;
+        letter-spacing: 0.36em;
+        color: var(--gold-dim);
+        margin-bottom: 12px;
       }
 
       .s4-headline {
-        font-size: clamp(28px, 8vw, 40px);
-        line-height: 1.11;
-        margin-bottom: 14px;
+        font-size: clamp(26px, 7vw, 34px);
+        line-height: 1.14;
+        margin-bottom: 12px;
       }
 
       .s4-para {
-        font-size: 15px;
-        line-height: 1.68;
+        font-size: 14px;
+        line-height: 1.70;
         max-width: 100%;
-        margin-bottom: 20px;
-        color: rgba(255,255,255,0.26);
+        margin-bottom: 18px;
+        color: rgba(255,255,255,0.30);
       }
 
       .s4-trust { gap: 10px; }
@@ -1995,11 +1995,11 @@
       .s4-submit {
         padding: 0 24px;
         font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.24em;
-        min-height: 54px;
-        color: rgba(232,201,106,0.90);
-        border-color: rgba(232,201,106,0.38);
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        min-height: 50px;
+        color: rgba(232,201,106,0.82);
+        border-color: rgba(232,201,106,0.34);
         background: transparent;
         /* smooth press feedback */
         transition: color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.18s;
@@ -2050,37 +2050,40 @@
       .s5-accent-line { margin-bottom: 24px; }
 
       .s5-headline {
-        font-size: clamp(28px, 7.5vw, 40px);
-        line-height: 1.12;
-        margin-bottom: 16px;
+        font-size: clamp(26px, 7vw, 34px);
+        line-height: 1.14;
+        margin-bottom: 14px;
         letter-spacing: -0.01em;
       }
 
       .s5-para {
-        font-size: 15px;
-        line-height: 1.68;
+        font-size: 14px;
+        line-height: 1.72;
         max-width: 100%;
-        margin-bottom: 32px;
-        color: rgba(255,255,255,0.24);
+        margin-bottom: 28px;
+        color: rgba(255,255,255,0.30);
       }
 
       .s5-notes {
         flex-direction: column;
         align-items: center;
         gap: 9px;
-        margin-bottom: 30px;
+        margin-bottom: 28px;
       }
       .s5-note {
-        font-size: 8px;
+        font-size: 8.5px;
         letter-spacing: 0.24em;
       }
       .s5-note:not(:last-child)::after { display: none; }
 
       .s5-cta {
-        font-size: 8.5px;
-        letter-spacing: 0.26em;
-        padding: 11px 20px;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.24em;
+        padding: 12px 24px;
         margin-bottom: 40px;
+        color: rgba(201,168,76,0.65);
+        border-color: rgba(201,168,76,0.24);
       }
 
       #s5-footer {
@@ -2105,10 +2108,10 @@
     @media (max-width: 390px) {
       .hm-headline .hm-line1 { font-size: 34px; }
       .hm-headline em         { font-size: 28px; }
-      .s2-headline { font-size: 26px; }
+      .s2-headline { font-size: 24px; }
       .s3-headline { font-size: 22px; }
       .s4-headline { font-size: 22px; }
-      .s5-headline { font-size: 24px; }
+      .s5-headline { font-size: 22px; }
       #heroMobileOverlay { padding-top: max(88px, 20vh); }
       .hm-cta { max-width: 260px; width: auto; }  /* never full-width on tiny phones */
       #s4 { padding: 52px 14px 56px; }
