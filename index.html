@@ -1774,21 +1774,30 @@
         color: rgba(255,255,255,0.30);
       }
 
-      /* cards — stacked, compact, clear */
+      /* cards — stacked list with clean separators */
       .s2-trio {
         grid-template-columns: 1fr;
-        border-left: none;
+        border: none;                   /* remove ALL grid borders */
       }
       .s2-card {
-        padding: 20px 0;
+        padding: 22px 0;
         text-align: left;
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 16px;
+        border: none;                   /* remove right & bottom grid borders */
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .s2-card:last-child {
+        border-bottom: none;            /* no line after last item */
       }
       .s2-card-dot {
         margin: 0;
         flex-shrink: 0;
+        width: 16px;
+        height: 1px;
+        border-radius: 0;
+        background: rgba(201,168,76,0.35);
       }
       .s2-card-title {
         font-size: clamp(16px, 4.2vw, 20px);
