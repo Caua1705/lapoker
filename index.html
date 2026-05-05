@@ -712,17 +712,18 @@
       /* ── HEADLINE ─────────────────────────────────────────────── */
       .hm-headline {
         font-family: var(--serif);
-        font-size: clamp(34px, 9.5vw, 48px);
+        font-size: clamp(40px, 11vw, 56px);  /* dominant — clearly the main element */
         font-weight: 300;
-        line-height: 1.10;
-        letter-spacing: -0.01em;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
         color: var(--white);
-        margin-bottom: 16px;
+        margin-bottom: 14px;
         opacity: 0;
       }
       .hm-headline em {
         font-style: italic;
         color: var(--gold-light);
+        font-size: 0.92em;               /* italic line slightly smaller, still strong */
       }
 
       /* ── SUBHEADLINE ──────────────────────────────────────────── */
@@ -730,38 +731,40 @@
         font-family: var(--sans);
         font-size: 13px;
         font-weight: 300;
-        line-height: 1.68;
-        color: rgba(255,255,255,0.42);
-        max-width: 260px;
-        margin-bottom: 28px;
+        line-height: 1.72;
+        color: rgba(255,255,255,0.40);
+        max-width: 280px;
+        margin-bottom: 24px;
         opacity: 0;
       }
 
-      /* ── CTA BUTTON ───────────────────────────────────────────── */
+      /* ── CTA BUTTON — refined, secondary to H1 ──────────────── */
       .hm-cta {
         pointer-events: all;
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         font-family: var(--sans);
-        font-size: 10px;
+        font-size: 9px;
         font-weight: 600;
-        letter-spacing: 0.32em;
+        letter-spacing: 0.26em;
         text-transform: uppercase;
-        color: rgba(255,255,255,0.96);
+        color: rgba(255,255,255,0.90);
         text-decoration: none;
-        padding: 0 32px;
-        width: min(280px, 82vw);
-        min-height: 52px;               /* 52px — larger tap target */
-        background: rgba(201,168,76,0.10);
-        border: 1px solid rgba(201,168,76,0.50);
+        padding: 0 24px;
+        width: auto;
+        max-width: 260px;
+        min-width: 180px;
+        min-height: 47px;               /* refined — smaller than headline */
+        background: rgba(201,168,76,0.08);
+        border: 1px solid rgba(201,168,76,0.40);
         opacity: 0;
         transition: background 0.35s, border-color 0.35s;
         -webkit-tap-highlight-color: transparent;
       }
       .hm-cta:active {
-        background: rgba(201,168,76,0.24);
-        border-color: rgba(201,168,76,0.80);
+        background: rgba(201,168,76,0.20);
+        border-color: rgba(201,168,76,0.70);
       }
 
       /* ── DISCLAIMER ───────────────────────────────────────────── */
@@ -2076,11 +2079,11 @@
       <p class="hm-label" id="hmLabel">Clube Privado</p>
 
       <h1 class="hm-headline" id="hmHeadline">
-        Acesso reservado<br><em>para poucos.</em>
+        Uma mesa reservada<br><em>para poucos.</em>
       </h1>
 
       <p class="hm-sub" id="hmSub">
-        Solicite entrada para uma experiência privada e seletiva.
+        Uma experiência sob convite para quem valoriza presença, precisão e discrição.
       </p>
 
       <a href="#s4" class="hm-cta" id="hmCta">Solicitar Acesso</a>
