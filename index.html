@@ -282,8 +282,13 @@
 
 
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      #navbar { padding: 24px clamp(20px, 5vw, 40px); }
+      .nav-links        { display: none; }
+      /* hide full desktop CTA on mobile */
+      .nav-cta-desktop  { display: none !important; }
+    }
+    /* hide compact mobile CTA on desktop */
+    @media (min-width: 769px) {
+      .nav-mobile-cta { display: none !important; }
     }
 
 
@@ -611,7 +616,44 @@
         z-index: 2;
       }
 
-      /* ── MOBILE TEXT OVERLAY ── */
+      /* ── MOBILE NAV COMPACT CTA ─────────────────────────────── */
+      /* Hidden on desktop, shown only on mobile */
+      .nav-mobile-cta {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 5px;
+        text-decoration: none;
+        padding: 8px 0 8px 16px;        /* comfortable tap padding */
+        -webkit-tap-highlight-color: transparent;
+        min-width: 44px;                /* minimum tap target */
+        min-height: 44px;
+        justify-content: center;
+      }
+      .nav-mobile-cta-line {
+        display: block;
+        width: 22px;
+        height: 1px;
+        background: rgba(201,168,76,0.55);
+        transition: width 0.3s, background 0.3s;
+      }
+      .nav-mobile-cta:active .nav-mobile-cta-line {
+        background: rgba(201,168,76,0.90);
+      }
+      .nav-mobile-cta-text {
+        font-family: var(--sans);
+        font-size: 8px;
+        font-weight: 500;
+        letter-spacing: 0.30em;
+        text-transform: uppercase;
+        color: rgba(201,168,76,0.65);
+        transition: color 0.3s;
+      }
+      .nav-mobile-cta:active .nav-mobile-cta-text {
+        color: rgba(201,168,76,1);
+      }
+
+      /* ── MOBILE TEXT OVERLAY ──────────────────────────────────── */
       #heroMobileOverlay {
         position: absolute;
         inset: 0;
@@ -619,37 +661,39 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        /* content sits in the upper 65% — below navbar, above video area */
         justify-content: flex-start;
-        padding: clamp(88px, 14vh, 120px) 28px clamp(36px, 6vh, 52px);
+        padding-top: max(72px, 16vh);   /* clears navbar, not stuck at very top */
+        padding-left: 28px;
+        padding-right: 28px;
+        padding-bottom: 100px;          /* leaves room for scroll hint */
         text-align: center;
         pointer-events: none;
       }
 
-      /* brand wordmark */
-      .hm-brand {
+      /* ── AP MONOGRAM WATERMARK ──── very faint, not a logo ────── */
+      .hm-monogram {
         font-family: var(--serif);
-        font-size: 13px;
+        font-size: clamp(60px, 18vw, 88px);
         font-weight: 300;
-        letter-spacing: 0.42em;
-        text-transform: uppercase;
-        color: rgba(255,255,255,0.55);
-        margin-bottom: 28px;
-        opacity: 0;
-        display: flex;
-        align-items: center;
-        gap: 0.4em;
+        letter-spacing: -0.04em;
+        color: rgba(201,168,76,0.055);
+        line-height: 1;
+        margin-bottom: 6px;
+        pointer-events: none;
+        user-select: none;
+        opacity: 0;         /* animated in by GSAP */
       }
-      .hm-brand span { color: var(--gold); }
 
-      /* label */
+      /* ── LABEL ────────────────────────────────────────────────── */
       .hm-label {
         font-family: var(--sans);
-        font-size: 8px;
+        font-size: 7.5px;
         font-weight: 500;
-        letter-spacing: 0.44em;
+        letter-spacing: 0.46em;
         text-transform: uppercase;
         color: var(--gold-dim);
-        margin-bottom: 20px;
+        margin-bottom: 16px;
         opacity: 0;
         display: flex;
         align-items: center;
@@ -658,21 +702,22 @@
       .hm-label::before, .hm-label::after {
         content: '';
         display: block;
-        width: 20px;
+        width: 18px;
         height: 1px;
         background: var(--gold-dim);
-        opacity: 0.5;
+        opacity: 0.45;
+        flex-shrink: 0;
       }
 
-      /* headline */
+      /* ── HEADLINE ─────────────────────────────────────────────── */
       .hm-headline {
         font-family: var(--serif);
-        font-size: clamp(34px, 9vw, 48px);
+        font-size: clamp(30px, 8.5vw, 44px);
         font-weight: 300;
-        line-height: 1.10;
+        line-height: 1.12;
         letter-spacing: -0.01em;
         color: var(--white);
-        margin-bottom: 16px;
+        margin-bottom: 18px;
         opacity: 0;
       }
       .hm-headline em {
@@ -680,86 +725,85 @@
         color: var(--gold-light);
       }
 
-      /* sub */
+      /* ── SUBHEADLINE ──────────────────────────────────────────── */
       .hm-sub {
         font-family: var(--sans);
-        font-size: 13px;
+        font-size: 12.5px;
         font-weight: 300;
-        line-height: 1.72;
-        color: rgba(255,255,255,0.36);
-        max-width: 300px;
-        margin-bottom: 32px;
+        line-height: 1.70;
+        color: rgba(255,255,255,0.34);
+        max-width: 270px;
+        margin-bottom: 28px;
         opacity: 0;
       }
 
-      /* CTA */
+      /* ── CTA BUTTON ───────────────────────────────────────────── */
       .hm-cta {
         pointer-events: all;
-        position: relative;
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        gap: 10px;
+        justify-content: center;
         font-family: var(--sans);
-        font-size: 10px;
+        font-size: 9.5px;
         font-weight: 600;
-        letter-spacing: 0.28em;
+        letter-spacing: 0.30em;
         text-transform: uppercase;
         color: var(--white);
         text-decoration: none;
-        padding: 15px 32px;
-        background: rgba(201,168,76,0.10);
-        border: 1px solid rgba(201,168,76,0.36);
-        min-width: 200px;
-        justify-content: center;
+        padding: 14px 28px;
+        width: min(260px, 78vw);        /* wide but never edge-to-edge */
+        min-height: 48px;               /* ergonomic tap zone */
+        background: rgba(201,168,76,0.08);
+        border: 1px solid rgba(201,168,76,0.38);
         opacity: 0;
-        transition: background 0.4s, border-color 0.4s;
+        transition: background 0.35s, border-color 0.35s;
         -webkit-tap-highlight-color: transparent;
       }
       .hm-cta:active {
-        background: rgba(201,168,76,0.22);
-        border-color: rgba(201,168,76,0.65);
+        background: rgba(201,168,76,0.20);
+        border-color: rgba(201,168,76,0.70);
       }
 
-      /* disclaimer */
+      /* ── DISCLAIMER ───────────────────────────────────────────── */
       .hm-disclaimer {
         font-family: var(--sans);
-        font-size: 8px;
-        letter-spacing: 0.24em;
+        font-size: 7.5px;
+        letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: rgba(255,255,255,0.14);
-        margin-top: 16px;
+        color: rgba(255,255,255,0.13);
+        margin-top: 14px;
         opacity: 0;
       }
 
-      /* scroll hint */
+      /* ── SCROLL HINT ──────────────────────────────────────────── */
       .hm-scroll-hint {
         position: absolute;
-        bottom: 28px;
+        bottom: 24px;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
+        gap: 7px;
         opacity: 0;
       }
       .hm-scroll-hint span {
         font-family: var(--sans);
-        font-size: 7px;
-        letter-spacing: 0.36em;
+        font-size: 6.5px;
+        letter-spacing: 0.32em;
         text-transform: uppercase;
-        color: rgba(255,255,255,0.18);
+        color: rgba(255,255,255,0.16);
       }
       .hm-scroll-hint i {
         display: block;
         width: 1px;
-        height: 32px;
-        background: linear-gradient(to bottom, rgba(201,168,76,0.40), transparent);
+        height: 26px;
+        background: linear-gradient(to bottom, rgba(201,168,76,0.36), transparent);
         animation: hm-pulse 2s ease-in-out infinite;
       }
       @keyframes hm-pulse {
-        0%, 100% { opacity: 0.4; }
-        50%       { opacity: 1.0; }
+        0%, 100% { opacity: 0.3; }
+        50%       { opacity: 0.85; }
       }
     }
 
@@ -1589,11 +1633,11 @@
 
       /* ── NAVBAR ────────────────────────────────────────────────── */
       #navbar-wrap {
-        padding-bottom: 0;               /* no oversized fade zone on mobile */
+        padding-bottom: 0;
       }
       #navbar {
-        padding: 0 20px;                 /* flat, controlled padding */
-        height: 60px;                    /* fixed navbar height for clean baseline */
+        padding: 0 20px;
+        height: 60px;
         min-height: 60px;
         gap: 0;
         align-items: center;
@@ -1603,20 +1647,9 @@
         letter-spacing: 0.24em;
         line-height: 1;
       }
-      /* nav-cta doubles as hamburger area — keep it visible & tappable */
-      .nav-cta {
-        padding: 10px 16px;
-        font-size: 9px;
-        letter-spacing: 0.22em;
-        min-height: 40px;               /* comfortable tap target */
-        display: inline-flex;
-        align-items: center;
-      }
-      /* kill the spinning conic on mobile — expensive and tiny */
-      .nav-cta .cta-spin { animation: none; opacity: 0 !important; }
 
       /* ── HERO WRAPPER ────────────────────────────────────────── */
-      #heroWrapper { height: 300vh; }   /* shorter scroll distance on mobile */
+      #heroWrapper { height: 300vh; }
 
       /* ── HERO CANVAS fills screen ────────────────────────────── */
       #heroMobileFrame {
@@ -1624,80 +1657,6 @@
         inset: 0;
         z-index: 1;
       }
-      /* heavier vignette at top for text legibility, softer at bottom */
-      #heroMobileFrame::after {
-        background:
-          linear-gradient(to bottom,
-            rgba(6,6,6,0.88) 0%,
-            rgba(6,6,6,0.55) 30%,
-            rgba(6,6,6,0.15) 56%,
-            rgba(6,6,6,0.70) 100%
-          );
-      }
-
-      /* ── MOBILE OVERLAY — re-tune vertical rhythm ─────────────── */
-      #heroMobileOverlay {
-        justify-content: center;          /* vertically centered */
-        padding: 80px 28px 56px;          /* top clears navbar; not stuck at top */
-        padding-top: max(96px, 22vh);     /* sit a touch lower on tall phones */
-        gap: 0;                           /* spacing handled per-element */
-      }
-
-      /* brand wordmark */
-      .hm-brand {
-        font-size: 12px;
-        letter-spacing: 0.36em;
-        margin-bottom: 20px;
-      }
-
-      /* label */
-      .hm-label {
-        font-size: 7.5px;
-        letter-spacing: 0.40em;
-        margin-bottom: 18px;
-        gap: 10px;
-      }
-      .hm-label::before,
-      .hm-label::after { width: 16px; }
-
-      /* headline — strong but not oversized */
-      .hm-headline {
-        font-size: clamp(28px, 7.5vw, 40px);
-        line-height: 1.13;
-        letter-spacing: -0.01em;
-        margin-bottom: 14px;
-      }
-
-      /* sub — shorter, readable */
-      .hm-sub {
-        font-size: 12.5px;
-        line-height: 1.68;
-        max-width: 280px;
-        margin-bottom: 28px;
-        color: rgba(255,255,255,0.32);
-      }
-
-      /* CTA — comfortably wide, easy to tap */
-      .hm-cta {
-        width: min(280px, 80vw);
-        padding: 14px 28px;
-        font-size: 9.5px;
-        letter-spacing: 0.26em;
-        min-height: 48px;               /* ergonomic tap height */
-      }
-
-      /* disclaimer — muted, small */
-      .hm-disclaimer {
-        font-size: 7.5px;
-        letter-spacing: 0.20em;
-        margin-top: 14px;
-        color: rgba(255,255,255,0.12);
-      }
-
-      /* scroll hint — keep it subtle */
-      .hm-scroll-hint { bottom: 20px; }
-      .hm-scroll-hint span { font-size: 6.5px; letter-spacing: 0.30em; }
-      .hm-scroll-hint i { height: 24px; }
 
       /* ── SECTION 2 — atmospheric & brand-driven ─────────────── */
       #s2 {
@@ -2033,12 +1992,18 @@
       <li><a href="#">Mesa Privada</a></li>
       <li><a href="#">Acesso</a></li>
     </ul>
-    <a class="nav-cta" href="#">
+    <!-- Desktop CTA -->
+    <a class="nav-cta nav-cta-desktop" href="#">
       <span class="cta-spin"></span>
       <span class="cta-bg"></span>
       <span class="cta-fill"></span>
       <span class="cta-glow"></span>
       <span class="label">Solicitar Acesso</span>
+    </a>
+    <!-- Mobile: compact anchor CTA -->
+    <a class="nav-mobile-cta" href="#s4" aria-label="Solicitar Acesso">
+      <span class="nav-mobile-cta-line"></span>
+      <span class="nav-mobile-cta-text">Acesso</span>
     </a>
   </nav>
 </div>
@@ -2093,18 +2058,22 @@
 
     <!-- MOBILE: text overlay (hidden on desktop via CSS) -->
     <div id="heroMobileOverlay">
-      <p class="hm-brand" id="hmBrand">Alá <span>Poker</span></p>
-      <p class="hm-label" id="hmLabel">Clube Privado · Membros Selecionados</p>
+
+      <!-- faint AP monogram — watermark only, very low opacity -->
+      <div class="hm-monogram" aria-hidden="true">AP</div>
+
+      <p class="hm-label" id="hmLabel">Clube Privado</p>
+
       <h1 class="hm-headline" id="hmHeadline">
         Uma mesa reservada<br><em>para poucos.</em>
       </h1>
+
       <p class="hm-sub" id="hmSub">
         Uma experiência sob convite para quem valoriza presença, precisão e discrição.
       </p>
-      <a href="#s4" class="hm-cta" id="hmCta">
-        Solicitar Acesso
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
+
+      <a href="#s4" class="hm-cta" id="hmCta">Solicitar Acesso</a>
+
       <p class="hm-disclaimer" id="hmDisclaimer">Vagas limitadas &nbsp;·&nbsp; Sujeito à aprovação &nbsp;·&nbsp; 18+</p>
 
       <!-- scroll hint -->
@@ -2536,8 +2505,8 @@
     } else {
       /* ── Mobile entrance — lighter, shorter y-travel ── */
       const e = 'power2.out';
-      gsap.to('#navbar-wrap', { opacity:1, y:0, duration:0.7, ease:'power2.out', delay:0.1 });
-      gsap.fromTo('#hmBrand',      { opacity:0, y:6  }, { opacity:1, y:0, duration:0.7, ease:e, delay:0.35 });
+      gsap.to('#navbar-wrap',  { opacity:1, y:0, duration:0.7, ease:'power2.out', delay:0.1 });
+      gsap.fromTo('.hm-monogram',  { opacity:0 },       { opacity:1,      duration:1.2, ease:'power1.out', delay:0.2 });
       gsap.fromTo('#hmLabel',      { opacity:0 },       { opacity:1,      duration:0.6, ease:e, delay:0.55 });
       gsap.fromTo('#hmHeadline',   { opacity:0, y:12 }, { opacity:1, y:0, duration:0.9, ease:e, delay:0.72 });
       gsap.fromTo('#hmSub',        { opacity:0, y:8  }, { opacity:1, y:0, duration:0.8, ease:e, delay:1.00 });
