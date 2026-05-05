@@ -168,20 +168,20 @@
       border: none;
       background: transparent;
       transition: transform 0.25s, filter 0.45s;
-      /* ambient glow — both states */
-      filter: drop-shadow(0 0 8px rgba(232,201,106,0.20));
+      /* no ambient glow at rest — clean, refined */
+      filter: none;
     }
     .nav-cta:hover {
-      filter: drop-shadow(0 0 16px rgba(232,201,106,0.40));
+      filter: drop-shadow(0 0 8px rgba(232,201,106,0.22));
     }
     .nav-cta:active { transform: scale(0.97); }
 
-    /* ── CTA in SCROLLED state — brighter, higher contrast ── */
+    /* ── CTA in SCROLLED state ── */
     .scrolled .nav-cta {
-      filter: drop-shadow(0 0 10px rgba(232,201,106,0.28));
+      filter: none;
     }
     .scrolled .nav-cta:hover {
-      filter: drop-shadow(0 0 20px rgba(232,201,106,0.50));
+      filter: drop-shadow(0 0 10px rgba(232,201,106,0.28));
     }
 
     /* ① spinning conic border */
@@ -245,13 +245,13 @@
       );
       transition: opacity 0.5s;
     }
-    .nav-cta:hover .cta-glow { opacity: 1; }
-    /* scrolled: always show a faint constant inner glow */
+    .nav-cta:hover .cta-glow { opacity: 0.8; }
+    /* scrolled: very faint constant inner glow */
     .scrolled .nav-cta .cta-glow {
-      opacity: 0.35;
+      opacity: 0.15;
     }
     .scrolled .nav-cta:hover .cta-glow {
-      opacity: 1;
+      opacity: 0.8;
     }
 
     /* ⑤ label */
@@ -264,7 +264,7 @@
       transition: text-shadow 0.45s;
     }
     .nav-cta:hover span.label {
-      text-shadow: 0 0 14px rgba(232,201,106,0.60);
+      text-shadow: 0 0 8px rgba(232,201,106,0.35);
     }
     .nav-cta span.label::after {
       content: '\2192';
@@ -295,13 +295,13 @@
     /* ── HERO WRAPPER (scroll pin container) ── */
     #heroWrapper {
       position: relative;
-      height: 100vh; /* desktop: normal flow — mobile overrides to 300vh */
+      height: 400vh; /* scroll distance for pin + expansion */
     }
 
     /* ── HERO SECTION ── */
     #hero {
-      position: relative; /* desktop: normal flow — mobile overrides to sticky */
-      top: auto;
+      position: sticky;
+      top: 0;
       width: 100%;
       height: 100vh;
       display: grid;
@@ -2688,12 +2688,44 @@
       }
     });
 
-    /* ── Desktop expansion disabled ──────────────────────────────────
-       heroWrapper is now 100vh (normal flow), S2 sits directly below.
-       initExpansion used to fix the frame to position:fixed and expand
-       it to full-screen on scroll — no longer needed.
-       The canvas draws frame 0 statically inside .video-frame.
+    /* ── Desktop expansion ──────────────────────────────────────────
+       As you scroll through the 400vh heroWrapper, the video card
+       on the right grows until it fills the full viewport.
+       When heroWrapper ends, the fixed frame hides so S2 appears below.
     ─────────────────────────────────────────────────────────────── */
+    function initExpansion() {
+      const frame = document.getElementById('videoFrame');
+      const r     = frame.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) { requestAnimationFrame(initExpansion); return; }
+      const iLeft = r.left, iTop = r.top, iWidth = r.width, iHeight = r.height;
+      Object.assign(frame.style, {
+        position: 'fixed', left: iLeft+'px', top: iTop+'px',
+        width: iWidth+'px', height: iHeight+'px', maxWidth: 'none', zIndex: '50',
+      });
+      drawFrame(cur.index);
+      gsap.to('.hero-left', {
+        opacity: 0, y: -24,
+        scrollTrigger: { trigger:'#heroWrapper', start:'top top', end:'18% top', scrub:true }
+      });
+      gsap.to(frame, {
+        left:0, top:0, width: window.innerWidth, height: window.innerHeight,
+        borderRadius:0, ease:'none',
+        onUpdate: () => drawFrame(cur.index),
+        scrollTrigger: { trigger:'#heroWrapper', start:'12% top', end:'bottom bottom', scrub:0.4 }
+      });
+      /* When heroWrapper ends, hide the fixed frame so S2 appears cleanly below */
+      ScrollTrigger.create({
+        trigger: '#heroWrapper',
+        start: 'bottom bottom',
+        onLeave()     { frame.style.display = 'none'; },
+        onEnterBack() { frame.style.display = '';     },
+      });
+    }
+    if (document.readyState === 'complete') {
+      requestAnimationFrame(() => requestAnimationFrame(initExpansion));
+    } else {
+      window.addEventListener('load', () => requestAnimationFrame(() => requestAnimationFrame(initExpansion)));
+    }
     window.addEventListener('resize', () => { ScrollTrigger.refresh(); drawFrame(cur.index); });
   }
 
@@ -3091,25 +3123,10 @@
       update();
     })();
 
-    /* ─ Mouse parallax on video frame ────────────────────────────── */
-    (function () {
-      const frame = document.getElementById('videoFrame');
-      if (!frame) return;
-      let ticking = false;
-      document.addEventListener('mousemove', (e) => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          const x = (e.clientX / window.innerWidth  - 0.5) * 2;
-          const y = (e.clientY / window.innerHeight - 0.5) * 2;
-          gsap.to(frame, {
-            x: x * 10, y: y * 6,
-            duration: 2.0, ease: 'power2.out', overwrite: 'auto',
-          });
-          ticking = false;
-        });
-      });
-    })();
+    /* ─ Mouse parallax disabled ──────────────────────────────────────
+       The video frame uses position:fixed + GSAP left/top during the
+       expansion. Applying x/y transforms alongside would conflict.
+    ─────────────────────────────────────────────────────────────── */
 
     /* ─ S3 step numbers count-up on scroll ────────────────────────── */
     (function () {

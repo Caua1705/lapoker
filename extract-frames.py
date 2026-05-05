@@ -13,8 +13,8 @@ import shutil
 from pathlib import Path
 
 # ── CONFIG ───────────────────────────────────────────────────────────────────
-VIDEO_PATH    = Path(__file__).parent / "video1-mobile.mp4"
-OUTPUT_DIR    = Path(__file__).parent / "frames-mobile"
+VIDEO_PATH    = Path(__file__).parent / "video1-pc.mp4"
+OUTPUT_DIR    = Path(__file__).parent / "frames"
 TOTAL_FRAMES  = 150        # número de frames extraídos
 FRAME_WIDTH   = 1280       # largura de saída, altura proporcional
 WEBP_QUALITY  = 82         # qualidade WebP
