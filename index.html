@@ -662,12 +662,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* content sits in the upper 65% — below navbar, above video area */
-        justify-content: flex-start;
-        padding-top: max(72px, 16vh);   /* clears navbar, not stuck at very top */
+        justify-content: center;        /* TRUE vertical center */
+        padding-top: 0;
         padding-left: 28px;
         padding-right: 28px;
-        padding-bottom: 100px;          /* leaves room for scroll hint */
+        padding-bottom: 56px;           /* offset for scroll hint at bottom */
         text-align: center;
         pointer-events: none;
       }
@@ -675,12 +674,12 @@
       /* ── AP MONOGRAM WATERMARK ──── very faint, not a logo ────── */
       .hm-monogram {
         font-family: var(--serif);
-        font-size: clamp(60px, 18vw, 88px);
+        font-size: clamp(72px, 22vw, 100px);
         font-weight: 300;
         letter-spacing: -0.04em;
-        color: rgba(201,168,76,0.055);
+        color: rgba(201,168,76,0.050);
         line-height: 1;
-        margin-bottom: 6px;
+        margin-bottom: 10px;
         pointer-events: none;
         user-select: none;
         opacity: 0;         /* animated in by GSAP */
@@ -689,21 +688,21 @@
       /* ── LABEL ────────────────────────────────────────────────── */
       .hm-label {
         font-family: var(--sans);
-        font-size: 8.5px;
+        font-size: 9px;
         font-weight: 600;
         letter-spacing: 0.44em;
         text-transform: uppercase;
         color: var(--gold);
-        margin-bottom: 16px;
+        margin-bottom: 20px;
         opacity: 0;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 14px;
       }
       .hm-label::before, .hm-label::after {
         content: '';
         display: block;
-        width: 18px;
+        width: 24px;
         height: 1px;
         background: var(--gold-dim);
         opacity: 0.55;
@@ -713,29 +712,29 @@
       /* ── HEADLINE ─────────────────────────────────────────────── */
       .hm-headline {
         font-family: var(--serif);
-        font-size: clamp(40px, 11vw, 56px);  /* dominant — clearly the main element */
+        font-size: clamp(44px, 12vw, 60px);
         font-weight: 300;
-        line-height: 1.08;
-        letter-spacing: -0.015em;
+        line-height: 1.06;
+        letter-spacing: -0.02em;
         color: var(--white);
-        margin-bottom: 14px;
+        margin-bottom: 20px;
         opacity: 0;
       }
       .hm-headline em {
         font-style: italic;
         color: var(--gold-light);
-        font-size: 0.92em;               /* italic line slightly smaller, still strong */
+        font-size: 0.92em;
       }
 
       /* ── SUBHEADLINE ──────────────────────────────────────────── */
       .hm-sub {
         font-family: var(--sans);
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 300;
         line-height: 1.72;
-        color: rgba(255,255,255,0.40);
-        max-width: 280px;
-        margin-bottom: 24px;
+        color: rgba(255,255,255,0.42);
+        max-width: 300px;
+        margin-bottom: 32px;
         opacity: 0;
       }
 
@@ -746,17 +745,17 @@
         align-items: center;
         justify-content: center;
         font-family: var(--sans);
-        font-size: 9px;
+        font-size: 9.5px;
         font-weight: 600;
-        letter-spacing: 0.26em;
+        letter-spacing: 0.28em;
         text-transform: uppercase;
-        color: rgba(255,255,255,0.90);
+        color: rgba(255,255,255,0.92);
         text-decoration: none;
-        padding: 0 24px;
+        padding: 0 28px;
         width: auto;
-        max-width: 260px;
-        min-width: 180px;
-        min-height: 47px;               /* refined — smaller than headline */
+        max-width: 280px;
+        min-width: 200px;
+        min-height: 50px;
         background: rgba(201,168,76,0.08);
         border: 1px solid rgba(201,168,76,0.40);
         opacity: 0;
@@ -771,11 +770,11 @@
       /* ── DISCLAIMER ───────────────────────────────────────────── */
       .hm-disclaimer {
         font-family: var(--sans);
-        font-size: 8px;
+        font-size: 8.5px;
         letter-spacing: 0.20em;
         text-transform: uppercase;
         color: rgba(255,255,255,0.18);
-        margin-top: 14px;
+        margin-top: 18px;
         opacity: 0;
       }
 
