@@ -1439,9 +1439,79 @@
       .s4-row { grid-template-columns: 1fr; }
     }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       SEÇÃO 5 — FECHAMENTO PREMIUM  (closing editorial)
-    ═══════════════════════════════════════════════════════════════════ */
+    /* ── SEGMENTED CONTROL — .s4-seg ───────────────────────────────── */
+    .s4-seg {
+      display: flex;
+      gap: 0;
+      width: 100%;
+    }
+    .s4-seg-opt {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.34);
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.14);
+      cursor: pointer;
+      padding: 0 20px;
+      min-height: 46px;
+      transition:
+        color 0.28s,
+        background 0.28s,
+        border-color 0.28s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    /* seamless join between the two pills */
+    .s4-seg-opt:first-child {
+      border-radius: 2px 0 0 2px;
+      border-right: none;
+    }
+    .s4-seg-opt:last-child {
+      border-radius: 0 2px 2px 0;
+    }
+    /* thin separator line between the two */
+    .s4-seg-opt:last-child::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 1px;
+      background: rgba(201,168,76,0.14);
+      transition: background 0.28s;
+    }
+    /* hover state — subtle gold awakening */
+    .s4-seg-opt:hover {
+      color: rgba(255,255,255,0.62);
+      border-color: rgba(201,168,76,0.28);
+      background: rgba(201,168,76,0.04);
+    }
+    /* active / selected state */
+    .s4-seg-opt[aria-pressed="true"] {
+      color: rgba(232,201,106,0.92);
+      background: rgba(201,168,76,0.09);
+      border-color: rgba(201,168,76,0.45);
+    }
+    .s4-seg-opt[aria-pressed="true"]:last-child::before {
+      background: rgba(201,168,76,0.30);
+    }
+    /* error state — both buttons get red tint when no selection */
+    .s4-field.has-error .s4-seg-opt {
+      border-color: rgba(220,90,60,0.35);
+    }
+    .s4-field.has-error .s4-seg-opt:last-child::before {
+      background: rgba(220,90,60,0.25);
+    }
+
+    /* ───────────────────────────────────────────────────────────────── */
+
+    /* ── SEÇÃO 5 — FECHAMENTO PREMIUM  (closing editorial) ───────── */
     #s5 {
       position: relative;
       background: var(--black);
@@ -1861,6 +1931,15 @@
         min-height: 52px;               /* 52px tap target */
       }
 
+      /* segmented control — full width, taller tap zone on mobile */
+      .s4-seg { width: 100%; }
+      .s4-seg-opt {
+        min-height: 52px;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        padding: 0 12px;
+      }
+
       .s4-textarea {
         min-height: 80px;
         font-size: 14px;
@@ -2242,17 +2321,22 @@
           </div>
         </div>
 
-        <!-- Intenção de jogo -->
-        <div class="s4-field">
-          <label class="s4-label-field" for="s4Jogo">Pretende jogar?</label>
-          <div class="s4-select-wrap">
-            <select class="s4-select" id="s4Jogo" name="intencao">
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option value="sim">Sim</option>
-              <option value="talvez">Talvez</option>
-              <option value="nao">Não, quero participar da experiência</option>
-            </select>
+        <!-- Intenção de jogo — segmented control -->
+        <div class="s4-field" id="s4FieldJogo">
+          <p class="s4-label-field" id="s4JogoLabel">Pretende jogar?</p>
+          <!-- hidden input stores the value for form submission -->
+          <input type="hidden" id="s4Jogo" name="intencao" value="">
+          <div class="s4-seg" role="group" aria-labelledby="s4JogoLabel">
+            <button type="button" class="s4-seg-opt" data-value="jogar"
+              aria-pressed="false" id="s4SegJogar">
+              Pretendo jogar
+            </button>
+            <button type="button" class="s4-seg-opt" data-value="participar"
+              aria-pressed="false" id="s4SegParticipar">
+              Apenas participar
+            </button>
           </div>
+          <span class="s4-error-msg" id="s4JogoErr">Selecione uma opção</span>
         </div>
 
         <!-- Observação -->
@@ -2618,6 +2702,29 @@
     }
   })();
 
+  /* ══ SEGMENTED CONTROL — INTENÇÃO DE JOGO ═══════════════════════════ */
+  (function () {
+    const hidden  = document.getElementById('s4Jogo');
+    const opts    = document.querySelectorAll('.s4-seg-opt');
+    const field   = document.getElementById('s4FieldJogo');
+    const errMsg  = document.getElementById('s4JogoErr');
+    if (!hidden || !opts.length) return;
+
+    opts.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // deselect all
+        opts.forEach(b => b.setAttribute('aria-pressed', 'false'));
+        // select clicked
+        btn.setAttribute('aria-pressed', 'true');
+        // update hidden value
+        hidden.value = btn.dataset.value;
+        // clear error
+        if (field)  field.classList.remove('has-error');
+        if (errMsg) errMsg.style.display = 'none';
+      });
+    });
+  })();
+
   /* ══ SECTION 4 FORM HANDLER ══ */
   (function () {
     const form      = document.getElementById('s4Form');
@@ -2649,6 +2756,19 @@
       const wppClean = wpp.value.replace(/\D/g,'');
       if (wppClean.length < 10) { setFieldError(wppField, wpp, true); valid = false; }
       else setFieldError(wppField, wpp, false);
+
+      // segmented control validation
+      const jogoField = document.getElementById('s4FieldJogo');
+      const jogoVal   = document.getElementById('s4Jogo').value;
+      const jogoErr   = document.getElementById('s4JogoErr');
+      if (!jogoVal) {
+        jogoField.classList.add('has-error');
+        jogoErr.style.display = 'block';
+        valid = false;
+      } else {
+        jogoField.classList.remove('has-error');
+        jogoErr.style.display = 'none';
+      }
 
       const age = document.getElementById('s4Age');
       const ageField = document.getElementById('s4FieldAge');
