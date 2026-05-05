@@ -367,8 +367,9 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
         form.style.display = 'none';
         status.className = 's4-form-status success';
         status.innerHTML =
-          '<strong>Solicitação recebida.</strong>' +
-          'Caso aprovada, você receberá o convite com as informações pelo WhatsApp.';
+          '<strong>Solicitação recebida.</strong><br><br>' +
+          'Você receberá uma mensagem no WhatsApp com a confirmação.<br>' +
+          'Seu acesso está em análise e, se aprovado, enviaremos o convite com todos os detalhes.';
         gsap.fromTo(status, { opacity:0, y:12 }, { opacity:1, y:0, duration:0.9, ease:'power2.out' });
 
       } catch (err) {

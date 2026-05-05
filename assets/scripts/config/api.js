@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://212.85.0.237:8001';
+export const API_BASE_URL = 'https://api.lapoker.com.br';
 
 export const API_ROUTES = {
   accessRequest: '/access-request',
