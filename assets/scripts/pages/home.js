@@ -15,7 +15,7 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
     const cur    = { index: 0 };
 
     function framePath(i) {
-      return 'assets/frames/frame_' + String(i).padStart(4, '0') + '.webp';
+      return 'references/image-frames/desktop/frame_' + String(i).padStart(4, '0') + '.webp';
     }
     function drawFrame(index) {
       const img = frames[index];
@@ -109,7 +109,7 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
     const mCur    = { index: 0 };
 
     function mFramePath(i) {
-      return 'assets/frames-mobile/frame_' + String(i).padStart(4, '0') + '.webp';
+      return 'references/image-frames/mobile/frame_' + String(i).padStart(4, '0') + '.webp';
     }
     function mDraw(index) {
       const img = mFrames[index];
