@@ -2321,24 +2321,6 @@
             placeholder="@seuinstagram">
         </div>
 
-        <!-- Intenção de jogo — segmented control -->
-        <div class="s4-field" id="s4FieldJogo">
-          <p class="s4-label-field" id="s4JogoLabel">Pretende jogar?</p>
-          <!-- hidden input stores the value for form submission -->
-          <input type="hidden" id="s4Jogo" name="intencao" value="">
-          <div class="s4-seg" role="group" aria-labelledby="s4JogoLabel">
-            <button type="button" class="s4-seg-opt" data-value="jogar"
-              aria-pressed="false" id="s4SegJogar">
-              Pretendo jogar
-            </button>
-            <button type="button" class="s4-seg-opt" data-value="participar"
-              aria-pressed="false" id="s4SegParticipar">
-              Apenas participar
-            </button>
-          </div>
-          <span class="s4-error-msg" id="s4JogoErr">Selecione uma opção</span>
-        </div>
-
 
         <div class="s4-divider"></div>
 
@@ -2702,29 +2684,6 @@
     }
   })();
 
-  /* ══ SEGMENTED CONTROL — INTENÇÃO DE JOGO ═══════════════════════════ */
-  (function () {
-    const hidden  = document.getElementById('s4Jogo');
-    const opts    = document.querySelectorAll('.s4-seg-opt');
-    const field   = document.getElementById('s4FieldJogo');
-    const errMsg  = document.getElementById('s4JogoErr');
-    if (!hidden || !opts.length) return;
-
-    opts.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // deselect all
-        opts.forEach(b => b.setAttribute('aria-pressed', 'false'));
-        // select clicked
-        btn.setAttribute('aria-pressed', 'true');
-        // update hidden value
-        hidden.value = btn.dataset.value;
-        // clear error
-        if (field)  field.classList.remove('has-error');
-        if (errMsg) errMsg.style.display = 'none';
-      });
-    });
-  })();
-
   /* ══ SECTION 4 FORM HANDLER ══ */
   (function () {
     const form      = document.getElementById('s4Form');
@@ -2757,18 +2716,6 @@
       if (wppClean.length < 10) { setFieldError(wppField, wpp, true); valid = false; }
       else setFieldError(wppField, wpp, false);
 
-      // segmented control validation
-      const jogoField = document.getElementById('s4FieldJogo');
-      const jogoVal   = document.getElementById('s4Jogo').value;
-      const jogoErr   = document.getElementById('s4JogoErr');
-      if (!jogoVal) {
-        jogoField.classList.add('has-error');
-        jogoErr.style.display = 'block';
-        valid = false;
-      } else {
-        jogoField.classList.remove('has-error');
-        jogoErr.style.display = 'none';
-      }
 
       const age = document.getElementById('s4Age');
       const ageField = document.getElementById('s4FieldAge');
