@@ -2103,13 +2103,14 @@
 
     /* ── very small phones (≤ 390px) ── */
     @media (max-width: 390px) {
-      .hm-headline { font-size: 26px; }
+      .hm-headline .hm-line1 { font-size: 34px; }
+      .hm-headline em         { font-size: 28px; }
       .s2-headline { font-size: 26px; }
       .s3-headline { font-size: 22px; }
       .s4-headline { font-size: 22px; }
       .s5-headline { font-size: 24px; }
       #heroMobileOverlay { padding-top: max(88px, 20vh); }
-      .hm-cta { width: 90vw; }
+      .hm-cta { max-width: 260px; width: auto; }  /* never full-width on tiny phones */
       #s4 { padding: 52px 14px 56px; }
     }
 
