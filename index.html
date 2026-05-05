@@ -1364,28 +1364,27 @@
       font-weight: 600;
       letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--gold-vivid);
+      color: rgba(232,201,106,0.80);
       background: transparent;
-      border: 1px solid rgba(232,201,106,0.45);
+      border: 1px solid rgba(232,201,106,0.32);
       cursor: pointer;
       overflow: hidden;
-      transition: color 0.4s, filter 0.4s;
-      filter: drop-shadow(0 0 8px rgba(232,201,106,0.14));
+      transition: color 0.45s, border-color 0.45s, box-shadow 0.45s, background 0.45s;
     }
+    /* Desktop hover — refined: subtle gold glow, no full fill */
     .s4-submit:hover {
-      color: #040404;
-      filter: drop-shadow(0 0 18px rgba(232,201,106,0.38));
+      color: rgba(232,201,106,1);
+      border-color: rgba(232,201,106,0.60);
+      background: rgba(232,201,106,0.05);
+      box-shadow: 0 0 24px rgba(232,201,106,0.12), inset 0 0 12px rgba(232,201,106,0.04);
     }
-    .s4-submit:active { transform: scale(0.98); }
-    .s4-submit-fill {
-      position: absolute;
-      inset: 0;
-      background: var(--gold-vivid);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    .s4-submit:active {
+      transform: scale(0.985);
+      background: rgba(232,201,106,0.08);
+      border-color: rgba(232,201,106,0.50);
     }
-    .s4-submit:hover .s4-submit-fill { transform: scaleX(1); }
+    /* fill element kept in DOM but no longer used — hidden everywhere */
+    .s4-submit-fill { display: none; }
     .s4-submit-label { position: relative; z-index: 1; }
 
     /* states */
@@ -1968,7 +1967,7 @@
         color: rgba(255,255,255,0.38);
       }
 
-      /* submit — full width, large tap target */
+      /* submit — mobile */
       .s4-submit {
         padding: 0 24px;
         font-size: 12px;
@@ -1976,9 +1975,20 @@
         letter-spacing: 0.24em;
         min-height: 54px;
         color: rgba(232,201,106,0.90);
-        border-color: rgba(232,201,106,0.48);
+        border-color: rgba(232,201,106,0.38);
+        background: transparent;
+        /* smooth press feedback */
+        transition: color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.18s;
       }
-      /* disable hover fill animation on touch */
+      /* premium mobile active — glow pulse, text stays gold and visible */
+      .s4-submit:active {
+        transform: scale(0.97);
+        color: rgba(232,201,106,1);
+        border-color: rgba(232,201,106,0.65);
+        box-shadow:
+          0 0 18px rgba(232,201,106,0.16),
+          inset 0 0 10px rgba(232,201,106,0.06);
+      }
       .s4-submit .s4-submit-fill { display: none; }
 
       .s4-legal {
