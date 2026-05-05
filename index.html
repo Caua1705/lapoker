@@ -295,13 +295,13 @@
     /* ── HERO WRAPPER (scroll pin container) ── */
     #heroWrapper {
       position: relative;
-      height: 400vh; /* scroll distance for pin + expansion */
+      height: 100vh; /* desktop: normal flow — mobile overrides to 300vh */
     }
 
     /* ── HERO SECTION ── */
     #hero {
-      position: sticky;
-      top: 0;
+      position: relative; /* desktop: normal flow — mobile overrides to sticky */
+      top: auto;
       width: 100%;
       height: 100vh;
       display: grid;
@@ -397,7 +397,7 @@
       letter-spacing: 0.26em;
       text-transform: uppercase;
       text-decoration: none;
-      color: var(--white);
+      color: var(--gold-vivid); /* always gold-vivid — matches nav-cta hover */
       padding: clamp(16px, 1.8vw, 20px) clamp(36px, 3.5vw, 52px);
       margin-bottom: 28px;
       overflow: hidden;
@@ -407,22 +407,22 @@
       background: transparent;
       opacity: 0;
     }
-    /* Spinning conic border layer */
+    /* Spinning conic border — always visible, not just on hover */
     .btn-primary .btn-spin {
       position: absolute;
       inset: -100%;
       animation: cta-spin 3s linear infinite;
-      background: conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 75%, var(--gold) 100%);
-      opacity: 0;
+      background: conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 72%, var(--gold-vivid) 100%);
+      opacity: 0.75;          /* always on */
       transition: opacity 0.35s;
     }
     .btn-primary:hover .btn-spin { opacity: 1; }
-    /* Default zinc-ish base border */
+    /* Base border — hidden by default since spin is always showing */
     .btn-primary .btn-base {
       position: absolute;
       inset: 0;
-      background: rgba(201,168,76,0.10);
-      border: 1px solid rgba(201,168,76,0.28);
+      background: rgba(232,201,106,0.06);
+      border: 1px solid rgba(232,201,106,0.22);
       transition: opacity 0.3s;
     }
     .btn-primary:hover .btn-base { opacity: 0; }
@@ -433,14 +433,14 @@
       background: var(--black);
       z-index: 1;
     }
-    /* Bottom glow radial on hover */
+    /* Bottom glow — always slightly on, full on hover */
     .btn-primary .btn-glow {
       position: absolute;
       inset: 0;
       pointer-events: none;
       z-index: 1;
-      opacity: 0;
-      background: radial-gradient(50% 50% at 50% 100%, rgba(201,168,76,0.30) 0%, transparent 100%);
+      opacity: 0.35;          /* always a faint glow */
+      background: radial-gradient(50% 50% at 50% 100%, rgba(232,201,106,0.28) 0%, transparent 100%);
       transition: opacity 0.55s;
     }
     .btn-primary:hover .btn-glow { opacity: 1; }
@@ -2143,11 +2143,168 @@
       #s4 { padding: 52px 14px 56px; }
     }
 
+    /* ═════════════════════════════════════════════════════════════
+       ██  DESKTOP REFINEMENT LAYER  (min-width: 769px)               ██
+       ██  Grain, parallax, ambient glow, micro-animations              ██
+    ═════════════════════════════════════════════════════════════ */
+    @media (min-width: 769px) {
+
+      /* ─ 1. GRAIN TEXTURE — editorial luxury feel ─────────────────────── */
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 9998;
+        pointer-events: none;
+        opacity: 0.038;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        background-size: 160px 160px;
+      }
+
+      /* ─ 2. SCROLL PROGRESS BAR ──────────────────────────────────── */
+      #scrollProgress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 1px;
+        width: 0%;
+        background: linear-gradient(
+          to right,
+          var(--gold-dim)   0%,
+          var(--gold-vivid) 50%,
+          var(--gold-dim)   100%
+        );
+        z-index: 9999;
+        pointer-events: none;
+        box-shadow: 0 0 8px rgba(232,201,106,0.45);
+        transition: width 0.12s linear;
+      }
+
+      /* ─ 3. HERO LEFT — ambient pulse behind copy ─────────────────── */
+      .hero-left::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -5%;
+        transform: translateY(-50%);
+        width: 55%;
+        height: 90%;
+        background: radial-gradient(ellipse at center,
+          rgba(201,168,76,0.055) 0%,
+          transparent 68%
+        );
+        pointer-events: none;
+        animation: heroAmbientPulse 7s ease-in-out infinite;
+        z-index: 0;
+      }
+      @keyframes heroAmbientPulse {
+        0%, 100% { opacity: 0.55; transform: translateY(-50%) scale(1);    }
+        50%       { opacity: 1.00; transform: translateY(-52%) scale(1.10); }
+      }
+
+      /* ─ 4. SECTION RULES — richer shimmer ────────────────────────── */
+      #s2-rule, #s3-rule, #s4-rule, #s5-rule {
+        background: linear-gradient(
+          to right,
+          transparent 0%,
+          rgba(201,168,76,0.08)  10%,
+          rgba(201,168,76,0.26)  35%,
+          rgba(232,201,106,0.36) 50%,
+          rgba(201,168,76,0.26)  65%,
+          rgba(201,168,76,0.08)  90%,
+          transparent 100%
+        );
+        box-shadow: 0 0 16px rgba(201,168,76,0.07);
+      }
+
+      /* ─ 5. S2 CARDS — gold left-border accent on hover ────────────── */
+      .s2-card {
+        transition: background 0.5s, padding-left 0.45s cubic-bezier(0.16,1,0.3,1);
+      }
+      .s2-card::before {
+        /* the animated gold top bar — make it draw on hover */
+        transform-origin: left center;
+        transition: transform 0.55s cubic-bezier(0.16,1,0.3,1);
+      }
+      .s2-card:hover {
+        background: rgba(201,168,76,0.025);
+      }
+
+      /* ─ 6. S3 NUMBERS — glow on card hover ──────────────────────── */
+      .s3-card-num {
+        transition: color 0.5s, text-shadow 0.5s;
+      }
+      .s3-card:hover .s3-card-num {
+        color: rgba(201,168,76,0.34);
+        text-shadow: 0 0 40px rgba(201,168,76,0.20);
+      }
+
+      /* ─ 7. VIDEO FRAME — ambient glow on hover ───────────────────── */
+      .video-frame {
+        transition:
+          box-shadow 0.9s cubic-bezier(0.16,1,0.3,1),
+          border-color 0.9s cubic-bezier(0.16,1,0.3,1);
+      }
+      .video-frame:hover {
+        border-color: rgba(201,168,76,0.28);
+        box-shadow:
+          0 0 0 1px rgba(0,0,0,0.6),
+          0 28px 90px rgba(0,0,0,0.70),
+          0 0 80px rgba(201,168,76,0.12);
+      }
+
+      /* ─ 8. NAV BRAND — refined hover breathing ───────────────────── */
+      .nav-brand {
+        transition: letter-spacing 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
+      }
+      .nav-brand:hover {
+        letter-spacing: 0.33em;
+      }
+
+      /* ─ 9. S4 TRUST ITEMS — hover shimmer ──────────────────────── */
+      .s4-trust-item {
+        transition: color 0.4s, padding-left 0.4s cubic-bezier(0.16,1,0.3,1);
+      }
+      .s4-trust-item:hover {
+        color: rgba(255,255,255,0.52);
+        padding-left: 4px;
+      }
+
+      /* ─ 10. S5 HEADLINE — cinematic glow ────────────────────────── */
+      .s5-headline {
+        text-shadow: 0 0 80px rgba(201,168,76,0.07);
+      }
+
+      /* ─ 11. HERO HEADLINE — editorial text shadow ────────────────── */
+      .hero-headline {
+        text-shadow: 0 2px 40px rgba(0,0,0,0.40);
+      }
+
+      /* ─ 12. S3 CARD BAR — warm gold shimmer on hover ─────────────── */
+      .s3-card-bar {
+        transition: background 0.55s, box-shadow 0.55s;
+      }
+      .s3-card:hover .s3-card-bar {
+        background: linear-gradient(to right, var(--gold-dim), var(--gold-vivid), var(--gold-dim));
+        box-shadow: 0 0 10px rgba(232,201,106,0.30);
+      }
+
+      /* ─ 13. HERO LABEL — shimmer line extends on scroll-in ───────── */
+      .hero-label::before {
+        transition: width 0.8s cubic-bezier(0.16,1,0.3,1);
+      }
+
+    } /* end @media (min-width: 769px) */
+
   </style>
 </head>
 
 
 <body>
+
+<!-- Scroll progress bar — desktop only (hidden on mobile via CSS above) -->
+<div id="scrollProgress" aria-hidden="true"></div>
 
 <!-- ── NAVBAR WRAPPER (pill layout) ── -->
 <div id="navbar-wrap">
@@ -2531,42 +2688,12 @@
       }
     });
 
-    /* ── Desktop expansion ── */
-    function initExpansion() {
-      const frame = document.getElementById('videoFrame');
-      const r     = frame.getBoundingClientRect();
-      if (r.width === 0 || r.height === 0) { requestAnimationFrame(initExpansion); return; }
-      const iLeft = r.left, iTop = r.top, iWidth = r.width, iHeight = r.height;
-      Object.assign(frame.style, {
-        position: 'fixed', left: iLeft+'px', top: iTop+'px',
-        width: iWidth+'px', height: iHeight+'px', maxWidth: 'none', zIndex: '50',
-      });
-      drawFrame(cur.index);
-      gsap.to('.hero-left', {
-        opacity: 0, y: -24,
-        scrollTrigger: { trigger:'#heroWrapper', start:'top top', end:'18% top', scrub:true }
-      });
-      gsap.to(frame, {
-        left:0, top:0, width: window.innerWidth, height: window.innerHeight,
-        borderRadius:0, ease:'none',
-        onUpdate: () => drawFrame(cur.index),
-        scrollTrigger: { trigger:'#heroWrapper', start:'12% top', end:'bottom bottom', scrub:0.4 }
-      });
-
-      /* ── Hide the fixed frame once heroWrapper is fully scrolled past ──
-         Without this the fixed z-50 frame sits on top of every section below. */
-      ScrollTrigger.create({
-        trigger: '#heroWrapper',
-        start: 'bottom bottom',   /* heroWrapper bottom hits viewport bottom */
-        onLeave()      { frame.style.display = 'none';  },   /* scrolled past hero → hide */
-        onEnterBack()  { frame.style.display = '';      },   /* scrolled back into hero → show */
-      });
-    }
-    if (document.readyState === 'complete') {
-      requestAnimationFrame(() => requestAnimationFrame(initExpansion));
-    } else {
-      window.addEventListener('load', () => requestAnimationFrame(() => requestAnimationFrame(initExpansion)));
-    }
+    /* ── Desktop expansion disabled ──────────────────────────────────
+       heroWrapper is now 100vh (normal flow), S2 sits directly below.
+       initExpansion used to fix the frame to position:fixed and expand
+       it to full-screen on scroll — no longer needed.
+       The canvas draws frame 0 statically inside .video-frame.
+    ─────────────────────────────────────────────────────────────── */
     window.addEventListener('resize', () => { ScrollTrigger.refresh(); drawFrame(cur.index); });
   }
 
@@ -2946,6 +3073,89 @@
     /* 10 — footer line fades last */
     gsap.fromTo('#s5-footer', { opacity:0 }, { opacity:1, duration:1.1, ease:e, delay:1.40, scrollTrigger:TN });
   })();
+
+  /* ═════════════════════════════════════════════════════════════
+     DESKTOP REFINEMENTS — parallax, progress, count-up, extras
+  ═════════════════════════════════════════════════════════════ */
+  if (!IS_MOBILE) {
+
+    /* ─ Scroll progress bar ────────────────────────────────────────── */
+    (function () {
+      const bar = document.getElementById('scrollProgress');
+      if (!bar) return;
+      const update = () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        if (total > 0) bar.style.width = (window.scrollY / total * 100) + '%';
+      };
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+
+    /* ─ Mouse parallax on video frame ────────────────────────────── */
+    (function () {
+      const frame = document.getElementById('videoFrame');
+      if (!frame) return;
+      let ticking = false;
+      document.addEventListener('mousemove', (e) => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const x = (e.clientX / window.innerWidth  - 0.5) * 2;
+          const y = (e.clientY / window.innerHeight - 0.5) * 2;
+          gsap.to(frame, {
+            x: x * 10, y: y * 6,
+            duration: 2.0, ease: 'power2.out', overwrite: 'auto',
+          });
+          ticking = false;
+        });
+      });
+    })();
+
+    /* ─ S3 step numbers count-up on scroll ────────────────────────── */
+    (function () {
+      document.querySelectorAll('.s3-card-num').forEach((el, i) => {
+        const target = parseInt(el.textContent, 10);
+        if (isNaN(target)) return;
+        el.textContent = '00';
+        ScrollTrigger.create({
+          trigger: el.closest('.s3-card') || '#s3',
+          start: 'top 80%',
+          once: true,
+          onEnter() {
+            const obj = { val: 0 };
+            gsap.to(obj, {
+              val: target,
+              duration: 1.0,
+              ease: 'power2.out',
+              delay: i * 0.18,
+              onUpdate() {
+                el.textContent = String(Math.round(obj.val)).padStart(2, '0');
+              },
+            });
+          },
+        });
+      });
+    })();
+
+    /* ─ Subtle parallax on section headings (depth layer) ──────────── */
+    (function () {
+      ['.s2-headline', '.s3-headline', '.s4-headline', '.s5-headline'].forEach(sel => {
+        const el = document.querySelector(sel);
+        if (!el) return;
+        gsap.to(el, {
+          y: -18,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: el.closest('section') || el,
+            start: 'top bottom',
+            end:   'bottom top',
+            scrub: 0.6,
+          },
+        });
+      });
+    })();
+
+  }
 
 })();
 </script>
