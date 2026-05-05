@@ -13,7 +13,7 @@ import shutil
 from pathlib import Path
 
 # ── CONFIG ───────────────────────────────────────────────────────────────────
-VIDEO_PATH    = Path(__file__).parent / "video4.mp4"
+VIDEO_PATH    = Path(__file__).parent / "video5.mp4"
 OUTPUT_DIR    = Path(__file__).parent / "frames-mobile"
 TOTAL_FRAMES  = 150        # número de frames extraídos
 FRAME_WIDTH   = 1280       # largura de saída, altura proporcional
