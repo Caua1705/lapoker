@@ -13,11 +13,20 @@ import shutil
 from pathlib import Path
 
 # ── CONFIG ───────────────────────────────────────────────────────────────────
-VIDEO_PATH    = Path(__file__).parent / "video5.mp4"
+VIDEO_PATH    = Path(__file__).parent / "video1-mobile.mp4"
 OUTPUT_DIR    = Path(__file__).parent / "frames-mobile"
 TOTAL_FRAMES  = 150        # número de frames extraídos
 FRAME_WIDTH   = 1280       # largura de saída, altura proporcional
 WEBP_QUALITY  = 82         # qualidade WebP
+
+# ── ZOOM CROP ─────────────────────────────────────────────────────────────────
+# Remove uma margem percentual de cada borda antes de redimensionar.
+# Isso faz um "zoom in" e elimina marcas d'água nos cantos (ex: "VEO").
+# Ajuste o valor até a marca sumir:
+#   0.08 = 8% de cada borda cortada  (zoom suave, recomendado)
+#   0.12 = 12% de cada borda cortada (zoom mais agressivo)
+#   0.00 = sem corte (desativado)
+ZOOM_CROP = 0.08
 # ─────────────────────────────────────────────────────────────────────────────
 
 
@@ -34,8 +43,21 @@ def clean_output_dir():
     print(f"Pasta limpa: {OUTPUT_DIR}")
 
 
+def crop_frame(frame):
+    """Aplica zoom cortando ZOOM_CROP% de cada borda."""
+    if ZOOM_CROP <= 0:
+        return frame
+    h, w = frame.shape[:2]
+    cx = int(w * ZOOM_CROP)
+    cy = int(h * ZOOM_CROP)
+    return frame[cy : h - cy, cx : w - cx]
+
+
 def extract():
     clean_output_dir()
+
+    if ZOOM_CROP > 0:
+        print(f"Zoom crop ativo: {ZOOM_CROP * 100:.0f}% de cada borda removida")
 
     cap = cv2.VideoCapture(str(VIDEO_PATH))
     if not cap.isOpened():
@@ -67,7 +89,10 @@ def extract():
             print(f"  aviso: frame {frame_index} não lido, pulando")
             continue
 
-        # Redimensiona mantendo proporção
+        # ── Zoom: corta as bordas para remover marca d'água ──────────────
+        frame = crop_frame(frame)
+
+        # ── Redimensiona mantendo proporção ──────────────────────────────
         h, w = frame.shape[:2]
         new_w = FRAME_WIDTH
         new_h = int(h * new_w / w)
@@ -78,7 +103,7 @@ def extract():
             interpolation=cv2.INTER_AREA
         )
 
-        # Salva como WebP
+        # ── Salva como WebP ───────────────────────────────────────────────
         out_path = OUTPUT_DIR / f"frame_{i:04d}.webp"
 
         cv2.imwrite(
