@@ -2526,6 +2526,15 @@
         onUpdate: () => drawFrame(cur.index),
         scrollTrigger: { trigger:'#heroWrapper', start:'12% top', end:'bottom bottom', scrub:0.4 }
       });
+
+      /* ── Hide the fixed frame once heroWrapper is fully scrolled past ──
+         Without this the fixed z-50 frame sits on top of every section below. */
+      ScrollTrigger.create({
+        trigger: '#heroWrapper',
+        start: 'bottom bottom',   /* heroWrapper bottom hits viewport bottom */
+        onLeave()      { frame.style.display = 'none';  },   /* scrolled past hero → hide */
+        onEnterBack()  { frame.style.display = '';      },   /* scrolled back into hero → show */
+      });
     }
     if (document.readyState === 'complete') {
       requestAnimationFrame(() => requestAnimationFrame(initExpansion));
