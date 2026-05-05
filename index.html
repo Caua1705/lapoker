@@ -2323,11 +2323,19 @@
           </div>
         </div>
 
-        <!-- Instagram -->
-        <div class="s4-field">
-          <label class="s4-label-field" for="s4Insta">Instagram</label>
-          <input class="s4-input" id="s4Insta" name="instagram" type="text"
-            placeholder="@seuinstagram">
+        <!-- Instagram + E-mail -->
+        <div class="s4-row">
+          <div class="s4-field" id="s4FieldInsta">
+            <label class="s4-label-field" for="s4Insta">Instagram</label>
+            <input class="s4-input" id="s4Insta" name="instagram" type="text"
+              placeholder="@seuinstagram">
+          </div>
+          <div class="s4-field" id="s4FieldEmail">
+            <label class="s4-label-field" for="s4Email">E-mail</label>
+            <input class="s4-input" id="s4Email" name="email" type="email"
+              placeholder="seu@email.com" autocomplete="email">
+            <span class="s4-error-msg">Informe um e-mail válido</span>
+          </div>
         </div>
 
 
@@ -2719,6 +2727,12 @@
       if (!nome.value.trim()) { setFieldError(nomeField, nome, true); valid = false; }
       else setFieldError(nomeField, nome, false);
 
+      const email = document.getElementById('s4Email');
+      const emailField = document.getElementById('s4FieldEmail');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.value.trim() || !emailRegex.test(email.value.trim())) { setFieldError(emailField, email, true); valid = false; }
+      else setFieldError(emailField, email, false);
+
       const wpp = document.getElementById('s4Wpp');
       const wppField = document.getElementById('s4FieldWpp');
       const wppClean = wpp.value.replace(/\D/g,'');
@@ -2772,7 +2786,7 @@
     });
 
     // Live clear errors on input
-    ['s4Nome','s4Wpp'].forEach(id => {
+    ['s4Nome','s4Wpp','s4Email'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener('input', () => el.classList.remove('error'));
     });
