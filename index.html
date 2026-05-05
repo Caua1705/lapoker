@@ -1581,6 +1581,443 @@
       .s5-notes { gap: 14px; }
     }
 
+    /* ═══════════════════════════════════════════════════════════════
+       ██  MOBILE POLISH LAYER  — all rules ≤ 768 px               ██
+       ██  Desktop layout / spacing / animations: untouched         ██
+    ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* ── NAVBAR ────────────────────────────────────────────────── */
+      #navbar-wrap {
+        padding-bottom: 0;               /* no oversized fade zone on mobile */
+      }
+      #navbar {
+        padding: 0 20px;                 /* flat, controlled padding */
+        height: 60px;                    /* fixed navbar height for clean baseline */
+        min-height: 60px;
+        gap: 0;
+        align-items: center;
+      }
+      .nav-brand {
+        font-size: 14px;
+        letter-spacing: 0.24em;
+        line-height: 1;
+      }
+      /* nav-cta doubles as hamburger area — keep it visible & tappable */
+      .nav-cta {
+        padding: 10px 16px;
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        min-height: 40px;               /* comfortable tap target */
+        display: inline-flex;
+        align-items: center;
+      }
+      /* kill the spinning conic on mobile — expensive and tiny */
+      .nav-cta .cta-spin { animation: none; opacity: 0 !important; }
+
+      /* ── HERO WRAPPER ────────────────────────────────────────── */
+      #heroWrapper { height: 300vh; }   /* shorter scroll distance on mobile */
+
+      /* ── HERO CANVAS fills screen ────────────────────────────── */
+      #heroMobileFrame {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+      /* heavier vignette at top for text legibility, softer at bottom */
+      #heroMobileFrame::after {
+        background:
+          linear-gradient(to bottom,
+            rgba(6,6,6,0.88) 0%,
+            rgba(6,6,6,0.55) 30%,
+            rgba(6,6,6,0.15) 56%,
+            rgba(6,6,6,0.70) 100%
+          );
+      }
+
+      /* ── MOBILE OVERLAY — re-tune vertical rhythm ─────────────── */
+      #heroMobileOverlay {
+        justify-content: center;          /* vertically centered */
+        padding: 80px 28px 56px;          /* top clears navbar; not stuck at top */
+        padding-top: max(96px, 22vh);     /* sit a touch lower on tall phones */
+        gap: 0;                           /* spacing handled per-element */
+      }
+
+      /* brand wordmark */
+      .hm-brand {
+        font-size: 12px;
+        letter-spacing: 0.36em;
+        margin-bottom: 20px;
+      }
+
+      /* label */
+      .hm-label {
+        font-size: 7.5px;
+        letter-spacing: 0.40em;
+        margin-bottom: 18px;
+        gap: 10px;
+      }
+      .hm-label::before,
+      .hm-label::after { width: 16px; }
+
+      /* headline — strong but not oversized */
+      .hm-headline {
+        font-size: clamp(28px, 7.5vw, 40px);
+        line-height: 1.13;
+        letter-spacing: -0.01em;
+        margin-bottom: 14px;
+      }
+
+      /* sub — shorter, readable */
+      .hm-sub {
+        font-size: 12.5px;
+        line-height: 1.68;
+        max-width: 280px;
+        margin-bottom: 28px;
+        color: rgba(255,255,255,0.32);
+      }
+
+      /* CTA — comfortably wide, easy to tap */
+      .hm-cta {
+        width: min(280px, 80vw);
+        padding: 14px 28px;
+        font-size: 9.5px;
+        letter-spacing: 0.26em;
+        min-height: 48px;               /* ergonomic tap height */
+      }
+
+      /* disclaimer — muted, small */
+      .hm-disclaimer {
+        font-size: 7.5px;
+        letter-spacing: 0.20em;
+        margin-top: 14px;
+        color: rgba(255,255,255,0.12);
+      }
+
+      /* scroll hint — keep it subtle */
+      .hm-scroll-hint { bottom: 20px; }
+      .hm-scroll-hint span { font-size: 6.5px; letter-spacing: 0.30em; }
+      .hm-scroll-hint i { height: 24px; }
+
+      /* ── SECTION 2 — atmospheric & brand-driven ─────────────── */
+      #s2 {
+        padding: 64px 24px 56px;
+        text-align: left;
+      }
+      /* hide the giant watermark AP on mobile — too heavy */
+      #s2::before { display: none; }
+
+      #s2-rule { margin-bottom: 48px; }
+
+      .s2-label {
+        font-size: 8.5px;
+        letter-spacing: 0.34em;
+        margin-bottom: 20px;
+        justify-content: flex-start;
+      }
+      .s2-label::before { display: none; }
+      .s2-label::after  { display: none; }
+
+      .s2-headline {
+        font-size: clamp(28px, 7.5vw, 40px);
+        line-height: 1.15;
+        margin-bottom: 18px;
+      }
+
+      .s2-para {
+        font-size: 13px;
+        line-height: 1.78;
+        margin-bottom: 36px;
+        margin-left: 0;
+        max-width: 100%;
+        color: rgba(255,255,255,0.30);
+      }
+
+      /* cards — stacked, compact, clear */
+      .s2-trio {
+        grid-template-columns: 1fr;
+        border-left: none;
+      }
+      .s2-card {
+        padding: 20px 0;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .s2-card-dot {
+        margin: 0;
+        flex-shrink: 0;
+      }
+      .s2-card-title {
+        font-size: clamp(15px, 4vw, 18px);
+      }
+      /* remove hover top bar animation on touch — not needed */
+      .s2-card::before { display: none; }
+
+      /* ── SECTION 3 — practical & process-driven ─────────────── */
+      #s3 {
+        padding: 60px 24px 52px;
+      }
+      /* tighten ambient glow on mobile */
+      #s3::before {
+        background: radial-gradient(ellipse 100% 40% at 50% 100%, rgba(201,168,76,0.03) 0%, transparent 70%);
+      }
+
+      #s3-rule { margin-bottom: 44px; }
+
+      .s3-header {
+        margin-bottom: 36px;
+      }
+
+      .s3-label {
+        font-size: 8.5px;
+        letter-spacing: 0.34em;
+        margin-bottom: 14px;
+      }
+
+      .s3-headline {
+        font-size: clamp(24px, 6.5vw, 34px);
+        line-height: 1.20;
+        margin-bottom: 14px;
+      }
+
+      .s3-para {
+        font-size: 12.5px;
+        line-height: 1.74;
+        max-width: 100%;
+        color: rgba(255,255,255,0.28);
+      }
+
+      /* cards stacked with clear visual separation */
+      .s3-cards {
+        grid-template-columns: 1fr;
+        gap: 1px;
+      }
+      .s3-card {
+        padding: 28px 20px;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+        column-gap: 18px;
+        align-items: start;
+      }
+      /* number column — left, compact */
+      .s3-card-num {
+        font-size: clamp(36px, 9vw, 52px);
+        margin-bottom: 0;
+        grid-row: 1 / 3;
+        line-height: 1;
+        align-self: center;
+        color: rgba(201,168,76,0.14);
+      }
+      .s3-card-title {
+        font-size: clamp(16px, 4.2vw, 20px);
+        align-self: end;
+      }
+      .s3-card-desc {
+        font-size: 12px;
+        line-height: 1.70;
+        color: rgba(255,255,255,0.22);
+      }
+
+      /* ── SECTION 4 — form: most polished section ──────────────── */
+      #s4 {
+        padding: 60px 16px 64px;         /* side margin avoids edge-to-edge */
+      }
+
+      #s4-rule { margin-bottom: 44px; }
+
+      .s4-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .s4-left { position: static; }
+
+      .s4-label {
+        font-size: 8.5px;
+        letter-spacing: 0.34em;
+        margin-bottom: 18px;
+      }
+
+      .s4-headline {
+        font-size: clamp(24px, 6.5vw, 34px);
+        line-height: 1.20;
+        margin-bottom: 16px;
+      }
+
+      .s4-para {
+        font-size: 12.5px;
+        line-height: 1.76;
+        max-width: 100%;
+        margin-bottom: 24px;
+        color: rgba(255,255,255,0.28);
+      }
+
+      .s4-trust { gap: 12px; }
+      .s4-trust-item {
+        font-size: 10.5px;
+        letter-spacing: 0.06em;
+        color: rgba(255,255,255,0.26);
+      }
+
+      /* form card — breathing room, no edge-to-edge */
+      .s4-card {
+        padding: 28px 20px 28px;
+        border: 1px solid rgba(201,168,76,0.14);
+        /* softer shadow on small screens */
+        box-shadow:
+          0 0 0 1px rgba(201,168,76,0.04) inset,
+          0 16px 48px rgba(0,0,0,0.50);
+      }
+
+      /* full-width stacked rows */
+      .s4-row { grid-template-columns: 1fr; gap: 14px; }
+
+      /* form gap and input sizing */
+      .s4-form { gap: 16px; }
+
+      .s4-label-field {
+        font-size: 9.5px;
+        letter-spacing: 0.18em;
+        color: rgba(255,255,255,0.44);
+      }
+
+      .s4-input,
+      .s4-select,
+      .s4-textarea {
+        padding: 15px 14px;             /* tall touch targets */
+        font-size: 14px;                /* avoids iOS zoom on focus */
+        min-height: 50px;
+      }
+
+      .s4-textarea {
+        min-height: 80px;
+        font-size: 14px;
+      }
+
+      /* checkbox area — readable, not cramped */
+      .s4-check { gap: 10px; }
+      .s4-check-box {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .s4-check-label {
+        font-size: 11px;
+        line-height: 1.58;
+        color: rgba(255,255,255,0.30);
+      }
+
+      /* submit — full width, comfortable */
+      .s4-submit {
+        padding: 17px 24px;
+        font-size: 9.5px;
+        letter-spacing: 0.28em;
+        min-height: 52px;
+      }
+      /* disable hover fill animation on touch */
+      .s4-submit .s4-submit-fill { display: none; }
+
+      .s4-legal {
+        font-size: 9.5px;
+        line-height: 1.60;
+        color: rgba(255,255,255,0.14);
+        margin-top: 14px;
+        text-align: center;
+      }
+
+      /* ── SECTION 5 — minimal, elegant closing ──────────────── */
+      #s5 {
+        padding: 64px 24px 0;
+      }
+      /* suppress giant watermark on mobile */
+      #s5::before { display: none; }
+
+      #s5-rule { margin-bottom: 48px; }
+
+      .s5-monogram {
+        font-size: clamp(22px, 6vw, 32px);
+        margin-bottom: 16px;
+        color: rgba(201,168,76,0.30);
+      }
+
+      .s5-label {
+        font-size: 8px;
+        letter-spacing: 0.36em;
+        margin-bottom: 24px;
+        gap: 14px;
+      }
+      .s5-label::before,
+      .s5-label::after { width: 20px; opacity: 0.35; }
+
+      .s5-accent-line { margin-bottom: 28px; }
+
+      .s5-headline {
+        font-size: clamp(26px, 7vw, 38px);
+        line-height: 1.16;
+        margin-bottom: 18px;
+        letter-spacing: -0.01em;
+      }
+
+      .s5-para {
+        font-size: 12.5px;
+        line-height: 1.78;
+        max-width: 100%;
+        margin-bottom: 40px;
+        color: rgba(255,255,255,0.26);
+      }
+
+      .s5-notes {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 36px;
+      }
+      .s5-note {
+        font-size: 8.5px;
+        letter-spacing: 0.26em;
+      }
+      .s5-note:not(:last-child)::after { display: none; }
+
+      .s5-cta {
+        font-size: 8.5px;
+        letter-spacing: 0.28em;
+        padding: 12px 22px;
+        margin-bottom: 48px;
+      }
+
+      #s5-footer {
+        font-size: 8.5px;
+        letter-spacing: 0.18em;
+        padding: 20px 0 28px;
+        text-align: center;
+      }
+
+      /* ── MOBILE ANIMATIONS — lighter, shorter ───────────────── */
+      /* Reduce y-travel on scroll-triggered entrance animations   */
+      /* (GSAP still runs these — we just tighten via CSS fallback  */
+      /* and the JS already guards with IS_MOBILE check)            */
+      @keyframes hm-pulse {
+        0%, 100% { opacity: 0.3; }
+        50%       { opacity: 0.85; }
+      }
+
+    } /* end @media (max-width: 768px) */
+
+    /* ── very small phones (≤ 390px) ── */
+    @media (max-width: 390px) {
+      .hm-headline { font-size: 26px; }
+      .s2-headline { font-size: 26px; }
+      .s3-headline { font-size: 22px; }
+      .s4-headline { font-size: 22px; }
+      .s5-headline { font-size: 24px; }
+      #heroMobileOverlay { padding-top: max(88px, 20vh); }
+      .hm-cta { width: 90vw; }
+      #s4 { padding: 52px 14px 56px; }
+    }
+
   </style>
 </head>
 
@@ -2097,16 +2534,16 @@
       tl.to('#heroDisclaimer', { opacity:1,            duration:0.8                     }, 2.9);
       tl.to('#videoFrame',     { opacity:1,            duration:1.4, ease:'power2.out'  }, 0.8);
     } else {
-      /* ── Mobile entrance ── */
-      const e = 'power3.out';
-      gsap.to('#navbar-wrap', { opacity:1, y:0, duration:0.9, ease:'power2.out', delay:0.1 });
-      gsap.fromTo('#hmBrand',      { opacity:0, y:10 }, { opacity:1, y:0, duration:0.9, ease:e, delay:0.4 });
-      gsap.fromTo('#hmLabel',      { opacity:0 },       { opacity:1,      duration:0.8, ease:e, delay:0.65 });
-      gsap.fromTo('#hmHeadline',   { opacity:0, y:18 }, { opacity:1, y:0, duration:1.1, ease:e, delay:0.85 });
-      gsap.fromTo('#hmSub',        { opacity:0, y:10 }, { opacity:1, y:0, duration:1.0, ease:e, delay:1.20 });
-      gsap.fromTo('#hmCta',        { opacity:0, y:8  }, { opacity:1, y:0, duration:0.9, ease:e, delay:1.60 });
-      gsap.fromTo('#hmDisclaimer', { opacity:0 },       { opacity:1,      duration:0.7, ease:e, delay:2.00 });
-      gsap.fromTo('#hmScrollHint', { opacity:0 },       { opacity:1,      duration:0.8, ease:e, delay:2.40 });
+      /* ── Mobile entrance — lighter, shorter y-travel ── */
+      const e = 'power2.out';
+      gsap.to('#navbar-wrap', { opacity:1, y:0, duration:0.7, ease:'power2.out', delay:0.1 });
+      gsap.fromTo('#hmBrand',      { opacity:0, y:6  }, { opacity:1, y:0, duration:0.7, ease:e, delay:0.35 });
+      gsap.fromTo('#hmLabel',      { opacity:0 },       { opacity:1,      duration:0.6, ease:e, delay:0.55 });
+      gsap.fromTo('#hmHeadline',   { opacity:0, y:12 }, { opacity:1, y:0, duration:0.9, ease:e, delay:0.72 });
+      gsap.fromTo('#hmSub',        { opacity:0, y:8  }, { opacity:1, y:0, duration:0.8, ease:e, delay:1.00 });
+      gsap.fromTo('#hmCta',        { opacity:0, y:6  }, { opacity:1, y:0, duration:0.7, ease:e, delay:1.35 });
+      gsap.fromTo('#hmDisclaimer', { opacity:0 },       { opacity:1,      duration:0.6, ease:e, delay:1.65 });
+      gsap.fromTo('#hmScrollHint', { opacity:0 },       { opacity:1,      duration:0.7, ease:e, delay:2.00 });
     }
   }
 
