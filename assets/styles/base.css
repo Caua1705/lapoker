@@ -1,0 +1,37 @@
+/* ── TOKENS ── */
+:root {
+  --black:      #060606;
+  --gold:       #C9A84C;
+  --gold-light: #E2C882;
+  --gold-vivid: #E8C96A;
+  --gold-dim:   #7A6230;
+  --gold-faint: rgba(201,168,76,0.12);
+  --gold-soft:  #D4AE52;
+  --gold-border: rgba(232,201,106,0.55);
+  --white:      #ffffff;
+  --serif:      'Cormorant Garamond', Georgia, serif;
+  --sans:       'Manrope', sans-serif;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-label, .hero-headline, .hero-rule, .hero-sub,
+  .btn-primary, .hero-disclaimer, .video-frame, #navbar {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@keyframes cta-spin { to { transform: rotate(360deg); } }
