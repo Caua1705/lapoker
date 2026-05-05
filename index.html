@@ -593,6 +593,7 @@
         position: absolute;
         inset: 0;
         z-index: 1;
+        background: #060606;    /* solid fallback — no color mismatch */
       }
       #heroCanvasMobile {
         display: block;
@@ -1729,6 +1730,13 @@
         position: absolute;
         inset: 0;
         z-index: 1;
+        background: #060606;
+      }
+
+      /* sections after hero scroll ON TOP of the sticky hero */
+      #s2, #s3, #s4, #s5 {
+        position: relative;
+        z-index: 2;
       }
 
       /* ── SECTION 2 — atmospheric & brand-driven ─────────────── */
@@ -2527,16 +2535,21 @@
       const img = mFrames[index];
       if (!img || !img.complete || !img.naturalWidth) return;
       const dpr = window.devicePixelRatio || 1;
-      const cw  = window.innerWidth * dpr;
-      const ch  = window.innerHeight * dpr;
+      // Use the canvas element’s ACTUAL rendered size via getBoundingClientRect.
+      // This matches the CSS layout exactly (100vh) and avoids the mismatch
+      // between window.innerHeight and CSS 100vh on mobile browsers.
+      const rect = mCanvas.getBoundingClientRect();
+      const cw = Math.round(rect.width  * dpr);
+      const ch = Math.round(rect.height * dpr);
       if (mCanvas.width !== cw || mCanvas.height !== ch) {
         mCanvas.width = cw; mCanvas.height = ch;
       }
+      // object-fit: cover — always fills, always centered
       const ir = img.naturalWidth / img.naturalHeight;
       const cr = cw / ch;
       let sw, sh, sx, sy;
-      if (ir > cr) { sh = img.naturalHeight; sw = sh * cr; sx = (img.naturalWidth - sw) / 2; sy = 0; }
-      else         { sw = img.naturalWidth;  sh = sw / cr; sx = 0; sy = (img.naturalHeight - sh) / 2; }
+      if (ir > cr) { sh = img.naturalHeight; sw = sh * cr; sx = (img.naturalWidth  - sw) / 2; sy = 0; }
+      else         { sw = img.naturalWidth;  sh = sw / cr; sx = 0;                             sy = (img.naturalHeight - sh) / 2; }
       mCtx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
     }
 
