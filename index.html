@@ -1709,16 +1709,21 @@
         padding-bottom: 0;
       }
       #navbar {
-        padding: 0 20px;
-        height: 60px;
-        min-height: 60px;
+        padding: 0 22px;
+        height: 56px;
+        min-height: 56px;
         gap: 0;
         align-items: center;
       }
       .nav-brand {
-        font-size: 14px;
-        letter-spacing: 0.24em;
+        font-size: 13px;
+        letter-spacing: 0.26em;
         line-height: 1;
+      }
+      /* compact right CTA if present */
+      .nav-mobile-cta {
+        gap: 6px;
+        padding: 7px 10px;
       }
 
       /* ── HERO WRAPPER ────────────────────────────────────────── */
@@ -1740,211 +1745,199 @@
 
       /* ── SECTION 2 — atmospheric & brand-driven ─────────────── */
       #s2 {
-        padding: 64px 24px 56px;
+        padding: 56px 24px 48px;
         text-align: left;
       }
-      /* hide the giant watermark AP on mobile — too heavy */
       #s2::before { display: none; }
 
-      #s2-rule { margin-bottom: 48px; }
+      #s2-rule { margin-bottom: 40px; }
 
       .s2-label {
-        font-size: 9px;
+        font-size: 8.5px;
         font-weight: 600;
-        letter-spacing: 0.34em;
+        letter-spacing: 0.36em;
         color: var(--gold);
-        margin-bottom: 20px;
+        margin-bottom: 18px;
         justify-content: flex-start;
       }
       .s2-label::before { display: none; }
       .s2-label::after  { display: none; }
 
       .s2-headline {
-        font-size: clamp(30px, 8vw, 42px);
-        line-height: 1.13;
-        margin-bottom: 16px;
+        font-size: clamp(28px, 7.5vw, 40px);
+        line-height: 1.12;
+        margin-bottom: 14px;
       }
 
       .s2-para {
         font-size: 13px;
-        line-height: 1.78;
-        margin-bottom: 36px;
+        line-height: 1.76;
+        margin-bottom: 32px;
         margin-left: 0;
-        max-width: 100%;
-        color: rgba(255,255,255,0.30);
-      }
-
-      /* cards — stacked list with clean separators */
-      .s2-trio {
-        grid-template-columns: 1fr;
-        border: none;                   /* remove ALL grid borders */
-      }
-      .s2-card {
-        padding: 22px 0;
-        text-align: left;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        border: none;                   /* remove right & bottom grid borders */
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-      }
-      .s2-card:last-child {
-        border-bottom: none;            /* no line after last item */
-      }
-      .s2-card-dot {
-        margin: 0;
-        flex-shrink: 0;
-        width: 16px;
-        height: 1px;
-        border-radius: 0;
-        background: rgba(201,168,76,0.35);
-      }
-      .s2-card-title {
-        font-size: clamp(16px, 4.2vw, 20px);
-        color: rgba(255,255,255,0.80);
-      }
-      /* remove hover top bar animation on touch — not needed */
-      .s2-card::before { display: none; }
-
-      /* ── SECTION 3 — practical & process-driven ─────────────── */
-      #s3 {
-        padding: 60px 24px 52px;
-      }
-      /* tighten ambient glow on mobile */
-      #s3::before {
-        background: radial-gradient(ellipse 100% 40% at 50% 100%, rgba(201,168,76,0.03) 0%, transparent 70%);
-      }
-
-      #s3-rule { margin-bottom: 44px; }
-
-      .s3-header {
-        margin-bottom: 36px;
-      }
-
-      .s3-label {
-        font-size: 9px;
-        font-weight: 600;
-        letter-spacing: 0.34em;
-        color: var(--gold);
-        margin-bottom: 14px;
-      }
-
-      .s3-headline {
-        font-size: clamp(26px, 7.5vw, 38px);
-        line-height: 1.16;
-        margin-bottom: 14px;
-      }
-
-      .s3-para {
-        font-size: 12.5px;
-        line-height: 1.74;
         max-width: 100%;
         color: rgba(255,255,255,0.28);
       }
 
-      /* cards stacked with clear visual separation */
+      /* cards — clean separator list */
+      .s2-trio {
+        grid-template-columns: 1fr;
+        border: none;
+      }
+      .s2-card {
+        padding: 20px 0;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border: none;
+        border-bottom: 1px solid rgba(255,255,255,0.055);
+      }
+      .s2-card:last-child { border-bottom: none; }
+      .s2-card-dot {
+        margin: 0;
+        flex-shrink: 0;
+        width: 14px;
+        height: 1px;
+        border-radius: 0;
+        background: rgba(201,168,76,0.32);
+      }
+      .s2-card-title {
+        font-size: clamp(15px, 4vw, 19px);
+        color: rgba(255,255,255,0.78);
+      }
+      .s2-card::before { display: none; }
+
+      /* ── SECTION 3 — process steps ─────────────────────────── */
+      #s3 {
+        padding: 52px 24px 48px;
+      }
+      #s3::before {
+        background: radial-gradient(ellipse 100% 40% at 50% 100%, rgba(201,168,76,0.025) 0%, transparent 70%);
+      }
+
+      #s3-rule { margin-bottom: 40px; }
+
+      .s3-header { margin-bottom: 32px; }
+
+      .s3-label {
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.36em;
+        color: var(--gold);
+        margin-bottom: 12px;
+      }
+
+      .s3-headline {
+        font-size: clamp(24px, 7vw, 36px);
+        line-height: 1.15;
+        margin-bottom: 12px;
+      }
+
+      .s3-para {
+        font-size: 12.5px;
+        line-height: 1.72;
+        max-width: 100%;
+        color: rgba(255,255,255,0.26);
+      }
+
       .s3-cards {
         grid-template-columns: 1fr;
         gap: 1px;
       }
       .s3-card {
-        padding: 28px 20px;
+        padding: 24px 18px;
         display: grid;
         grid-template-columns: auto 1fr;
         grid-template-rows: auto auto;
-        column-gap: 18px;
+        column-gap: 16px;
         align-items: start;
       }
-      /* number column — left, compact */
       .s3-card-num {
-        font-size: clamp(36px, 9vw, 52px);
+        font-size: clamp(32px, 8vw, 46px);
         margin-bottom: 0;
         grid-row: 1 / 3;
         line-height: 1;
         align-self: center;
-        color: rgba(201,168,76,0.14);
+        color: rgba(201,168,76,0.12);
       }
       .s3-card-title {
-        font-size: clamp(17px, 4.5vw, 22px);
+        font-size: clamp(16px, 4.2vw, 20px);
         align-self: end;
       }
       .s3-card-desc {
-        font-size: 12.5px;
-        line-height: 1.68;
-        color: rgba(255,255,255,0.28);
+        font-size: 12px;
+        line-height: 1.66;
+        color: rgba(255,255,255,0.26);
       }
 
-      /* ── SECTION 4 — form: most polished section ──────────────── */
+      /* ── SECTION 4 — form ──────────────────────────────────── */
       #s4 {
-        padding: 60px 16px 64px;         /* side margin avoids edge-to-edge */
+        padding: 52px 20px 56px;
       }
 
       #s4-rule { margin-bottom: 44px; }
 
       .s4-grid {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 32px;
       }
       .s4-left { position: static; }
 
       .s4-label {
-        font-size: 9px;
+        font-size: 8.5px;
         font-weight: 600;
-        letter-spacing: 0.34em;
+        letter-spacing: 0.36em;
         color: var(--gold);
-        margin-bottom: 18px;
+        margin-bottom: 14px;
       }
 
       .s4-headline {
-        font-size: clamp(28px, 7.5vw, 40px);
-        line-height: 1.14;
-        margin-bottom: 14px;
+        font-size: clamp(26px, 7vw, 38px);
+        line-height: 1.13;
+        margin-bottom: 12px;
       }
 
       .s4-para {
         font-size: 12.5px;
-        line-height: 1.76;
+        line-height: 1.74;
         max-width: 100%;
-        margin-bottom: 24px;
-        color: rgba(255,255,255,0.28);
+        margin-bottom: 20px;
+        color: rgba(255,255,255,0.26);
       }
 
-      .s4-trust { gap: 12px; }
+      .s4-trust { gap: 10px; }
       .s4-trust-item {
-        font-size: 11px;
-        letter-spacing: 0.06em;
-        color: rgba(255,255,255,0.32);
+        font-size: 10.5px;
+        letter-spacing: 0.05em;
+        color: rgba(255,255,255,0.28);
       }
 
       /* form card — breathing room, no edge-to-edge */
       .s4-card {
-        padding: 28px 20px 28px;
-        border: 1px solid rgba(201,168,76,0.14);
-        /* softer shadow on small screens */
+        padding: 24px 18px 28px;
+        border: 1px solid rgba(201,168,76,0.12);
         box-shadow:
-          0 0 0 1px rgba(201,168,76,0.04) inset,
-          0 16px 48px rgba(0,0,0,0.50);
+          0 0 0 1px rgba(201,168,76,0.03) inset,
+          0 12px 40px rgba(0,0,0,0.45);
       }
 
       /* full-width stacked rows */
-      .s4-row { grid-template-columns: 1fr; gap: 14px; }
-
-      /* form gap and input sizing */
-      .s4-form { gap: 16px; }
+      .s4-row { grid-template-columns: 1fr; gap: 12px; }
+      .s4-form { gap: 14px; }
 
       .s4-label-field {
-        font-size: 10px;
+        font-size: 9.5px;
         font-weight: 500;
         letter-spacing: 0.18em;
-        color: rgba(255,255,255,0.52);
+        color: rgba(255,255,255,0.48);
       }
 
       .s4-input,
       .s4-select,
       .s4-textarea {
-        padding: 16px 14px;             /* tall touch targets */
-        font-size: 15px;                /* avoids iOS zoom on focus */
-        min-height: 52px;               /* 52px tap target */
+        padding: 14px 13px;
+        font-size: 15px;
+        min-height: 50px;
       }
 
       /* segmented control — full width, taller tap zone on mobile */
@@ -1981,9 +1974,9 @@
         font-size: 10px;
         font-weight: 600;
         letter-spacing: 0.30em;
-        min-height: 56px;               /* prominent mobile button */
+        min-height: 52px;
         color: rgba(232,201,106,0.90);
-        border-color: rgba(232,201,106,0.50);
+        border-color: rgba(232,201,106,0.48);
       }
       /* disable hover fill animation on touch */
       .s4-submit .s4-submit-fill { display: none; }
@@ -1997,69 +1990,69 @@
       }
 
       /* ── SECTION 5 — minimal, elegant closing ──────────────── */
+      /* ── SECTION 5 — closing ───────────────────────────────── */
       #s5 {
-        padding: 64px 24px 0;
+        padding: 56px 24px 0;
       }
-      /* suppress giant watermark on mobile */
       #s5::before { display: none; }
 
-      #s5-rule { margin-bottom: 48px; }
+      #s5-rule { margin-bottom: 40px; }
 
       .s5-monogram {
-        font-size: clamp(22px, 6vw, 32px);
-        margin-bottom: 16px;
-        color: rgba(201,168,76,0.30);
+        font-size: clamp(20px, 5.5vw, 30px);
+        margin-bottom: 14px;
+        color: rgba(201,168,76,0.28);
       }
 
       .s5-label {
         font-size: 8px;
-        letter-spacing: 0.36em;
-        margin-bottom: 24px;
-        gap: 14px;
+        letter-spacing: 0.34em;
+        margin-bottom: 20px;
+        gap: 12px;
       }
       .s5-label::before,
-      .s5-label::after { width: 20px; opacity: 0.35; }
+      .s5-label::after { width: 18px; opacity: 0.32; }
 
-      .s5-accent-line { margin-bottom: 28px; }
+      .s5-accent-line { margin-bottom: 24px; }
 
       .s5-headline {
-        font-size: clamp(26px, 7vw, 38px);
-        line-height: 1.16;
-        margin-bottom: 18px;
+        font-size: clamp(24px, 6.5vw, 36px);
+        line-height: 1.15;
+        margin-bottom: 16px;
         letter-spacing: -0.01em;
       }
 
       .s5-para {
         font-size: 12.5px;
-        line-height: 1.78;
+        line-height: 1.76;
         max-width: 100%;
-        margin-bottom: 40px;
-        color: rgba(255,255,255,0.26);
+        margin-bottom: 32px;
+        color: rgba(255,255,255,0.24);
       }
 
       .s5-notes {
         flex-direction: column;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 36px;
+        gap: 9px;
+        margin-bottom: 30px;
       }
       .s5-note {
-        font-size: 8.5px;
-        letter-spacing: 0.26em;
+        font-size: 8px;
+        letter-spacing: 0.24em;
       }
       .s5-note:not(:last-child)::after { display: none; }
 
       .s5-cta {
         font-size: 8.5px;
-        letter-spacing: 0.28em;
-        padding: 12px 22px;
-        margin-bottom: 48px;
+        letter-spacing: 0.26em;
+        padding: 11px 20px;
+        margin-bottom: 40px;
       }
 
       #s5-footer {
-        font-size: 8.5px;
-        letter-spacing: 0.18em;
-        padding: 20px 0 28px;
+        font-size: 8px;
+        letter-spacing: 0.16em;
+        padding: 18px 0 24px;
         text-align: center;
       }
 
