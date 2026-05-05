@@ -13,8 +13,8 @@ import os
 from pathlib import Path
 
 # ── CONFIG ───────────────────────────────────────────────────────────────────
-VIDEO_PATH    = Path(__file__).parent / "aaaa.mp4"
-OUTPUT_DIR    = Path(__file__).parent / "frames"
+VIDEO_PATH    = Path(__file__).parent / "video1.mp4"
+OUTPUT_DIR    = Path(__file__).parent / "frames-mobile"
 TOTAL_FRAMES  = 150        # número de frames extraídos (mais = mais suave, mais pesado)
 FRAME_WIDTH   = 1280       # largura de saída (height proporcional)
 WEBP_QUALITY  = 82         # qualidade WebP (0-100). 80-85 é o sweet-spot tamanho/qualidade
