@@ -2149,6 +2149,8 @@
     ═════════════════════════════════════════════════════════════ */
     @media (min-width: 769px) {
 
+      /* ─ 0. (reserved) ─ */
+
       /* ─ 1. GRAIN TEXTURE — editorial luxury feel ─────────────────────── */
       body::after {
         content: '';
@@ -2713,12 +2715,37 @@
         onUpdate: () => drawFrame(cur.index),
         scrollTrigger: { trigger:'#heroWrapper', start:'12% top', end:'bottom bottom', scrub:0.4 }
       });
-      /* When heroWrapper ends, hide the fixed frame so S2 appears cleanly below */
+      /* Once expansion is complete (frame = fullscreen), switch from fixed to absolute
+         so the frame scrolls naturally with heroWrapper. S2 appears below in normal flow.
+         At 'bottom bottom' (scroll ≈ 300vh), the expansion GSAP tween is done.
+         We anchor the frame at the bottom of heroWrapper so it scrolls out 300vh→400vh. */
+      const wrapper = document.getElementById('heroWrapper');
       ScrollTrigger.create({
         trigger: '#heroWrapper',
         start: 'bottom bottom',
-        onLeave()     { frame.style.display = 'none'; },
-        onEnterBack() { frame.style.display = '';     },
+        onLeave() {
+          const absTop = wrapper.offsetHeight - window.innerHeight;
+          Object.assign(frame.style, {
+            position: 'absolute',
+            top: absTop + 'px',
+            left: '0px',
+            width: '100%',
+            height: window.innerHeight + 'px',
+            zIndex: '1',
+          });
+          drawFrame(cur.index);
+        },
+        onEnterBack() {
+          Object.assign(frame.style, {
+            position: 'fixed',
+            top: '0px',
+            left: '0px',
+            width: window.innerWidth + 'px',
+            height: window.innerHeight + 'px',
+            zIndex: '50',
+          });
+          drawFrame(cur.index);
+        },
       });
     }
     if (document.readyState === 'complete') {
