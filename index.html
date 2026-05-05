@@ -1326,15 +1326,23 @@
       transition: border-color 0.3s, background 0.3s;
     }
     .s4-check input[type="checkbox"]:checked + .s4-check-box {
-      background: rgba(201,168,76,0.15);
-      border-color: rgba(201,168,76,0.65);
+      background: rgba(201,168,76,0.10);
+      border-color: rgba(201,168,76,0.70);
     }
-    .s4-check input[type="checkbox"]:checked + .s4-check-box::after {
+    /* premium checkmark — drawn with CSS, not a square */
+    .s4-check-box::after {
       content: '';
       position: absolute;
-      top: 3px; left: 3px;
-      width: 8px; height: 8px;
-      background: var(--gold-vivid);
+      top: 2px; left: 4px;
+      width: 5px; height: 9px;
+      border-right: 1.5px solid rgba(201,168,76,0);
+      border-bottom: 1.5px solid rgba(201,168,76,0);
+      transform: rotate(45deg);
+      transition: border-color 0.25s;
+    }
+    .s4-check input[type="checkbox"]:checked + .s4-check-box::after {
+      border-right-color: rgba(232,201,106,0.95);
+      border-bottom-color: rgba(232,201,106,0.95);
     }
     .s4-check-label {
       font-family: var(--sans);
