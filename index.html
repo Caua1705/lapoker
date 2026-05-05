@@ -1763,10 +1763,31 @@
         z-index: 2;
       }
 
+      /* ── MOBILE CONTRAST LIFT ─────────────────────────────────────
+         The pure #060606 background is too flat on small screens.
+         Give each section a slightly warmer dark base + ambient glow.
+      ────────────────────────────────────────────────────────────── */
+      #s2 { background: #0d0d0b; }
+      #s3 { background: #0a0a09; }
+      #s4 { background: #0d0d0b; }
+      #s5 { background: #0d0d0b; }
+
+      /* Divider rules — more visible */
+      #s2-rule, #s3-rule, #s4-rule, #s5-rule {
+        background: linear-gradient(to right,
+          transparent,
+          rgba(201,168,76,0.28) 25%,
+          rgba(201,168,76,0.28) 75%,
+          transparent
+        );
+      }
+
       /* ── SECTION 2 — atmospheric & brand-driven ─────────────── */
       #s2 {
         padding: 56px 24px 48px;
         text-align: left;
+        /* subtle ambient from top */
+        background-image: radial-gradient(ellipse 90% 35% at 50% 0%, rgba(201,168,76,0.04) 0%, transparent 100%);
       }
       #s2::before { display: none; }
 
@@ -1810,29 +1831,27 @@
         align-items: center;
         gap: 16px;
         border: none;
-        border-bottom: 1px solid rgba(255,255,255,0.055);
+        border-bottom: 1px solid rgba(255,255,255,0.10); /* more visible separator */
       }
       .s2-card:last-child { border-bottom: none; }
       .s2-card-dot {
         margin: 0;
         flex-shrink: 0;
-        width: 14px;
+        width: 18px;
         height: 1px;
         border-radius: 0;
-        background: rgba(201,168,76,0.32);
+        background: rgba(201,168,76,0.55); /* more visible gold tick */
       }
       .s2-card-title {
         font-size: clamp(16px, 4.2vw, 20px);
-        color: rgba(255,255,255,0.72);
+        color: rgba(255,255,255,0.82); /* lifted from 0.72 */
       }
       .s2-card::before { display: none; }
 
       /* ── SECTION 3 — process steps ─────────────────────────── */
       #s3 {
         padding: 52px 24px 48px;
-      }
-      #s3::before {
-        background: radial-gradient(ellipse 100% 40% at 50% 100%, rgba(201,168,76,0.025) 0%, transparent 70%);
+        background-image: radial-gradient(ellipse 100% 40% at 50% 100%, rgba(201,168,76,0.05) 0%, transparent 70%);
       }
 
       #s3-rule { margin-bottom: 40px; }
@@ -1867,10 +1886,12 @@
       .s3-card {
         padding: 24px 18px;
         display: grid;
-        grid-template-columns: 44px 1fr;  /* fixed number column */
+        grid-template-columns: 44px 1fr;
         grid-template-rows: auto auto;
         column-gap: 16px;
         align-items: start;
+        background: #111110;           /* slightly lifted from section bg */
+        border-bottom: 1px solid rgba(255,255,255,0.07);
       }
       .s3-card-num {
         font-size: clamp(28px, 7vw, 38px);
@@ -1886,16 +1907,17 @@
         line-height: 1.22;
         margin-top: 0;
         align-self: start;
+        color: rgba(255,255,255,0.88); /* lifted for better contrast */
       }
       .s3-card-desc {
         font-size: 13px;
         line-height: 1.68;
-        color: rgba(255,255,255,0.28);
+        color: rgba(255,255,255,0.42); /* up from 0.28 — more readable */
       }
 
-      /* ── SECTION 4 — form ──────────────────────────────────── */
       #s4 {
         padding: 52px 20px 56px;
+        background-image: radial-gradient(ellipse 90% 40% at 50% 100%, rgba(201,168,76,0.05) 0%, transparent 70%);
       }
 
       #s4-rule { margin-bottom: 44px; }
@@ -1938,10 +1960,11 @@
       /* form card — breathing room, no edge-to-edge */
       .s4-card {
         padding: 24px 18px 28px;
-        border: 1px solid rgba(201,168,76,0.12);
+        background: rgba(255,255,255,0.025); /* slight lift from pure black */
+        border: 1px solid rgba(201,168,76,0.22); /* more visible gold border */
         box-shadow:
-          0 0 0 1px rgba(201,168,76,0.03) inset,
-          0 12px 40px rgba(0,0,0,0.45);
+          0 0 0 1px rgba(201,168,76,0.06) inset,
+          0 12px 40px rgba(0,0,0,0.40);
       }
 
       /* full-width stacked rows */
@@ -1961,6 +1984,9 @@
         padding: 14px 13px;
         font-size: 15px;
         min-height: 50px;
+        background: rgba(255,255,255,0.04);  /* slightly lighter than card bg */
+        border-color: rgba(255,255,255,0.14); /* more visible input borders */
+        color: rgba(255,255,255,0.90);
       }
 
       /* segmented control — full width, taller tap zone on mobile */
@@ -2024,9 +2050,9 @@
       }
 
       /* ── SECTION 5 — minimal, elegant closing ──────────────── */
-      /* ── SECTION 5 — closing ───────────────────────────────── */
       #s5 {
         padding: 56px 24px 0;
+        background-image: radial-gradient(ellipse 90% 35% at 50% 0%, rgba(201,168,76,0.04) 0%, transparent 100%);
       }
       #s5::before { display: none; }
 
