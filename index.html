@@ -688,11 +688,11 @@
       /* ── LABEL ────────────────────────────────────────────────── */
       .hm-label {
         font-family: var(--sans);
-        font-size: 7.5px;
-        font-weight: 500;
-        letter-spacing: 0.46em;
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.44em;
         text-transform: uppercase;
-        color: var(--gold-dim);
+        color: var(--gold);
         margin-bottom: 16px;
         opacity: 0;
         display: flex;
@@ -705,19 +705,19 @@
         width: 18px;
         height: 1px;
         background: var(--gold-dim);
-        opacity: 0.45;
+        opacity: 0.55;
         flex-shrink: 0;
       }
 
       /* ── HEADLINE ─────────────────────────────────────────────── */
       .hm-headline {
         font-family: var(--serif);
-        font-size: clamp(30px, 8.5vw, 44px);
+        font-size: clamp(34px, 9.5vw, 48px);
         font-weight: 300;
-        line-height: 1.12;
+        line-height: 1.10;
         letter-spacing: -0.01em;
         color: var(--white);
-        margin-bottom: 18px;
+        margin-bottom: 16px;
         opacity: 0;
       }
       .hm-headline em {
@@ -728,11 +728,11 @@
       /* ── SUBHEADLINE ──────────────────────────────────────────── */
       .hm-sub {
         font-family: var(--sans);
-        font-size: 12.5px;
+        font-size: 13px;
         font-weight: 300;
-        line-height: 1.70;
-        color: rgba(255,255,255,0.34);
-        max-width: 270px;
+        line-height: 1.68;
+        color: rgba(255,255,255,0.42);
+        max-width: 260px;
         margin-bottom: 28px;
         opacity: 0;
       }
@@ -744,33 +744,33 @@
         align-items: center;
         justify-content: center;
         font-family: var(--sans);
-        font-size: 9.5px;
+        font-size: 10px;
         font-weight: 600;
-        letter-spacing: 0.30em;
+        letter-spacing: 0.32em;
         text-transform: uppercase;
-        color: var(--white);
+        color: rgba(255,255,255,0.96);
         text-decoration: none;
-        padding: 14px 28px;
-        width: min(260px, 78vw);        /* wide but never edge-to-edge */
-        min-height: 48px;               /* ergonomic tap zone */
-        background: rgba(201,168,76,0.08);
-        border: 1px solid rgba(201,168,76,0.38);
+        padding: 0 32px;
+        width: min(280px, 82vw);
+        min-height: 52px;               /* 52px — larger tap target */
+        background: rgba(201,168,76,0.10);
+        border: 1px solid rgba(201,168,76,0.50);
         opacity: 0;
         transition: background 0.35s, border-color 0.35s;
         -webkit-tap-highlight-color: transparent;
       }
       .hm-cta:active {
-        background: rgba(201,168,76,0.20);
-        border-color: rgba(201,168,76,0.70);
+        background: rgba(201,168,76,0.24);
+        border-color: rgba(201,168,76,0.80);
       }
 
       /* ── DISCLAIMER ───────────────────────────────────────────── */
       .hm-disclaimer {
         font-family: var(--sans);
-        font-size: 7.5px;
-        letter-spacing: 0.22em;
+        font-size: 8px;
+        letter-spacing: 0.20em;
         text-transform: uppercase;
-        color: rgba(255,255,255,0.13);
+        color: rgba(255,255,255,0.18);
         margin-top: 14px;
         opacity: 0;
       }
@@ -1669,8 +1669,10 @@
       #s2-rule { margin-bottom: 48px; }
 
       .s2-label {
-        font-size: 8.5px;
+        font-size: 9px;
+        font-weight: 600;
         letter-spacing: 0.34em;
+        color: var(--gold);
         margin-bottom: 20px;
         justify-content: flex-start;
       }
@@ -1678,9 +1680,9 @@
       .s2-label::after  { display: none; }
 
       .s2-headline {
-        font-size: clamp(28px, 7.5vw, 40px);
-        line-height: 1.15;
-        margin-bottom: 18px;
+        font-size: clamp(30px, 8vw, 42px);
+        line-height: 1.13;
+        margin-bottom: 16px;
       }
 
       .s2-para {
@@ -1709,7 +1711,8 @@
         flex-shrink: 0;
       }
       .s2-card-title {
-        font-size: clamp(15px, 4vw, 18px);
+        font-size: clamp(16px, 4.2vw, 20px);
+        color: rgba(255,255,255,0.80);
       }
       /* remove hover top bar animation on touch — not needed */
       .s2-card::before { display: none; }
@@ -1730,14 +1733,16 @@
       }
 
       .s3-label {
-        font-size: 8.5px;
+        font-size: 9px;
+        font-weight: 600;
         letter-spacing: 0.34em;
+        color: var(--gold);
         margin-bottom: 14px;
       }
 
       .s3-headline {
-        font-size: clamp(24px, 6.5vw, 34px);
-        line-height: 1.20;
+        font-size: clamp(26px, 7.5vw, 38px);
+        line-height: 1.16;
         margin-bottom: 14px;
       }
 
@@ -1771,13 +1776,13 @@
         color: rgba(201,168,76,0.14);
       }
       .s3-card-title {
-        font-size: clamp(16px, 4.2vw, 20px);
+        font-size: clamp(17px, 4.5vw, 22px);
         align-self: end;
       }
       .s3-card-desc {
-        font-size: 12px;
-        line-height: 1.70;
-        color: rgba(255,255,255,0.22);
+        font-size: 12.5px;
+        line-height: 1.68;
+        color: rgba(255,255,255,0.28);
       }
 
       /* ── SECTION 4 — form: most polished section ──────────────── */
@@ -1794,15 +1799,17 @@
       .s4-left { position: static; }
 
       .s4-label {
-        font-size: 8.5px;
+        font-size: 9px;
+        font-weight: 600;
         letter-spacing: 0.34em;
+        color: var(--gold);
         margin-bottom: 18px;
       }
 
       .s4-headline {
-        font-size: clamp(24px, 6.5vw, 34px);
-        line-height: 1.20;
-        margin-bottom: 16px;
+        font-size: clamp(28px, 7.5vw, 40px);
+        line-height: 1.14;
+        margin-bottom: 14px;
       }
 
       .s4-para {
@@ -1815,9 +1822,9 @@
 
       .s4-trust { gap: 12px; }
       .s4-trust-item {
-        font-size: 10.5px;
+        font-size: 11px;
         letter-spacing: 0.06em;
-        color: rgba(255,255,255,0.26);
+        color: rgba(255,255,255,0.32);
       }
 
       /* form card — breathing room, no edge-to-edge */
@@ -1837,17 +1844,18 @@
       .s4-form { gap: 16px; }
 
       .s4-label-field {
-        font-size: 9.5px;
+        font-size: 10px;
+        font-weight: 500;
         letter-spacing: 0.18em;
-        color: rgba(255,255,255,0.44);
+        color: rgba(255,255,255,0.52);
       }
 
       .s4-input,
       .s4-select,
       .s4-textarea {
-        padding: 15px 14px;             /* tall touch targets */
-        font-size: 14px;                /* avoids iOS zoom on focus */
-        min-height: 50px;
+        padding: 16px 14px;             /* tall touch targets */
+        font-size: 15px;                /* avoids iOS zoom on focus */
+        min-height: 52px;               /* 52px tap target */
       }
 
       .s4-textarea {
@@ -1864,17 +1872,20 @@
         margin-top: 2px;
       }
       .s4-check-label {
-        font-size: 11px;
-        line-height: 1.58;
-        color: rgba(255,255,255,0.30);
+        font-size: 12px;
+        line-height: 1.55;
+        color: rgba(255,255,255,0.38);
       }
 
-      /* submit — full width, comfortable */
+      /* submit — full width, large tap target */
       .s4-submit {
-        padding: 17px 24px;
-        font-size: 9.5px;
-        letter-spacing: 0.28em;
-        min-height: 52px;
+        padding: 0 24px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.30em;
+        min-height: 56px;               /* prominent mobile button */
+        color: rgba(232,201,106,0.90);
+        border-color: rgba(232,201,106,0.50);
       }
       /* disable hover fill animation on touch */
       .s4-submit .s4-submit-fill { display: none; }
@@ -2065,20 +2076,20 @@
       <p class="hm-label" id="hmLabel">Clube Privado</p>
 
       <h1 class="hm-headline" id="hmHeadline">
-        Uma mesa reservada<br><em>para poucos.</em>
+        Acesso reservado<br><em>para poucos.</em>
       </h1>
 
       <p class="hm-sub" id="hmSub">
-        Uma experiência sob convite para quem valoriza presença, precisão e discrição.
+        Solicite entrada para uma experiência privada e seletiva.
       </p>
 
       <a href="#s4" class="hm-cta" id="hmCta">Solicitar Acesso</a>
 
-      <p class="hm-disclaimer" id="hmDisclaimer">Vagas limitadas &nbsp;·&nbsp; Sujeito à aprovação &nbsp;·&nbsp; 18+</p>
+      <p class="hm-disclaimer" id="hmDisclaimer">Vagas limitadas · Aprovação · 18+</p>
 
       <!-- scroll hint -->
       <div class="hm-scroll-hint" id="hmScrollHint">
-        <span>Role para explorar</span>
+        <span>Explorar</span>
         <i></i>
       </div>
     </div>
@@ -2099,19 +2110,18 @@
     <p class="s2-label" id="s2Label">A Experiência</p>
 
     <h2 class="s2-headline" id="s2Headline">
-      Mais do que uma mesa.<br>
-      <em>Um ambiente reservado.</em>
+      Uma noite reservada.<br>
+      <em>Um público selecionado.</em>
     </h2>
 
     <p class="s2-para" id="s2Para">
-      O Alá Poker reúne convidados em uma experiência pensada para quem
-      valoriza presença, discrição e uma atmosfera mais seletiva.
+      Ambiente privado, discreto e organizado para convidados selecionados.
     </p>
 
     <div class="s2-trio">
       <div class="s2-card" id="s2Card1">
         <span class="s2-card-dot"></span>
-        <span class="s2-card-title">Ambiente reservado</span>
+        <span class="s2-card-title">Ambiente privado</span>
       </div>
       <div class="s2-card" id="s2Card2">
         <span class="s2-card-dot"></span>
@@ -2119,7 +2129,7 @@
       </div>
       <div class="s2-card" id="s2Card3">
         <span class="s2-card-dot"></span>
-        <span class="s2-card-title">Atmosfera exclusiva</span>
+        <span class="s2-card-title">Experiência seletiva</span>
       </div>
     </div>
   </div>
@@ -2134,11 +2144,10 @@
   <div class="s3-header">
     <p class="s3-label" id="s3Label">Como Funciona</p>
     <h2 class="s3-headline" id="s3Headline">
-      Solicite acesso<br>em poucos passos.
+      Do cadastro<br>ao convite.
     </h2>
     <p class="s3-para" id="s3Para">
-      Preencha seus dados, aguarde a análise e receba a confirmação
-      caso seu perfil seja aprovado.
+      Envie seus dados. Aguarde a análise. Receba o convite se aprovado.
     </p>
   </div>
 
@@ -2147,22 +2156,22 @@
     <div class="s3-card" id="s3Card1">
       <div class="s3-card-bar"></div>
       <div class="s3-card-num">01</div>
-      <h3 class="s3-card-title">Envie sua solicitação</h3>
-      <p class="s3-card-desc">Preencha o formulário com seus dados básicos.</p>
+      <h3 class="s3-card-title">Envie seus dados</h3>
+      <p class="s3-card-desc">Preencha o formulário.</p>
     </div>
 
     <div class="s3-card" id="s3Card2">
       <div class="s3-card-bar"></div>
       <div class="s3-card-num">02</div>
       <h3 class="s3-card-title">Aguarde a análise</h3>
-      <p class="s3-card-desc">Cada solicitação é avaliada individualmente.</p>
+      <p class="s3-card-desc">Cada pedido é avaliado.</p>
     </div>
 
     <div class="s3-card" id="s3Card3">
       <div class="s3-card-bar"></div>
       <div class="s3-card-num">03</div>
-      <h3 class="s3-card-title">Receba a confirmação</h3>
-      <p class="s3-card-desc">Se aprovado, você receberá o convite por WhatsApp ou SMS.</p>
+      <h3 class="s3-card-title">Receba o convite</h3>
+      <p class="s3-card-desc">Confirmação por WhatsApp ou SMS.</p>
     </div>
 
   </div>
@@ -2181,19 +2190,17 @@
       <p class="s4-label" id="s4Label">Solicitação de Acesso</p>
 
       <h2 class="s4-headline" id="s4Headline">
-        Entre para a lista<br>de convidados.
+        Entre na lista.
       </h2>
 
       <p class="s4-para" id="s4Para">
-        Preencha seus dados para solicitar participação em uma experiência
-        privada. As solicitações são avaliadas individualmente e a
-        confirmação será enviada por WhatsApp ou SMS.
+        Preencha seus dados para solicitar participação nos próximos eventos.
       </p>
 
       <div class="s4-trust" id="s4Trust">
-        <div class="s4-trust-item">Acesso sujeito à aprovação</div>
-        <div class="s4-trust-item">Lista privada de convidados</div>
-        <div class="s4-trust-item">Confirmação por WhatsApp ou SMS</div>
+        <div class="s4-trust-item">Aprovação individual</div>
+        <div class="s4-trust-item">Lista privada</div>
+        <div class="s4-trust-item">Convite por WhatsApp/SMS</div>
       </div>
     </div>
 
@@ -2226,15 +2233,15 @@
               placeholder="@seuinstagram">
           </div>
           <div class="s4-field">
-            <label class="s4-label-field" for="s4Indica">Indicação</label>
+            <label class="s4-label-field" for="s4Indica">Indicado por alguém?</label>
             <input class="s4-input" id="s4Indica" name="indicacao" type="text"
-              placeholder="Nome de quem indicou, se houver">
+              placeholder="Nome de quem indicou">
           </div>
         </div>
 
         <!-- Intenção de jogo -->
         <div class="s4-field">
-          <label class="s4-label-field" for="s4Jogo">Você pretende jogar?</label>
+          <label class="s4-label-field" for="s4Jogo">Pretende jogar?</label>
           <div class="s4-select-wrap">
             <select class="s4-select" id="s4Jogo" name="intencao">
               <option value="" disabled selected>Selecione uma opção</option>
@@ -2247,9 +2254,9 @@
 
         <!-- Observação -->
         <div class="s4-field">
-          <label class="s4-label-field" for="s4Obs">Observação <span style="opacity:.45;font-size:9px;letter-spacing:.1em">(opcional)</span></label>
+          <label class="s4-label-field" for="s4Obs">Observação</label>
           <textarea class="s4-textarea" id="s4Obs" name="observacao"
-            placeholder="Conte algo que ajude nossa equipe a avaliar sua solicitação"></textarea>
+            placeholder="Algo que ajude na avaliação"></textarea>
         </div>
 
         <div class="s4-divider"></div>
@@ -2259,7 +2266,7 @@
           <label class="s4-check">
             <input type="checkbox" id="s4Age" name="age18">
             <span class="s4-check-box"></span>
-            <span class="s4-check-label">Confirmo que tenho 18 anos ou mais.</span>
+            <span class="s4-check-label">Confirmo que tenho 18+.</span>
           </label>
           <span class="s4-error-msg">Confirmação obrigatória</span>
         </div>
@@ -2268,7 +2275,7 @@
           <label class="s4-check">
             <input type="checkbox" id="s4Consent" name="consent">
             <span class="s4-check-box"></span>
-            <span class="s4-check-label">Autorizo o contato por WhatsApp ou SMS sobre minha solicitação e próximos eventos.</span>
+            <span class="s4-check-label">Autorizo contato por WhatsApp/SMS.</span>
           </label>
           <span class="s4-error-msg">Autorização necessária</span>
         </div>
@@ -2285,8 +2292,7 @@
       <div class="s4-form-status" id="s4Status"></div>
 
       <p class="s4-legal">
-        O envio da solicitação não garante acesso automático. As vagas são
-        limitadas e a participação está sujeita à aprovação.
+        O envio não garante acesso. Participação sujeita à aprovação.
       </p>
 
     </div>
@@ -2311,20 +2317,19 @@
 
     <!-- Headline -->
     <h2 class="s5-headline" id="s5Headline">
-      Acesso reservado.<br>Experiência selecionada.
+      Acesso reservado.<br>Experiência seletiva.
     </h2>
 
     <!-- Paragraph -->
     <p class="s5-para" id="s5Para">
-      Cada solicitação é analisada individualmente para preservar a proposta,
-      o ambiente e o padrão da experiência.
+      Cada solicitação é avaliada para preservar o padrão da experiência.
     </p>
 
     <!-- Final notes -->
     <div class="s5-notes">
       <span class="s5-note" id="s5Note1">Vagas limitadas</span>
-      <span class="s5-note" id="s5Note2">Acesso sujeito à aprovação</span>
-      <span class="s5-note" id="s5Note3">Confirmação por WhatsApp ou SMS</span>
+      <span class="s5-note" id="s5Note2">Sujeito à aprovação</span>
+      <span class="s5-note" id="s5Note3">Convite por WhatsApp/SMS</span>
       <span class="s5-note" id="s5Note4">18+</span>
     </div>
 
