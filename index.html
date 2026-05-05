@@ -581,7 +581,7 @@
         width: 100%;
         height: 100vh;
         overflow: hidden;
-        background: var(--black);
+        background: #060606;    /* exact match to canvas fallback */
       }
 
       /* desktop columns hidden on mobile */
@@ -599,19 +599,19 @@
         display: block;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        /* NOTE: object-fit does NOT work on <canvas>. Fill is handled by mDraw JS. */
       }
-      /* cinematic vignette — heavier at top for text legibility */
+      /* cinematic vignette — uniform darkness so video shows consistently */
       #heroMobileFrame::after {
         content: '';
         position: absolute;
         inset: 0;
         background:
           linear-gradient(to bottom,
-            rgba(6,6,6,0.78) 0%,
-            rgba(6,6,6,0.38) 38%,
-            rgba(6,6,6,0.10) 58%,
-            rgba(6,6,6,0.60) 100%
+            rgba(6,6,6,0.52) 0%,
+            rgba(6,6,6,0.30) 30%,
+            rgba(6,6,6,0.18) 55%,
+            rgba(6,6,6,0.40) 100%
           );
         pointer-events: none;
         z-index: 2;
@@ -2526,6 +2526,7 @@
       // This matches the CSS layout exactly (100vh) and avoids the mismatch
       // between window.innerHeight and CSS 100vh on mobile browsers.
       const rect = mCanvas.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return; // layout not ready yet
       const cw = Math.round(rect.width  * dpr);
       const ch = Math.round(rect.height * dpr);
       if (mCanvas.width !== cw || mCanvas.height !== ch) {
@@ -2543,7 +2544,7 @@
     /* preload frames */
     for (let i = 0; i < TOTAL_M; i++) {
       const img = new Image(); img.src = mFramePath(i);
-      img.onload = () => { if (i === 0) mDraw(0); };
+      img.onload = () => { if (i === 0) requestAnimationFrame(() => mDraw(0)); };
       mFrames.push(img);
     }
 
