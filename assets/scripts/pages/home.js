@@ -307,13 +307,13 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
         setFieldError(nomeField, nome, false);
       }
 
-      const wpp = document.getElementById('s4Wpp');
-      const wppField = document.getElementById('s4FieldWpp');
-      const wppClean = wpp.value.replace(/\D/g, '');
-      if (!/^\d+$/.test(wppClean) || wppClean.length < 10 || wppClean.length > 15) {
-        setFieldError(wppField, wpp, true); valid = false;
+      const phone = document.getElementById('s4Wpp');
+      const phoneField = document.getElementById('s4FieldWpp');
+      const phoneClean = phone.value.replace(/\D/g, '');
+      if (phoneClean && (phoneClean.length < 10 || phoneClean.length > 15)) {
+        setFieldError(phoneField, phone, true); valid = false;
       } else {
-        setFieldError(wppField, wpp, false);
+        setFieldError(phoneField, phone, false);
       }
 
       const email = document.getElementById('s4Email');
@@ -346,7 +346,7 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
       if (!validate()) return;
 
       submitBtn.disabled = true;
-      submitLbl.textContent = 'Enviando solicitação...';
+      submitLbl.textContent = 'Enviando convite...';
 
       try {
         let instagram = document.getElementById('s4Insta').value.trim();
@@ -354,27 +354,33 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
           instagram = '@' + instagram;
         }
 
-        await apiFetch(API_ROUTES.accessRequest, {
+        const formData = {
+          name:      document.getElementById('s4Nome').value.trim(),
+          phone:     document.getElementById('s4Wpp').value.replace(/\D/g, '') || null,
+          instagram: instagram || null,
+          email:     document.getElementById('s4Email').value.trim(),
+        };
+
+        const result = await apiFetch(API_ROUTES.accessRequest, {
           method: 'POST',
-          body: JSON.stringify({
-            name:      document.getElementById('s4Nome').value.trim(),
-            phone:     document.getElementById('s4Wpp').value.replace(/\D/g, ''),
-            instagram: instagram || null,
-            email:     document.getElementById('s4Email').value.trim(),
-          }),
+          body: JSON.stringify(formData),
         });
 
         form.style.display = 'none';
         status.className = 's4-form-status success';
+        const name = result.name || formData.name;
+        const email = result.email || formData.email;
+        const deliveryMethod = result.delivery_method || 'email';
+        const title = deliveryMethod === 'email' ? 'Convite enviado.' : (result.message || 'Convite enviado.');
         status.innerHTML =
-          '<strong>Solicitação recebida.</strong><br><br>' +
-          'Você receberá uma mensagem no WhatsApp com a confirmação.<br>' +
-          'Seu acesso está em análise e, se aprovado, enviaremos o convite com todos os detalhes.';
+          `<strong>${title}</strong><br><br>` +
+          `${name}, enviamos o convite para ${email}.<br>` +
+          'Confira sua caixa de entrada. Caso não encontre o e-mail, verifique também a caixa de spam.';
         gsap.fromTo(status, { opacity:0, y:12 }, { opacity:1, y:0, duration:0.9, ease:'power2.out' });
 
       } catch (err) {
         submitBtn.disabled = false;
-        submitLbl.textContent = 'Enviar solicitação';
+        submitLbl.textContent = 'Receber convite';
         status.className = 's4-form-status error';
         status.textContent = err.message || 'Não foi possível enviar agora. Tente novamente em instantes.';
         gsap.fromTo(status, { opacity:0 }, { opacity:1, duration:0.5 });
