@@ -296,6 +296,76 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
       inputEl.classList.toggle('error', show);
     }
 
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function showFormMessage({ type = 'success', title, message, helper = '', secondaryHelper = '', hideForm = false, actions = [] }) {
+      form.style.display = hideForm ? 'none' : '';
+      status.className = `s4-form-status ${type}`;
+      const buttons = actions.length
+        ? `<div class="s4-status-actions">${actions.map((action) => (
+            `<button class="s4-status-action ${action.variant === 'secondary' ? 'secondary' : 'primary'}" type="button" data-action="${escapeHtml(action.action)}">${escapeHtml(action.label)}</button>`
+          )).join('')}</div>`
+        : '';
+      status.innerHTML = [
+        title ? `<strong>${escapeHtml(title)}</strong>` : '',
+        message ? escapeHtml(message) : '',
+        helper ? `<br>${escapeHtml(helper)}` : '',
+        secondaryHelper ? `<br>${escapeHtml(secondaryHelper)}` : '',
+        buttons,
+      ].join('');
+      gsap.fromTo(status, { opacity:0, y:12 }, { opacity:1, y:0, duration:0.7, ease:'power2.out' });
+    }
+
+    function clearFieldErrors() {
+      form.querySelectorAll('.error').forEach((el) => el.classList.remove('error'));
+      form.querySelectorAll('.has-error').forEach((el) => el.classList.remove('has-error'));
+    }
+
+    function restoreForm() {
+      form.style.display = '';
+      submitBtn.disabled = false;
+      submitLbl.textContent = 'Receber convite';
+      clearFieldErrors();
+    }
+
+    function resetFormForNewSubmission() {
+      form.reset();
+      restoreForm();
+      status.className = 's4-form-status';
+      status.textContent = '';
+      document.getElementById('s4Nome')?.focus();
+    }
+
+    function focusEmailForRetry() {
+      const email = document.getElementById('s4Email');
+      restoreForm();
+      if (email) {
+        email.value = '';
+        email.focus();
+      }
+    }
+
+    function scrollToStart() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    status.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-action]');
+      if (!button) return;
+
+      const action = button.dataset.action;
+      if (action === 'scroll-start') scrollToStart();
+      if (action === 'new-submission') resetFormForNewSubmission();
+      if (action === 'retry-email') focusEmailForRetry();
+    });
+
     function validate() {
       let valid = true;
 
@@ -361,29 +431,101 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
           email:     document.getElementById('s4Email').value.trim(),
         };
 
-        const result = await apiFetch(API_ROUTES.accessRequest, {
+        const response = await apiFetch(API_ROUTES.accessRequest, {
           method: 'POST',
           body: JSON.stringify(formData),
         });
 
-        form.style.display = 'none';
-        status.className = 's4-form-status success';
-        const name = result.name || formData.name;
-        const email = result.email || formData.email;
-        const deliveryMethod = result.delivery_method || 'email';
-        const title = deliveryMethod === 'email' ? 'Convite enviado.' : (result.message || 'Convite enviado.');
-        status.innerHTML =
-          `<strong>${title}</strong><br><br>` +
-          `${name}, enviamos o convite para ${email}.<br>` +
-          'Confira sua caixa de entrada. Caso não encontre o e-mail, verifique também a caixa de spam.';
-        gsap.fromTo(status, { opacity:0, y:12 }, { opacity:1, y:0, duration:0.9, ease:'power2.out' });
+        const result = await response.json();
+
+        if (!response.ok) {
+          showFormMessage({
+            type: 'error',
+            title: 'Erro ao enviar',
+            message: result.message || 'Não foi possível enviar sua solicitação.',
+            actions: [
+              { label: 'Voltar ao início', action: 'scroll-start', variant: 'primary' },
+            ],
+          });
+          submitBtn.disabled = false;
+          submitLbl.textContent = 'Receber convite';
+          return;
+        }
+
+        if (result.code === 'already_registered') {
+          showFormMessage({
+            type: 'warning',
+            title: 'Cadastro já encontrado.',
+            message: result.message || 'Este e-mail já está cadastrado para este evento.',
+            helper: `E-mail registrado: ${result.email || formData.email}`,
+            secondaryHelper: 'Verifique sua caixa de entrada ou utilize outro e-mail.',
+            actions: [
+              { label: 'Usar outro e-mail', action: 'retry-email', variant: 'primary' },
+              { label: 'Voltar ao início', action: 'scroll-start', variant: 'secondary' },
+            ],
+          });
+          submitBtn.disabled = false;
+          submitLbl.textContent = 'Receber convite';
+          return;
+        }
+
+        if (result.code === 'created' && result.success === true) {
+          showFormMessage({
+            type: 'success',
+            title: 'Convite enviado.',
+            message: `${result.name || formData.name}, enviamos o convite para ${result.email || formData.email}.`,
+            helper: 'Confira sua caixa de entrada. Caso não encontre, verifique também a caixa de spam.',
+            hideForm: true,
+            actions: [
+              { label: 'Voltar ao início', action: 'scroll-start', variant: 'primary' },
+              { label: 'Solicitar para outro e-mail', action: 'new-submission', variant: 'secondary' },
+            ],
+          });
+          return;
+        }
+
+        if (result.code === 'no_active_event') {
+          showFormMessage({
+            type: 'warning',
+            title: 'Evento indisponível.',
+            message: result.message || 'Nenhum evento ativo no momento.',
+            helper: 'Tente novamente mais tarde.',
+            actions: [
+              { label: 'Voltar ao início', action: 'scroll-start', variant: 'primary' },
+            ],
+          });
+          submitBtn.disabled = false;
+          submitLbl.textContent = 'Receber convite';
+          return;
+        }
+
+        showFormMessage({
+          type: result.success ? 'success' : 'warning',
+          title: result.success ? 'Convite enviado.' : 'Atenção.',
+          message: result.message || 'Recebemos sua solicitação.',
+          helper: result.email ? `E-mail: ${result.email}` : '',
+          hideForm: result.success === true,
+          actions: [
+            { label: 'Voltar ao início', action: 'scroll-start', variant: 'primary' },
+          ],
+        });
+
+        if (!result.success) {
+          submitBtn.disabled = false;
+          submitLbl.textContent = 'Receber convite';
+        }
 
       } catch (err) {
         submitBtn.disabled = false;
         submitLbl.textContent = 'Receber convite';
-        status.className = 's4-form-status error';
-        status.textContent = err.message || 'Não foi possível enviar agora. Tente novamente em instantes.';
-        gsap.fromTo(status, { opacity:0 }, { opacity:1, duration:0.5 });
+        showFormMessage({
+          type: 'error',
+          title: 'Erro de conexão.',
+          message: 'Não foi possível conectar ao servidor. Tente novamente.',
+          actions: [
+            { label: 'Voltar ao início', action: 'scroll-start', variant: 'primary' },
+          ],
+        });
       }
     });
 

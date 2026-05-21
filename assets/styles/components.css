@@ -413,7 +413,7 @@
 /* form status messages */
 .s4-form-status {
   display: none;
-  padding: 20px 24px;
+  padding: 20px 22px;
   font-family: var(--sans);
   font-size: 12px;
   font-weight: 300;
@@ -426,7 +426,21 @@
   border: 1px solid rgba(201,168,76,0.20);
   background: rgba(201,168,76,0.04);
 }
+.s4-form-status.warning {
+  display: block;
+  color: rgba(255,255,255,0.60);
+  border: 1px solid rgba(232,201,106,0.24);
+  background: rgba(232,201,106,0.035);
+}
 .s4-form-status.success strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 8px;
+}
+.s4-form-status.warning strong {
   display: block;
   font-family: var(--serif);
   font-size: 18px;
@@ -439,6 +453,58 @@
   color: rgba(220,120,80,0.70);
   border: 1px solid rgba(220,90,60,0.20);
 }
+.s4-form-status.error strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 8px;
+}
+.s4-status-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+.s4-status-action {
+  min-height: 42px;
+  padding: 0 18px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.35s, border-color 0.35s, background 0.35s, box-shadow 0.35s, transform 0.18s;
+}
+.s4-status-action.primary {
+  color: rgba(6,6,6,0.92);
+  background: rgba(232,201,106,0.82);
+  border: 1px solid rgba(232,201,106,0.90);
+  box-shadow: 0 0 22px rgba(232,201,106,0.10);
+}
+.s4-status-action.secondary {
+  color: rgba(232,201,106,0.82);
+  background: transparent;
+  border: 1px solid rgba(232,201,106,0.28);
+}
+.s4-status-action:hover {
+  transform: translateY(-1px);
+}
+.s4-status-action.primary:hover {
+  background: rgba(232,201,106,0.96);
+  border-color: rgba(232,201,106,1);
+  box-shadow: 0 0 26px rgba(232,201,106,0.16);
+}
+.s4-status-action.secondary:hover {
+  color: rgba(232,201,106,1);
+  border-color: rgba(232,201,106,0.52);
+  background: rgba(232,201,106,0.05);
+}
+.s4-status-action:active {
+  transform: scale(0.98);
+}
 .s4-legal {
   margin-top: 18px;
   font-family: var(--sans);
@@ -450,6 +516,16 @@
 }
 
 /* ── SEGMENTED CONTROL — .s4-seg ── */
+@media (max-width: 768px) {
+  .s4-status-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .s4-status-action {
+    width: 100%;
+  }
+}
+
 .s4-seg {
   display: flex;
   gap: 0;
