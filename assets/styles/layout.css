@@ -143,6 +143,7 @@
     0 24px 80px rgba(0,0,0,0.7),
     0 0 100px rgba(201,168,76,0.04);
   opacity: 0;
+  pointer-events: none;
 }
 .video-frame canvas {
   display: block;
