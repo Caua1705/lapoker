@@ -291,9 +291,23 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
     const submitLbl = document.getElementById('s4SubmitLabel');
     if (!form) return;
 
+    let formState = 'idle';
+    let responseData = null;
+
     function setFieldError(fieldEl, inputEl, show) {
       fieldEl.classList.toggle('has-error', show);
       inputEl.classList.toggle('error', show);
+    }
+
+    function setFormState(nextState, data = null) {
+      formState = nextState;
+      responseData = data;
+
+      const showForm = formState === 'idle' || formState === 'loading';
+      form.style.display = showForm ? '' : 'none';
+      submitBtn.style.display = showForm ? '' : 'none';
+      submitBtn.disabled = formState === 'loading';
+      submitLbl.textContent = formState === 'loading' ? 'Enviando...' : 'Receber convite';
     }
 
     function escapeHtml(value) {
@@ -305,8 +319,8 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
         .replace(/'/g, '&#039;');
     }
 
-    function showFormMessage({ type = 'success', title, message, helper = '', secondaryHelper = '', hideForm = false, actions = [] }) {
-      form.style.display = hideForm ? 'none' : '';
+    function showFormMessage({ type = 'success', title, message, helper = '', secondaryHelper = '', actions = [], state = 'result', data = null }) {
+      setFormState(state, data);
       status.className = `s4-form-status ${type}`;
       const buttons = actions.length
         ? `<div class="s4-status-actions">${actions.map((action) => (
@@ -329,9 +343,7 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
     }
 
     function restoreForm() {
-      form.style.display = '';
-      submitBtn.disabled = false;
-      submitLbl.textContent = 'Receber convite';
+      setFormState('idle');
       clearFieldErrors();
     }
 
@@ -340,12 +352,14 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
       restoreForm();
       status.className = 's4-form-status';
       status.textContent = '';
-      document.getElementById('s4Nome')?.focus();
+      document.getElementById('s4Email')?.focus();
     }
 
     function focusEmailForRetry() {
       const email = document.getElementById('s4Email');
       restoreForm();
+      status.className = 's4-form-status';
+      status.textContent = '';
       if (email) {
         email.value = '';
         email.focus();
@@ -415,8 +429,7 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
 
       if (!validate()) return;
 
-      submitBtn.disabled = true;
-      submitLbl.textContent = 'Enviando convite...';
+      setFormState('loading');
 
       try {
         let instagram = document.getElementById('s4Insta').value.trim();
@@ -443,12 +456,11 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
             type: 'error',
             title: 'Erro ao enviar',
             message: result.message || 'Não foi possível enviar sua solicitação.',
+            data: result,
             actions: [
               { label: 'Voltar ao início', action: 'scroll-start', variant: 'primary' },
             ],
           });
-          submitBtn.disabled = false;
-          submitLbl.textContent = 'Receber convite';
           return;
         }
 
@@ -459,13 +471,12 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
             message: result.message || 'Este e-mail já está cadastrado para este evento.',
             helper: `E-mail registrado: ${result.email || formData.email}`,
             secondaryHelper: 'Verifique sua caixa de entrada ou utilize outro e-mail.',
+            data: result,
             actions: [
               { label: 'Usar outro e-mail', action: 'retry-email', variant: 'primary' },
               { label: 'Voltar ao início', action: 'scroll-start', variant: 'secondary' },
             ],
           });
-          submitBtn.disabled = false;
-          submitLbl.textContent = 'Receber convite';
           return;
         }
 
@@ -475,7 +486,7 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
             title: 'Convite enviado.',
             message: `${result.name || formData.name}, enviamos o convite para ${result.email || formData.email}.`,
             helper: 'Confira sua caixa de entrada. Caso não encontre, verifique também a caixa de spam.',
-            hideForm: true,
+            data: result,
             actions: [
               { label: 'Voltar ao início', action: 'scroll-start', variant: 'primary' },
               { label: 'Solicitar para outro e-mail', action: 'new-submission', variant: 'secondary' },
@@ -490,12 +501,11 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
             title: 'Evento indisponível.',
             message: result.message || 'Nenhum evento ativo no momento.',
             helper: 'Tente novamente mais tarde.',
+            data: result,
             actions: [
               { label: 'Voltar ao início', action: 'scroll-start', variant: 'primary' },
             ],
           });
-          submitBtn.disabled = false;
-          submitLbl.textContent = 'Receber convite';
           return;
         }
 
@@ -504,24 +514,18 @@ import { apiFetch, API_ROUTES } from '../config/api.js';
           title: result.success ? 'Convite enviado.' : 'Atenção.',
           message: result.message || 'Recebemos sua solicitação.',
           helper: result.email ? `E-mail: ${result.email}` : '',
-          hideForm: result.success === true,
+          data: result,
           actions: [
             { label: 'Voltar ao início', action: 'scroll-start', variant: 'primary' },
           ],
         });
 
-        if (!result.success) {
-          submitBtn.disabled = false;
-          submitLbl.textContent = 'Receber convite';
-        }
-
       } catch (err) {
-        submitBtn.disabled = false;
-        submitLbl.textContent = 'Receber convite';
         showFormMessage({
           type: 'error',
           title: 'Erro de conexão.',
           message: 'Não foi possível conectar ao servidor. Tente novamente.',
+          state: 'error',
           actions: [
             { label: 'Voltar ao início', action: 'scroll-start', variant: 'primary' },
           ],
